@@ -10,6 +10,7 @@
       "lat": null,
       "lng": null,
       "trees": 0,
+      "logs": 0,
       "seedBeds": null,
       "pottedBeds": null
     },
@@ -23,6 +24,7 @@
       "lat": 50.53967,
       "lng": 27.96789,
       "trees": 0,
+      "logs": 55,
       "seedBeds": null,
       "pottedBeds": null
     },
@@ -36,6 +38,7 @@
       "lat": 50.90157,
       "lng": 29.1111,
       "trees": 0,
+      "logs": 137,
       "seedBeds": null,
       "pottedBeds": null
     },
@@ -49,6 +52,7 @@
       "lat": 49.6508,
       "lng": 36.1988,
       "trees": 0,
+      "logs": 39,
       "seedBeds": null,
       "pottedBeds": null
     },
@@ -62,6 +66,7 @@
       "lat": 48.68098,
       "lng": 35.615,
       "trees": 0,
+      "logs": 0,
       "seedBeds": null,
       "pottedBeds": null
     },
@@ -75,6 +80,7 @@
       "lat": 49.49148,
       "lng": 36.34106,
       "trees": 0,
+      "logs": 77,
       "seedBeds": null,
       "pottedBeds": null
     },
@@ -88,6 +94,7 @@
       "lat": 50.53979,
       "lng": 27.96565,
       "trees": 0,
+      "logs": 1680,
       "seedBeds": null,
       "pottedBeds": null
     },
@@ -101,6 +108,7 @@
       "lat": 48.68253,
       "lng": 35.61415,
       "trees": 0,
+      "logs": 25,
       "seedBeds": null,
       "pottedBeds": null
     },
@@ -114,6 +122,7 @@
       "lat": 50.26042,
       "lng": 29.73213,
       "trees": 0,
+      "logs": 435,
       "seedBeds": null,
       "pottedBeds": null
     },
@@ -127,6 +136,7 @@
       "lat": 47.88822,
       "lng": 35.13787,
       "trees": 0,
+      "logs": 2,
       "seedBeds": null,
       "pottedBeds": null
     },
@@ -140,6 +150,7 @@
       "lat": 49.55216,
       "lng": 36.26374,
       "trees": 0,
+      "logs": 2,
       "seedBeds": null,
       "pottedBeds": null
     },
@@ -153,9 +164,10 @@
       "lat": 49.04075,
       "lng": 28.23724,
       "trees": 0,
+      "logs": 0,
       "seedBeds": null,
       "pottedBeds": null
     }
   ],
-  "fetchedAt": "2026-11-11T16:42:33.293Z"
+  "fetchedAt": "2026-11-11T19:15:08.829Z"
 }
