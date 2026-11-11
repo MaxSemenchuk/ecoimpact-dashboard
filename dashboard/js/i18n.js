@@ -72,7 +72,8 @@
     'Trees planted': 'Висаджено дерев',
     "Number of trees reported by projects. '—' means not reported yet.": 'Кількість дерев, заявлена проєктами. «—» означає, що даних ще немає.',
     'Not reported yet': 'Даних ще немає',
-    'Reported by Silvi projects': 'Дані проєктів у Silvi',
+    'Trees recorded in Silvi: tracked trees, or GPS-tagged planting photos (the points on the Silvi map)':
+      'Дерева, зафіксовані в Silvi: окремі дерева або фото посадок з GPS (точки на мапі Silvi)',
     'From the Hypercert claim of the network (Silvi projects have not reported tree counts yet)':
       'З гіперсертифіката мережі (проєкти в Silvi ще не подали кількість дерев)',
     "Number of trees reported by projects. If Silvi projects have not reported yet, the figure comes from the network's Hypercert claim.":

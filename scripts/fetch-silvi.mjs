@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Builds dashboard/data/silvi.json from the Silvi Public API: status, area, map position and
-// recorded trees / seed beds / potted beds per project.
+// recorded trees, GPS photo logs (map points), seed beds / potted beds per project.
 // Docs: https://api.silvi.earth/public-api/docs/
 //
 // Silvi issues one API key per project. Put them in gen/.env (gitignored), one per line:
@@ -64,7 +64,7 @@ for (const [label, key] of Object.entries(keys)) {
   const entry = {
     id, title: p.title, status: p.status, website: p.website_url || null,
     areaHa: null, zones: p.mrv_stats ? p.mrv_stats.zone_count : null, lat: null, lng: null,
-    trees: null, seedBeds: null, pottedBeds: null,
+    trees: null, logs: null, seedBeds: null, pottedBeds: null,
   };
 
   try {
@@ -82,11 +82,14 @@ for (const [label, key] of Object.entries(keys)) {
   } catch (e) { console.warn(`  ${label}: gis: ${e.message}`); }
 
   entry.trees = await count(key, `/projects/${id}/trees/`);
+  // Most projects record their plantings as GPS-tagged photo logs (the points on the Silvi map),
+  // not as individual tree records, so /trees/ stays empty. Count the logs as well.
+  entry.logs = await count(key, `/projects/${id}/logs/`);
   entry.seedBeds = await count(key, `/projects/${id}/seed-beds/`);
   entry.pottedBeds = await count(key, `/projects/${id}/potted-beds/`);
 
   out.push(entry);
-  console.log(`  #${id} ${entry.title}: ${entry.areaHa} ha, trees ${entry.trees}, seed beds ${entry.seedBeds}, potted beds ${entry.pottedBeds}, ${entry.lat ? entry.lat + ', ' + entry.lng : 'no position'}`);
+  console.log(`  #${id} ${entry.title}: ${entry.areaHa} ha, trees ${entry.trees}, logs ${entry.logs}, seed beds ${entry.seedBeds}, potted beds ${entry.pottedBeds}, ${entry.lat ? entry.lat + ', ' + entry.lng : 'no position'}`);
 }
 
 out.sort((a, b) => a.id - b.id);

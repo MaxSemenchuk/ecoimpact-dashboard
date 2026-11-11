@@ -80,7 +80,7 @@ function populateEcology(data) {
     const certTrees = certs.reduce((sum, c) => sum + ((c.metrics && c.metrics.trees) || 0), 0);
     if (eco.treesPlanted != null) {
       animateValue(treesEl, eco.treesPlanted);
-      treesEl.title = T('Reported by Silvi projects');
+      treesEl.title = T('Trees recorded in Silvi: tracked trees, or GPS-tagged planting photos (the points on the Silvi map)');
     } else if (certTrees > 0) {
       animateValue(treesEl, certTrees);
       treesEl.title = T('From the Hypercert claim of the network (Silvi projects have not reported tree counts yet)');

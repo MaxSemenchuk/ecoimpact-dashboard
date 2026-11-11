@@ -565,7 +565,9 @@ function mergeSilviIntoData(data, silvi) {
     if (Number.isFinite(s.lat) && Number.isFinite(s.lng)) { p.lat = s.lat; p.lng = s.lng; }
     if (typeof s.areaHa === 'number') p.hectares = s.areaHa;
     p.status = statusLabel(s.status);
-    p.trees = typeof s.trees === 'number' && s.trees > 0 ? s.trees : null;
+    // Individual tree records win; otherwise count the GPS-tagged planting logs (the points on the Silvi map)
+    p.trees = typeof s.trees === 'number' && s.trees > 0 ? s.trees
+      : typeof s.logs === 'number' && s.logs > 0 ? s.logs : null;
   });
 
   // Keep the ecology block in step with the (now authoritative) Silvi numbers
