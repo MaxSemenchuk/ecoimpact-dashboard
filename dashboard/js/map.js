@@ -1,0 +1,254 @@
+// ============================================================
+// GEN Ukraine Impact Dashboard — Map (Leaflet + OpenStreetMap)
+// ============================================================
+
+function initMap(data) {
+  const mapEl = document.getElementById('map');
+  if (!mapEl) return;
+
+  // Ukraine only: fit to its bounds and keep panning close to it
+  const ukraineBounds = L.latLngBounds([44.18, 22.14], [52.38, 40.23]);
+  const map = L.map('map', {
+    zoomControl: false,
+    attributionControl: false,
+    maxBounds: ukraineBounds.pad(0.15),
+    maxBoundsViscosity: 1.0,
+    zoomSnap: 0.25,
+  });
+  map.invalidateSize(); // container may not be laid out yet; avoids NaN bounds
+  map.fitBounds(ukraineBounds, { padding: [10, 10] });
+  map.setMinZoom(map.getZoom());
+
+  // Add zoom control to bottom-right
+  L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+  // OpenFreeMap "dark" vector style (free, no API key) rendered via MapLibre.
+  // Labels come from OSM name:en, so cities read "Kyiv", not "Kiev".
+  const basemap = L.maplibreGL({
+    style: 'https://tiles.openfreemap.org/styles/dark',
+    attribution: '<a href="https://openfreemap.org" target="_blank">OpenFreeMap</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors',
+  }).addTo(map);
+  // English names only (default style also prints the Cyrillic name underneath)
+  const glMap = basemap.getMaplibreMap();
+  const borderPromise = fetch('data/ukraine-border.json').then((r) => r.json()).catch(() => null);
+  glMap.on('style.load', async () => {
+    // Paint everything outside Ukraine with the card background (geoBoundaries ADM0, incl. Crimea)
+    const border = await borderPromise;
+    if (border) {
+      const world = [[-180, -85], [180, -85], [180, 85], [-180, 85], [-180, -85]];
+      glMap.addSource('outside-ukraine', {
+        type: 'geojson',
+        data: { type: 'Feature', geometry: { type: 'Polygon', coordinates: [world, border.geometry.coordinates[0]] } },
+      });
+      glMap.addSource('ukraine-border', { type: 'geojson', data: border });
+      // Mask goes under the labels; labels outside Ukraine are filtered out instead of covered
+      const layers = glMap.getStyle().layers;
+      const lastShape = layers.map((l) => l.type !== 'symbol').lastIndexOf(true);
+      const firstLabel = layers[lastShape + 1].id;
+      glMap.addLayer({ id: 'outside-ukraine', type: 'fill', source: 'outside-ukraine', paint: { 'fill-color': '#111827' } }, firstLabel);
+      glMap.addLayer({ id: 'ukraine-border', type: 'line', source: 'ukraine-border', paint: { 'line-color': '#4b5563', 'line-width': 1.2 } }, firstLabel);
+      glMap.getStyle().layers.filter((l) => l.type === 'symbol').forEach((l) => {
+        const within = ['within', border.geometry]; // a Feature here silently matches nothing
+        glMap.setFilter(l.id, l.filter ? ['all', l.filter, within] : within);
+      });
+    }
+    // Oblast labels crowd out city names at country zoom
+    glMap.setLayoutProperty('place_state', 'visibility', 'none');
+    glMap.getStyle().layers.forEach((layer) => {
+      if (!layer.layout || !layer.layout['text-field'] || layer.id === 'highway_name_motorway') return;
+      glMap.setLayoutProperty(layer.id, 'text-field',
+        ['coalesce', ['get', 'name_en'], ['get', 'name:latin'], ['get', 'name']]);
+      // Default place labels are very dim on the dark style
+      if (layer.id.startsWith('place_')) glMap.setPaintProperty(layer.id, 'text-color', '#a8a8b3');
+    });
+  });
+  L.control.attribution({ position: 'bottomleft', prefix: false }).addTo(map);
+
+  // Community category colors — muted tones so project layers pop
+  const categoryColors = {
+    'Family Estate':        '#2d8a4e',
+    'Eco-settlement':       '#45a368',
+    'Eco-community':        '#6dbf8b',
+    'Spiritual Community':  '#8b7ec8',
+    'Various Communities':  '#a0a0a0',
+  };
+
+  // Community dot icon (small, subtle)
+  function makeDot(color) {
+    return L.divIcon({
+      className: 'custom-marker',
+      html: `<div style="
+        width: 9px; height: 9px;
+        background: ${color};
+        border: 1.5px solid rgba(0,0,0,0.4);
+        border-radius: 50%;
+        opacity: 0.75;
+      "></div>`,
+      iconSize: [9, 9],
+      iconAnchor: [4, 4],
+      popupAnchor: [0, -6],
+    });
+  }
+
+  // Project icon (solar / rainwater) — emoji-based, larger, high contrast
+  function makeProjectIcon(emoji) {
+    return L.divIcon({
+      className: 'custom-marker',
+      html: `<div style="
+        font-size: 20px;
+        line-height: 1;
+        filter: drop-shadow(0 0 4px rgba(0,0,0,0.7));
+      ">${emoji}</div>`,
+      iconSize: [24, 24],
+      iconAnchor: [12, 12],
+      popupAnchor: [0, -14],
+    });
+  }
+
+  // --- Layer: Communities ---
+  const communitiesLayer = L.layerGroup();
+  data.ecovillages.forEach(v => {
+    const color = categoryColors[v.category] || '#4ade80';
+    L.marker([v.lat, v.lng], { icon: makeDot(color) })
+      .bindPopup(`
+        <div>
+          <strong style="color: #a7f3d0; font-size: 0.9rem;">${T(v.name)}</strong>
+          <div style="margin-top: 4px; color: #9ca3af; font-size: 0.75rem;">${T(v.category)}</div>
+        </div>
+      `)
+      .addTo(communitiesLayer);
+  });
+  communitiesLayer.addTo(map);
+
+  // --- Layer: Solar Stations ---
+  const solarLayer = L.layerGroup();
+  if (data.solarStations) {
+    data.solarStations.forEach(s => {
+      L.marker([s.lat, s.lng], { icon: makeProjectIcon('☀️') })
+        .bindPopup(`
+          <div>
+            <strong style="color: #fde68a; font-size: 0.9rem;">☀️ ${T(s.name)}</strong>
+            <div style="margin-top: 4px; color: #d1d5db; font-size: 0.75rem;">${T(s.desc)}</div>
+          </div>
+        `)
+        .addTo(solarLayer);
+    });
+  }
+  solarLayer.addTo(map);
+
+  // --- Layer: Rainwater Harvesting ---
+  const rainwaterLayer = L.layerGroup();
+  if (data.rainwaterSystems) {
+    data.rainwaterSystems.forEach(r => {
+      L.marker([r.lat, r.lng], { icon: makeProjectIcon('💧') })
+        .bindPopup(`
+          <div>
+            <strong style="color: #7dd3fc; font-size: 0.9rem;">💧 ${T(r.name)}</strong>
+            <div style="margin-top: 4px; color: #d1d5db; font-size: 0.75rem;">${T(r.desc)}</div>
+          </div>
+        `)
+        .addTo(rainwaterLayer);
+    });
+  }
+  rainwaterLayer.addTo(map);
+
+  // --- Layer: Silvi Forestry Projects (re-drawn when Silvi positions arrive with the live data) ---
+  const silviLayer = L.layerGroup();
+  window.refreshSilviMarkers = function (d) {
+    silviLayer.clearLayers();
+    (d.silviProjects || []).forEach(p => {
+      if (!Number.isFinite(p.lat) || !Number.isFinite(p.lng)) return; // no position yet
+      const ok = p.status === 'Verified' || p.status === 'Approved';
+      const statusColor = ok ? '#4ade80' : p.status === 'Pending' || p.status === 'Draft' ? '#fbbf24' : '#fb923c';
+      const url = `https://app.silvi.earth/?asset=zone&sourceProject=${p.id}&sourceProjectTitle=${encodeURIComponent(p.name)}`;
+      L.marker([p.lat, p.lng], { icon: makeProjectIcon('🌳') })
+        .bindPopup(`
+          <div>
+            <strong style="color: #a3e635; font-size: 0.9rem;">🌳 ${p.name}</strong>
+            <div style="margin-top: 4px; color: #d1d5db; font-size: 0.75rem;">${T(p.desc || '')}</div>
+            <div style="margin-top: 2px; color: #9ca3af; font-size: 0.7rem;">${p.hectares.toLocaleString(LOCALE)} ${T('ha')} · <span style="color:${statusColor}">${T(p.status)}</span></div>
+            <a href="${url}" target="_blank" style="color: #a3e635; font-size: 0.7rem; text-decoration: underline;">${T('View on Silvi →')}</a>
+          </div>
+        `)
+        .addTo(silviLayer);
+    });
+  };
+  window.refreshSilviMarkers(data);
+  silviLayer.addTo(map);
+
+  // --- Layer: Bird monitoring stations (drawn once BirdWeather data arrives) ---
+  const birdLayer = L.layerGroup();
+  window.refreshBirdMarkers = function (d) {
+    birdLayer.clearLayers();
+    ((d.birds && d.birds.stations) || []).forEach(s => {
+      L.marker([s.lat, s.lng], { icon: makeProjectIcon('🐦') })
+        .bindPopup(`
+          <div>
+            <strong style="color: #7dd3fc; font-size: 0.9rem;">🐦 ${T(s.name)}</strong>
+            <div style="margin-top: 4px; color: #d1d5db; font-size: 0.75rem;">${T('{n} detections', { n: s.detections.toLocaleString(LOCALE) })} · ${T('{n} species', { n: s.speciesCount })}</div>
+            ${s.approx ? `<div style="margin-top: 2px; color: #9ca3af; font-size: 0.7rem;">${T('approximate location')}</div>` : ''}
+            <a href="https://app.birdweather.com/stations/${s.id}" target="_blank" style="color: #7dd3fc; font-size: 0.7rem; text-decoration: underline;">${T('View on BirdWeather →')}</a>
+          </div>
+        `)
+        .addTo(birdLayer);
+    });
+  };
+  birdLayer.addTo(map);
+
+  // --- Interactive Legend with toggles ---
+  const legend = L.control({ position: 'bottomleft' });
+  legend.onAdd = function () {
+    const div = L.DomUtil.create('div', 'map-legend');
+    div.style.cssText = 'background: rgba(17,24,39,0.92); padding: 10px 14px; border-radius: 8px; font-size: 0.7rem; color: #d1d5db; line-height: 2; user-select: none;';
+
+    const layers = [
+      { key: 'Communities', label: T('Communities'), icon: '<span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#45a368;opacity:0.75;"></span>', layer: communitiesLayer },
+      { key: 'Solar Stations', label: T('Solar Stations'), icon: '<span style="font-size:14px;">☀️</span>', layer: solarLayer },
+      { key: 'Rainwater Harvesting', label: T('Rainwater Harvesting'), icon: '<span style="font-size:14px;">💧</span>', layer: rainwaterLayer },
+      { key: 'Silvi Forestry', label: T('Silvi Forestry'), icon: '<span style="font-size:14px;">🌳</span>', layer: silviLayer },
+      { key: 'Bird Stations', label: T('Bird Stations'), icon: '<span style="font-size:14px;">🐦</span>', layer: birdLayer },
+    ];
+
+    let html = '<div style="font-weight:600; margin-bottom:2px; color:#e5e7eb; font-size:0.72rem;">' + T('Layers') + '</div>';
+
+    layers.forEach(({ key, label, icon }) => {
+      const id = 'layer-' + key.replace(/\s/g, '-').toLowerCase();
+      html += `<label style="display:flex; align-items:center; gap:6px; cursor:pointer; padding:1px 0;">
+        <input type="checkbox" id="${id}" checked style="width:13px; height:13px; cursor:pointer;">
+        ${icon}
+        <span>${label}</span>
+      </label>`;
+    });
+
+    // Community sub-categories
+    html += '<div id="community-cats" style="margin-top:6px; padding-top:5px; border-top:1px solid rgba(255,255,255,0.1); font-size:0.65rem;">';
+    Object.entries(categoryColors).forEach(([cat, col]) => {
+      html += `<div style="padding:0 0 0 20px;"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${col};margin-right:5px;vertical-align:middle;"></span>${T(cat)}</div>`;
+    });
+    html += '</div>';
+
+    div.innerHTML = html;
+
+    L.DomEvent.disableClickPropagation(div);
+
+    // Wire up toggles
+    setTimeout(() => {
+      layers.forEach(({ key, layer }) => {
+        const id = 'layer-' + key.replace(/\s/g, '-').toLowerCase();
+        const cb = document.getElementById(id);
+        if (!cb) return;
+        cb.addEventListener('change', function () {
+          if (this.checked) map.addLayer(layer);
+          else map.removeLayer(layer);
+          if (key === 'Communities') {
+            const cats = document.getElementById('community-cats');
+            if (cats) cats.style.display = this.checked ? '' : 'none';
+          }
+        });
+      });
+    }, 0);
+
+    return div;
+  };
+  legend.addTo(map);
+}

@@ -1,0 +1,92 @@
+{
+  "pools": [
+    {
+      "id": "sarafu_1",
+      "name": "Toloka Regeneration",
+      "address": "0x4393f9Caa41b48a43CC9A99123cF6224573bF10c",
+      "category": "solar / energy",
+      "transactions": 240,
+      "tokenTransfers": 253,
+      "members": 60,
+      "tokens": [
+        {
+          "name": "Mento Dollar",
+          "symbol": "USDM",
+          "balance": 175
+        },
+        {
+          "name": "USDC",
+          "symbol": "USDC",
+          "balance": 86.007984
+        },
+        {
+          "name": "Maksym",
+          "symbol": "GENUA",
+          "balance": 773.370241
+        },
+        {
+          "name": "Prostir Lyubovi",
+          "symbol": "LYUB",
+          "balance": 40
+        }
+      ],
+      "url": "https://sarafu.network/pools/0x4393f9Caa41b48a43CC9A99123cF6224573bF10c"
+    },
+    {
+      "id": "sarafu_2",
+      "name": "Solar Support Pool",
+      "address": "0x236AA6982e75Bb133932a3B52329f5600049233d",
+      "category": "microgrants",
+      "transactions": 36,
+      "tokenTransfers": 38,
+      "members": 25,
+      "tokens": [
+        {
+          "name": "Happy Piople",
+          "symbol": "HP_UA",
+          "balance": 1500
+        }
+      ],
+      "url": "https://sarafu.network/pools/0x236AA6982e75Bb133932a3B52329f5600049233d"
+    },
+    {
+      "id": "sarafu_3",
+      "name": "GEN Fund MicroGrants Pool",
+      "address": "0x34317Aed39356aBd482299595d42aEEF03EB62Da",
+      "category": "community",
+      "transactions": 12,
+      "tokenTransfers": 11,
+      "members": 11,
+      "tokens": [
+        {
+          "name": "Mento Dollar",
+          "symbol": "USDM",
+          "balance": 0.0036359110455
+        }
+      ],
+      "url": "https://sarafu.network/pools/0x34317Aed39356aBd482299595d42aEEF03EB62Da"
+    },
+    {
+      "id": "sarafu_4",
+      "name": "GEN Activities",
+      "address": "0x0b8525c9356E5424E6B961498C8Ff33E16fD8b17",
+      "category": "community",
+      "transactions": 28,
+      "tokenTransfers": 34,
+      "members": 12,
+      "tokens": [
+        {
+          "name": "Maksym",
+          "symbol": "GENUA",
+          "balance": 882.240199
+        }
+      ],
+      "url": "https://sarafu.network/pools/0x0b8525c9356E5424E6B961498C8Ff33E16fD8b17"
+    }
+  ],
+  "totalTransactions": 316,
+  "totalTokenTransfers": 336,
+  "activeWallets": 108,
+  "totalPools": 4,
+  "fetchedAt": "2026-11-11T15:24:54.893Z"
+}

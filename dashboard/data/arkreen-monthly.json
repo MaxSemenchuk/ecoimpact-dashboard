@@ -1,0 +1,82 @@
+{
+  "months": [
+    "2026-05",
+    "2026-06",
+    "2026-07",
+    "2026-08",
+    "2026-09",
+    "2026-10"
+  ],
+  "sites": [
+    {
+      "name": "Drago",
+      "address": "0x95698e8c98bff2891c564d9e8ac19c62b9b4877c",
+      "hasHistory": true,
+      "historyFrom": "2026-07-22",
+      "standardKwh": 353.19,
+      "monthly": {
+        "2026-05": 0,
+        "2026-06": 0,
+        "2026-07": 71.2,
+        "2026-08": 129.3,
+        "2026-09": 0,
+        "2026-10": 141.7
+      }
+    },
+    {
+      "name": "Kazkove",
+      "address": "0xDD398FDCe78520880464F9704FC6a6f44A11d31C",
+      "hasHistory": false,
+      "historyFrom": null,
+      "standardKwh": 0,
+      "monthly": null
+    },
+    {
+      "name": "Tepla Gora",
+      "address": "0xD1Eaf98cA2303737888F6BD5D6D5FD3FFcbF164E",
+      "hasHistory": false,
+      "historyFrom": null,
+      "standardKwh": 0,
+      "monthly": null
+    },
+    {
+      "name": "Zhyvyi Dim",
+      "address": "0x1928d078f230d9e535eb89db3a3c5d84849c5e93",
+      "hasHistory": true,
+      "historyFrom": "2026-05-07",
+      "standardKwh": 216.48,
+      "monthly": {
+        "2026-05": 36.7,
+        "2026-06": 46.4,
+        "2026-07": 32.9,
+        "2026-08": 50.4,
+        "2026-09": 28.1,
+        "2026-10": 22
+      }
+    },
+    {
+      "name": "Happy People",
+      "address": "0x6Bc8cCaDb2eABdEf24113f468e263F0775EC09aB",
+      "hasHistory": true,
+      "historyFrom": "2026-08-19",
+      "standardKwh": 827.51,
+      "monthly": {
+        "2026-05": 0,
+        "2026-06": 0,
+        "2026-07": 0,
+        "2026-08": 182.1,
+        "2026-09": 426.7,
+        "2026-10": 218.7
+      }
+    },
+    {
+      "name": "SV Samara",
+      "address": "0x8713F971d3edE75e484edDbB8E89DfD0530138C8",
+      "hasHistory": false,
+      "historyFrom": null,
+      "standardKwh": 0,
+      "monthly": null
+    }
+  ],
+  "fetchedAt": "2026-11-11T15:55:26.174Z"
+}

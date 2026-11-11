@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ukraine Ecovillage Impact Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            dark: { 900: '#0a0f1a', 800: '#111827', 700: '#1a2332', 600: '#243044' },
+            accent: { green: '#4ade80', teal: '#2dd4bf', blue: '#38bdf8', orange: '#fb923c' },
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css" />
+  <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
+  <script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.1.4/leaflet-maplibre-gl.js"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-dark-900 text-gray-100 min-h-screen">
+
+  <!-- ===== HEADER ===== -->
+  <header class="border-b border-dark-600 px-6 py-4">
+    <div class="w-full px-2 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-accent-green to-accent-teal flex items-center justify-center">
+          <svg class="w-6 h-6 text-dark-900" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-xl font-bold tracking-tight">Ukraine Ecovillage <span class="text-accent-green">Impact Dashboard</span></h1>
+          <p class="text-xs text-gray-500">Global Ecovillage Network — Ukraine</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-4 text-xs text-gray-500">
+        <a href="https://github.com/MaxSemenchuk/ecoimpact-dashboard" target="_blank" rel="noopener" class="gh-link" aria-label="Source code on GitHub" title="Source code on GitHub">
+          <svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        </a>
+        <div id="lang-switch" class="lang-switch" role="group" aria-label="Language">
+          <button type="button" data-lang="en" onclick="setLang('en')">EN</button>
+          <button type="button" data-lang="uk" onclick="setLang('uk')">УК</button>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="inline-block w-2 h-2 rounded-full bg-accent-green animate-pulse"></span>
+          <span id="last-updated">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="w-full px-4 sm:px-6 py-6 space-y-6">
+
+    <!-- ===== INTRO ===== -->
+    <section class="intro">
+      <p class="intro-lead">A network of ecovillages across Ukraine, tracked in the open.</p>
+      <p class="intro-text" data-i18n-html="intro-text">This page shows what they <b>produce and restore</b> (solar energy, forests, water), how they <b>trade and help each other</b> locally, and what <b>funding</b> they have raised. Figures come from public blockchains and platforms, so they can be checked by anyone; blocks still showing example data say so in the footer.</p>
+      <p class="intro-key" data-i18n-html="intro-key"><span class="hint hint-static">i</span> hover or tap for an explanation &nbsp;·&nbsp; <span class="card-badge badge-arkreen">Badge</span> where the data comes from</p>
+    </section>
+
+    <!-- ===== MAIN GRID ===== -->
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <!-- ENERGY BLOCK -->
+      <div class="dashboard-card" id="block-energy">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="inline-block w-3 h-3 rounded-full bg-yellow-400 mr-2"></span>
+            Solar Energy
+          </h2>
+          <span class="card-badge badge-arkreen">Arkreen</span>
+        </div>
+        <div class="card-body space-y-4">
+          <p class="card-desc">Solar panels at ecovillages are connected to Arkreen, which records every kilowatt-hour they generate and rewards it with tokens.</p>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="metric-box" id="metric-energy-mwh">
+              <p class="metric-value" id="energy-mwh">—</p>
+              <p class="metric-label">Clean energy generated <span class="hint" tabindex="0" role="button" aria-label="What is this?" data-tip="Total electricity produced by the connected solar sites, measured by smart meters. 1 MWh = 1,000 kWh.">i</span></p>
+            </div>
+            <div class="metric-box">
+              <p class="metric-value" id="energy-tokens">—</p>
+              <p class="metric-label">AKRE rewards earned <span class="hint" tabindex="0" role="button" aria-label="What is this?" data-tip="AKRE is Arkreen&#39;s crypto token. Sites earn it automatically for producing verified renewable energy.">i</span></p>
+            </div>
+          </div>
+          <div class="chart-container" id="chart-energy-container">
+            <p class="text-xs text-gray-500 mb-2" id="energy-chart-title">Monthly generation, kWh</p>
+            <div style="position: relative; height: 160px;">
+              <canvas id="chart-energy"></canvas>
+              <div class="chart-skeleton" id="energy-chart-skeleton" aria-hidden="true"><span>Loading...</span></div>
+            </div>
+            <p class="list-hint mt-2" id="energy-chart-note"></p>
+          </div>
+          <!-- Solar sites list -->
+          <div>
+            <p class="text-xs text-gray-500 mb-1" id="energy-nodes-label">Solar Sites</p>
+            <p class="list-hint">Each row: site · its public wallet · energy produced · tokens earned</p>
+            <div class="space-y-0" id="energy-node-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ECOLOGY BLOCK — Hypercerts + INAT Carbon Credits -->
+      <div class="dashboard-card" id="block-ecology">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="inline-block w-3 h-3 rounded-full bg-green-400 mr-2"></span>
+            Restoring Nature
+          </h2>
+          <div class="flex gap-2">
+            <span class="card-badge badge-gainforest">Hypercerts / INAT</span>
+            <span class="card-badge" style="background: rgba(163,230,53,0.15); color: #a3e635;">Silvi</span>
+          </div>
+        </div>
+        <div class="card-body space-y-4">
+          <p class="card-desc">Projects that plant trees and restore land and water, recorded on independent platforms so the results can be verified.</p>
+          <!-- Hypercerts -->
+          <div>
+            <p class="text-xs text-gray-500 mb-2">Verified impact claims <span class="hint" tabindex="0" role="button" aria-label="What is this?" data-tip="Each card is a Hypercert: a public, tamper-proof record of work done (hectares restored, water systems built) that anyone can check or fund.">i</span></p>
+            <div class="space-y-3" id="hypercerts-list">
+              <div class="text-xs text-gray-600">Loading...</div>
+            </div>
+          </div>
+          <!-- Silvi tree tracking projects -->
+          <div>
+            <p class="text-xs text-gray-500 mb-2">Tree planting projects <span class="hint" tabindex="0" role="button" aria-label="What is this?" data-tip="Silvi is a tree-tracking platform. Each project is mapped and reviewed; &#39;Approved&#39; means Silvi has verified it. Tree counts show up once projects report them.">i</span></p>
+            <div class="grid grid-cols-3 gap-3 mb-3">
+              <div class="metric-box">
+                <p class="metric-value" id="eco-projects">—</p>
+                <p class="metric-label">Projects</p>
+              </div>
+              <div class="metric-box">
+                <p class="metric-value" id="eco-trees" title="Not reported yet">—</p>
+                <p class="metric-label">Trees planted <span class="hint" tabindex="0" role="button" aria-label="What is this?" data-tip="Number of trees reported by projects. &#39;—&#39; means not reported yet.">i</span></p>
+              </div>
+              <div class="metric-box">
+                <p class="metric-value" id="eco-hectares">—</p>
+                <p class="metric-label">Land restored <span class="hint" tabindex="0" role="button" aria-label="What is this?" data-tip="Total area of all tree-planting projects, in hectares. 1 hectare ≈ 1.4 football pitches.">i</span></p>
+              </div>
+            </div>
+            <div class="space-y-0" id="eco-project-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMMUNITY ECONOMY BLOCK -->
+      <div class="dashboard-card" id="block-community">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="inline-block w-3 h-3 rounded-full bg-orange-400 mr-2"></span>
+            Local Economy
+          </h2>
+          <span class="card-badge badge-sarafu">Sarafu Network</span>
+        </div>
+        <div class="card-body space-y-4">
+          <p class="card-desc">Each village issues its own digital voucher on Sarafu — a local currency for shared work and mutual help — and logs what it does as activity reports.</p>
+          <!-- Reports by Tag — Pie Chart -->
+          <div>
+            <p class="text-xs text-gray-500 mb-2">What communities do <span class="hint" tabindex="0" role="button" aria-label="What is this?" data-tip="Activity reports logged by villages, grouped by topic: workdays, events, building, care and more.">i</span></p>
+            <div class="grid grid-cols-2 gap-4">
+              <div id="sarafu-reports-legend" class="space-y-1.5"></div>
+              <div style="position: relative; max-height: 220px;">
+                <canvas id="chart-sarafu-reports"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Commitment Pools -->
+          <div>
+            <p class="text-xs text-gray-500 mb-2">Shared funds (Commitment Pools) <span class="hint" tabindex="0" role="button" aria-label="What is this?" data-tip="A pool is a community fund on Sarafu where people swap vouchers for goods, services or microgrants. &#39;tx&#39; = transactions, &#39;users&#39; = distinct participants.">i</span></p>
+            <div class="space-y-0" id="voucher-list"></div>
+          </div>
+
+          <!-- Settlement Vouchers with Reports -->
+          <div>
+            <p class="text-xs text-gray-500 mb-2">Village vouchers <span class="hint" tabindex="0" role="button" aria-label="What is this?" data-tip="Each settlement&#39;s own voucher. &#39;Reports&#39; are activities the community has logged (workdays, events, builds).">i</span></p>
+            <div class="space-y-0" id="settlement-list"></div>
+            <div class="pager" id="settlement-dots"></div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===== BIRD MONITORING (hidden until BirdWeather data arrives) ===== -->
+    <section id="block-birds" class="hidden">
+      <div class="dashboard-card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="inline-block w-3 h-3 rounded-full bg-sky-400 mr-2"></span>
+            Bird Monitoring
+          </h2>
+          <span class="card-badge badge-birdweather">BirdWeather</span>
+        </div>
+        <div class="card-body space-y-4">
+          <p class="card-desc">Listening stations record birdsong around the clock and identify species automatically. Figures are for the last 30 days.</p>
+          <div class="grid grid-cols-3 gap-3">
+            <div class="metric-box metric-box-sm">
+              <p class="metric-value" id="bird-stations">—</p>
+              <p class="metric-label">Stations</p>
+            </div>
+            <div class="metric-box metric-box-sm">
+              <p class="metric-value" id="bird-detections">—</p>
+              <p class="metric-label">Detections <span class="hint" tabindex="0" role="button" aria-label="What is this?" data-tip="BirdWeather is a network of listening stations: a microphone and AI recognise bird species from sound. A detection is one identified bird call.">i</span></p>
+            </div>
+            <div class="metric-box metric-box-sm">
+              <p class="metric-value" id="bird-species">—</p>
+              <p class="metric-label">Species heard</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="bird-station-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FUNDRAISING & GRANTS ===== -->
+    <section>
+      <div class="dashboard-card" id="block-fundraising">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="inline-block w-3 h-3 rounded-full bg-purple-400 mr-2"></span>
+            Funding
+          </h2>
+          <div class="flex gap-2">
+            <span class="card-badge badge-giveth">Giveth</span>
+            <span class="card-badge badge-karma">Karma</span>
+          </div>
+        </div>
+        <div class="card-body space-y-4">
+          <p class="card-desc">Donations, grants and eco-credit sales that support the network. Giveth is a donation platform for public-good projects; Karma tracks community grants and milestones.</p>
+          <!-- KPI strip -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div class="metric-box metric-box-sm">
+              <p class="metric-value" id="giveth-raised">—</p>
+              <p class="metric-label">Total raised <span class="hint" tabindex="0" role="button" aria-label="What is this?" data-tip="Giveth donations plus eco-credit sales (INAT), in US dollars. USDC is a digital dollar, so 1 USDC counts as US$1.">i</span></p>
+              <p class="metric-note" id="giveth-raised-note"></p>
+            </div>
+            <div class="metric-box metric-box-sm">
+              <p class="metric-value" id="giveth-donors">—</p>
+              <p class="metric-label">Donors</p>
+            </div>
+            <div class="metric-box metric-box-sm">
+              <p class="metric-value" id="inat-credits-sold">—</p>
+              <p class="metric-label">Eco-credits sold</p>
+            </div>
+            <div class="metric-box metric-box-sm">
+              <p class="metric-value" id="giveth-giv">—</p>
+              <p class="metric-label">GIV tokens given out <span class="hint" tabindex="0" role="button" aria-label="What is this?" data-tip="GIV is Giveth&#39;s token. It is distributed as a reward to donors and project supporters.">i</span></p>
+            </div>
+          </div>
+
+          <!-- By platform: Giveth | INAT | Karma -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-5">
+            <div>
+              <div class="col-head">
+                <p class="col-title"><span class="col-dot bg-purple-400"></span>Giveth donations</p>
+                <span class="col-sum" id="giveth-sum">—</span>
+              </div>
+              <div class="space-y-0" id="giveth-project-list"></div>
+            </div>
+            <div>
+              <div class="col-head">
+                <p class="col-title"><span class="col-dot bg-accent-blue"></span>Eco-credit sales (INAT) <span class="hint" tabindex="0" role="button" aria-label="What is this?" data-tip="Eco-credits are tradable certificates for a measured environmental result. Buyers pay in USDC and every sale is recorded on the Celo blockchain. The money goes to the projects.">i</span></p>
+                <span class="col-sum" id="inat-usdc">—</span>
+              </div>
+              <div class="space-y-0" id="inat-project-list"></div>
+            </div>
+            <div>
+              <div class="col-head">
+                <p class="col-title"><span class="col-dot bg-pink-400"></span>Karma grants tracker</p>
+                <span class="col-sum" id="karma-sum"></span>
+              </div>
+              <div class="bg-dark-700/50 border border-dark-600 rounded-lg p-3" id="karma-card">
+                <div class="text-xs text-gray-600">Loading...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== MAP (full width) ===== -->
+    <section>
+      <div class="dashboard-card" id="block-map">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="inline-block w-3 h-3 rounded-full bg-blue-400 mr-2"></span>
+            Where We Are
+          </h2>
+        </div>
+        <div class="card-body space-y-3">
+          <p class="card-desc">Ecovillages, solar stations, rainwater systems and tree-planting projects across Ukraine. Use the layer toggles on the map to show or hide each type.</p>
+          <div id="map" class="w-full rounded-lg overflow-hidden" style="height: 400px;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PLATFORM FOOTER ===== -->
+    <section class="border-t border-dark-600 pt-6">
+      <p class="text-center text-xs text-gray-500 mb-4">Data sourced from</p>
+      <div class="flex flex-wrap justify-center items-center gap-8" id="platform-logos">
+        <a href="https://arkreen.com" target="_blank" class="platform-logo">
+          <span class="text-accent-green font-bold text-lg">⚡ Arkreen</span>
+        </a>
+        <a href="https://www.regen.network" target="_blank" class="platform-logo">
+          <span class="text-green-300 font-bold text-lg">🌿 Regen Network</span>
+        </a>
+        <a href="https://sarafu.network" target="_blank" class="platform-logo">
+          <span class="text-accent-orange font-bold text-lg">🔶 Sarafu</span>
+        </a>
+        <a href="https://gainforest.app" target="_blank" class="platform-logo">
+          <span class="text-accent-blue font-bold text-lg">🌳 GainForest</span>
+        </a>
+        <a href="https://giveth.io" target="_blank" class="platform-logo">
+          <span class="text-purple-400 font-bold text-lg">💜 Giveth</span>
+        </a>
+        <a href="https://www.karmahq.xyz" target="_blank" class="platform-logo">
+          <span class="text-pink-400 font-bold text-lg">✦ Karma</span>
+        </a>
+        <a href="https://silvi.earth" target="_blank" class="platform-logo">
+          <span class="text-lime-400 font-bold text-lg">🌳 Silvi</span>
+        </a>
+      </div>
+      <p class="text-center text-xs text-gray-500 mt-4"><a href="https://github.com/MaxSemenchuk/ecoimpact-dashboard" target="_blank" rel="noopener" class="hover:text-gray-300 underline decoration-dotted">Open source on GitHub</a> · MIT</p>
+      <p class="text-center text-xs text-gray-600 mt-6" id="footer-label">
+        Demo version — mock data · Ukraine Ecovillage © 2026
+      </p>
+    </section>
+
+  </main>
+
+  <!-- Scripts -->
+  <script src="js/i18n.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

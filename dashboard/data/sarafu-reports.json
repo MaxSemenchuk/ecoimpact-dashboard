@@ -1,0 +1,313 @@
+{
+  "totalReports": 169,
+  "totalVouchers": 26,
+  "settlements": [
+    {
+      "name": "Happy People",
+      "address": "0x8c7b8148117E6d6A37eB789E48107B371308b61a",
+      "reports": 48,
+      "url": "https://sarafu.network/vouchers/0x8c7b8148117E6d6A37eB789E48107B371308b61a"
+    },
+    {
+      "name": "Omelyanivka",
+      "address": "0x100546fa90ce08FB0Fc77E8fc4b15437aFDCFd6d",
+      "reports": 30,
+      "url": "https://sarafu.network/vouchers/0x100546fa90ce08FB0Fc77E8fc4b15437aFDCFd6d"
+    },
+    {
+      "name": "Living Home",
+      "address": "0x4BB4D96840Ee960cE103abe3409Afde450E81F29",
+      "reports": 25,
+      "url": "https://sarafu.network/vouchers/0x4BB4D96840Ee960cE103abe3409Afde450E81F29"
+    },
+    {
+      "name": "Svitanok",
+      "address": "0x70325D3d9a7276C2444CaE3025E4E9C9BE3996cD",
+      "reports": 12,
+      "url": "https://sarafu.network/vouchers/0x70325D3d9a7276C2444CaE3025E4E9C9BE3996cD"
+    },
+    {
+      "name": "Charivne",
+      "address": "0x0F5BE6FAd57cC3813210Fc95e436B78E3Fec5CB9",
+      "reports": 11,
+      "url": "https://sarafu.network/vouchers/0x0F5BE6FAd57cC3813210Fc95e436B78E3Fec5CB9"
+    },
+    {
+      "name": "Etnokod",
+      "address": "0xD7B95aaD5cec0aD8cb4350eE51521B63674444FF",
+      "reports": 11,
+      "url": "https://sarafu.network/vouchers/0xD7B95aaD5cec0aD8cb4350eE51521B63674444FF"
+    },
+    {
+      "name": "Hobbit Terra",
+      "address": "0x38ccBFDb0CD66ad7c102d73029493F60671Fa91B",
+      "reports": 6,
+      "url": "https://sarafu.network/vouchers/0x38ccBFDb0CD66ad7c102d73029493F60671Fa91B"
+    },
+    {
+      "name": "Velyka Rodyna",
+      "address": "0xf4C346853d2dd9e5049acEcB5fF824d256a281E5",
+      "reports": 6,
+      "url": "https://sarafu.network/vouchers/0xf4C346853d2dd9e5049acEcB5fF824d256a281E5"
+    },
+    {
+      "name": "Prostir Lyubovi",
+      "address": "0xf05f36b8e3216875cE12330bd73Fe77Fa2a035BE",
+      "reports": 6,
+      "url": "https://sarafu.network/vouchers/0xf05f36b8e3216875cE12330bd73Fe77Fa2a035BE"
+    },
+    {
+      "name": "Tepla Hora",
+      "address": "0x096305EA606B1D5dC710eDae23c8a07993a323ab",
+      "reports": 4,
+      "url": "https://sarafu.network/vouchers/0x096305EA606B1D5dC710eDae23c8a07993a323ab"
+    },
+    {
+      "name": "MaistryMy",
+      "address": "0x640799065442b9Fed96edeA7Ee38FdCF03584c41",
+      "reports": 4,
+      "url": "https://sarafu.network/vouchers/0x640799065442b9Fed96edeA7Ee38FdCF03584c41"
+    },
+    {
+      "name": "Radaria",
+      "address": "0x36068337faA077351b7Cd73eE1eD39f2801031A4",
+      "reports": 2,
+      "url": "https://sarafu.network/vouchers/0x36068337faA077351b7Cd73eE1eD39f2801031A4"
+    },
+    {
+      "name": "Sunrise Ecovillage",
+      "address": "0x00cdeEF9A70E0b8128055adD3dE3c48f745E5b98",
+      "reports": 2,
+      "url": "https://sarafu.network/vouchers/0x00cdeEF9A70E0b8128055adD3dE3c48f745E5b98"
+    },
+    {
+      "name": "Ohra Workshop",
+      "address": "0x4ceEC475B783ED868D70f0B822Ac880E93331f74",
+      "reports": 2,
+      "url": "https://sarafu.network/vouchers/0x4ceEC475B783ED868D70f0B822Ac880E93331f74"
+    },
+    {
+      "name": "New Mayapur",
+      "address": "0x2bB8552D246640ff2e51E72Bfd3B822d11ba7C41",
+      "reports": 1,
+      "url": "https://sarafu.network/vouchers/0x2bB8552D246640ff2e51E72Bfd3B822d11ba7C41"
+    },
+    {
+      "name": "Dzin Space",
+      "address": "0xC013697bA7aDb9b29C58186234f0A304A3B43979",
+      "reports": 1,
+      "url": "https://sarafu.network/vouchers/0xC013697bA7aDb9b29C58186234f0A304A3B43979"
+    },
+    {
+      "name": "Potoky",
+      "address": "0x339C049CCa1E33607eb6cd0FdD1Cb20541ca1953",
+      "reports": 1,
+      "url": "https://sarafu.network/vouchers/0x339C049CCa1E33607eb6cd0FdD1Cb20541ca1953"
+    },
+    {
+      "name": "Pokuttya School",
+      "address": "0x3b36c220617e1810932393219A94Cc7Ae0edaD0e",
+      "reports": 1,
+      "url": "https://sarafu.network/vouchers/0x3b36c220617e1810932393219A94Cc7Ae0edaD0e"
+    },
+    {
+      "name": "Veloselo",
+      "address": "0x8f7597F01870496a35f2621e4F7Cd5432B795D9D",
+      "reports": 1,
+      "url": "https://sarafu.network/vouchers/0x8f7597F01870496a35f2621e4F7Cd5432B795D9D"
+    },
+    {
+      "name": "Lubodarove EcoHub",
+      "address": "0xaB6a92480A409246dd58f55f506DB5F21cd5B1fD",
+      "reports": 1,
+      "url": "https://sarafu.network/vouchers/0xaB6a92480A409246dd58f55f506DB5F21cd5B1fD"
+    },
+    {
+      "name": "Veseli Kurkuli",
+      "address": "0x96597fdC85D1b3e287f45a76FF00bF67EC2aBc65",
+      "reports": 1,
+      "url": "https://sarafu.network/vouchers/0x96597fdC85D1b3e287f45a76FF00bF67EC2aBc65"
+    },
+    {
+      "name": "Bushanska Toloka",
+      "address": "0x386E88BA20EF11c8E04f4904038A05CBAfD91199",
+      "reports": 0,
+      "url": "https://sarafu.network/vouchers/0x386E88BA20EF11c8E04f4904038A05CBAfD91199"
+    },
+    {
+      "name": "Prilestnoe",
+      "address": "0x8204605eCD0052A6340CbA512fB68aF911d9f3c0",
+      "reports": 0,
+      "url": "https://sarafu.network/vouchers/0x8204605eCD0052A6340CbA512fB68aF911d9f3c0"
+    },
+    {
+      "name": "Rodniki",
+      "address": "0xc4b2Ea06AC1e8617FEE636Fc10152bFD0baF7Cda",
+      "reports": 0,
+      "url": "https://sarafu.network/vouchers/0xc4b2Ea06AC1e8617FEE636Fc10152bFD0baF7Cda"
+    },
+    {
+      "name": "Space of Love",
+      "address": "0x24fa9fA92fC131c94Cac9F2C15DA1147CE77F3d6",
+      "reports": 0,
+      "url": "https://sarafu.network/vouchers/0x24fa9fA92fC131c94Cac9F2C15DA1147CE77F3d6"
+    },
+    {
+      "name": "Eco-center School Life",
+      "address": "0x2F559036B4D4ceD968b4E8a120b750A0c45953F5",
+      "reports": 0,
+      "url": "https://sarafu.network/vouchers/0x2F559036B4D4ceD968b4E8a120b750A0c45953F5"
+    }
+  ],
+  "tags": [
+    {
+      "tag": "Ecovillage",
+      "count": 78
+    },
+    {
+      "tag": "Volunteer",
+      "count": 74
+    },
+    {
+      "tag": "Common Spaces",
+      "count": 58
+    },
+    {
+      "tag": "Construction",
+      "count": 54
+    },
+    {
+      "tag": "Other",
+      "count": 41
+    },
+    {
+      "tag": "Cleaning",
+      "count": 41
+    },
+    {
+      "tag": "Gathering",
+      "count": 37
+    },
+    {
+      "tag": "Permaculture",
+      "count": 27
+    },
+    {
+      "tag": "Youth",
+      "count": 23
+    },
+    {
+      "tag": "Care",
+      "count": 23
+    },
+    {
+      "tag": "House building",
+      "count": 21
+    },
+    {
+      "tag": "Tree Planting",
+      "count": 21
+    },
+    {
+      "tag": "Housekeeping",
+      "count": 19
+    },
+    {
+      "tag": "Regenerative Agriculture",
+      "count": 17
+    },
+    {
+      "tag": "Collaboration",
+      "count": 13
+    },
+    {
+      "tag": "Biodiversity",
+      "count": 13
+    },
+    {
+      "tag": "Culture",
+      "count": 13
+    },
+    {
+      "tag": "Handcrafts",
+      "count": 12
+    },
+    {
+      "tag": "Education",
+      "count": 11
+    },
+    {
+      "tag": "Solar Energy",
+      "count": 11
+    },
+    {
+      "tag": "Soil Health",
+      "count": 9
+    },
+    {
+      "tag": "Water Catchment",
+      "count": 8
+    },
+    {
+      "tag": "Art",
+      "count": 8
+    },
+    {
+      "tag": "Food Processing",
+      "count": 7
+    },
+    {
+      "tag": "Food production",
+      "count": 7
+    },
+    {
+      "tag": "Plant Nursery",
+      "count": 6
+    },
+    {
+      "tag": "Outreach",
+      "count": 5
+    },
+    {
+      "tag": "Training",
+      "count": 5
+    },
+    {
+      "tag": "Festivals",
+      "count": 5
+    },
+    {
+      "tag": "Sociocracy",
+      "count": 4
+    },
+    {
+      "tag": "Software",
+      "count": 3
+    },
+    {
+      "tag": "Mobility",
+      "count": 3
+    },
+    {
+      "tag": "Rehabilitation",
+      "count": 2
+    },
+    {
+      "tag": "Fellowship",
+      "count": 2
+    },
+    {
+      "tag": "Natural building",
+      "count": 1
+    },
+    {
+      "tag": "Celebration",
+      "count": 1
+    },
+    {
+      "tag": "Elders",
+      "count": 1
+    }
+  ],
+  "fetchedAt": "2026-06-02T08:34:22.812227+00:00"
+}

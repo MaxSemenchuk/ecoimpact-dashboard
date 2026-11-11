@@ -1,0 +1,40 @@
+{
+  "certs": [
+    {
+      "id": "hypercert_1",
+      "title": "Ecovillage Network GEN Ukraine",
+      "claimType": "ecosystem restoration",
+      "tokenId": "46958966635089507957945695825584013180928",
+      "url": "https://app.hypercerts.org/hypercerts/42220-0x16bA53B74c234C870c61EFC04cD418B8f2865959-46958966635089507957945695825584013180928",
+      "metrics": {
+        "hectares": 163,
+        "trees": 2000,
+        "waterSystems": 5,
+        "lakesRestored": 4,
+        "riverCleared": 100,
+        "ecovillages": 11
+      },
+      "holders": "209",
+      "live": true
+    },
+    {
+      "id": "hypercert_2",
+      "title": "Water Save System for Ecovillages",
+      "claimType": "water infrastructure",
+      "tokenId": "83369179895629923548526778820783211806720",
+      "url": "https://app.hypercerts.org/hypercerts/42220-0x16bA53B74c234C870c61EFC04cD418B8f2865959-83369179895629923548526778820783211806720",
+      "metrics": {
+        "waterSystems": 9,
+        "waterStorageLiters": 65000,
+        "wellsDrilled": 4,
+        "lakesRestored": 3,
+        "livestockSecured": 120,
+        "ecovillages": 9
+      },
+      "holders": "209",
+      "live": true
+    }
+  ],
+  "totalClaims": 576,
+  "fetchedAt": "2026-11-11T15:24:17.025Z"
+}

@@ -1,0 +1,71 @@
+{
+  "projects": [
+    {
+      "name": "Tepla Gora",
+      "batch": 26,
+      "listing": 25,
+      "url": "https://app.regentokenomics.org/project/inat/tepla-gora",
+      "sales": 2,
+      "totalCredits": 293,
+      "revenue": 644.6,
+      "live": true
+    },
+    {
+      "name": "Verkhniy Byshkin",
+      "batch": 27,
+      "listing": 20,
+      "url": "https://app.regentokenomics.org/project/inat/verkhniy-byshkin",
+      "sales": 2,
+      "totalCredits": 4,
+      "revenue": 8.8,
+      "live": true
+    },
+    {
+      "name": "Living Home (Dudkivka)",
+      "batch": 28,
+      "listing": 21,
+      "url": "https://app.regentokenomics.org/project/inat/dudkivka-living-home",
+      "sales": 2,
+      "totalCredits": 4,
+      "revenue": 8.8,
+      "live": true
+    },
+    {
+      "name": "Hora Lyskivka",
+      "batch": 29,
+      "listing": 22,
+      "url": "https://app.regentokenomics.org/project/inat/hora-lyskivka",
+      "sales": 4,
+      "totalCredits": 6,
+      "revenue": 13.2,
+      "live": true
+    },
+    {
+      "name": "Lagulske (Zhytomyr)",
+      "batch": 30,
+      "listing": 23,
+      "url": "https://app.regentokenomics.org/project/inat/lagulske",
+      "sales": 2,
+      "totalCredits": 4,
+      "revenue": 8.8,
+      "live": true
+    },
+    {
+      "name": "Yemelyanivka",
+      "batch": 31,
+      "listing": 24,
+      "url": "https://app.regentokenomics.org/project/inat/yemelyanivka",
+      "sales": 2,
+      "totalCredits": 3,
+      "revenue": 6.6000000000000005,
+      "live": true
+    }
+  ],
+  "totalPurchases": 19,
+  "totalCreditsSold": 319,
+  "totalListings": 25,
+  "cancelledListings": 19,
+  "totalRevenue": 694.1399999999999,
+  "carbonBatchTxs": 0,
+  "fetchedAt": "2026-11-11T15:25:20.634Z"
+}
