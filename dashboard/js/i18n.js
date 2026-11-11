@@ -72,6 +72,11 @@
     'Trees planted': 'Висаджено дерев',
     "Number of trees reported by projects. '—' means not reported yet.": 'Кількість дерев, заявлена проєктами. «—» означає, що даних ще немає.',
     'Not reported yet': 'Даних ще немає',
+    'Reported by Silvi projects': 'Дані проєктів у Silvi',
+    'From the Hypercert claim of the network (Silvi projects have not reported tree counts yet)':
+      'З гіперсертифіката мережі (проєкти в Silvi ще не подали кількість дерев)',
+    "Number of trees reported by projects. If Silvi projects have not reported yet, the figure comes from the network's Hypercert claim.":
+      'Кількість дерев, заявлена проєктами. Поки проєкти в Silvi її не подали, цифра береться з гіперсертифіката мережі.',
     'Land restored': 'Відновлено землі',
     'Total area of all tree-planting projects, in hectares. 1 hectare ≈ 1.4 football pitches.':
       'Загальна площа всіх проєктів з висадки дерев, у гектарах. 1 гектар ≈ 1,4 футбольного поля.',
