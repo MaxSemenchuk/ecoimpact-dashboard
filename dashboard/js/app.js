@@ -97,13 +97,16 @@ function populateEcology(data) {
         ? `<span class="text-[0.6rem] ${(silviProject.status === 'Verified' || silviProject.status === 'Approved') ? 'text-green-400' : 'text-yellow-400'}">${T(silviProject.status)}</span>`
         : '';
       return `
-        <div class="flex items-center justify-between text-xs py-1.5 border-b border-dark-600/50">
-          <div class="flex items-center gap-2">
+        <div class="flex items-center justify-between gap-3 text-xs py-1.5 border-b border-dark-600/50">
+          <div class="flex items-center gap-2 min-w-0">
             <span class="w-1.5 h-1.5 rounded-full flex-shrink-0" style="background:#a3e635"></span>
-            ${nameHtml}
+            <div class="min-w-0">
+              ${nameHtml}
+              <div class="sm:hidden">${statusHtml}</div>
+            </div>
           </div>
-          <div class="flex items-center gap-3 text-gray-500">
-            ${statusHtml}
+          <div class="flex items-center gap-3 text-gray-500 flex-shrink-0">
+            <span class="hidden sm:inline">${statusHtml}</span>
             ${treesLabel ? `<span class="whitespace-nowrap">${treesLabel}</span>` : ''}
             <span class="whitespace-nowrap">${p.hectares.toLocaleString(LOCALE)} ${T('ha')}</span>
           </div>
@@ -172,14 +175,18 @@ function populateEnergyNodes(data) {
     const tokensBadge = n.tokens
       ? `<span class="text-yellow-400 font-mono">${n.tokens.toLocaleString(LOCALE)} AKRE</span>`
       : '<span class="text-gray-600 font-mono">—</span>';
+    // Phones: name with the wallet underneath on the left, kWh over AKRE on the right
     return `
-      <div class="flex items-center justify-between text-xs py-1.5 border-b border-dark-600/50">
-        <div class="flex items-center gap-2">
+      <div class="flex items-center justify-between gap-3 text-xs py-1.5 border-b border-dark-600/50">
+        <div class="flex items-center gap-2 min-w-0">
           ${statusDot}
-          <span class="text-gray-300">${T(n.name)}</span>
+          <div class="min-w-0">
+            <span class="block truncate text-gray-300">${T(n.name)}</span>
+            <span class="block text-[0.65rem] sm:hidden">${walletDisplay}</span>
+          </div>
         </div>
-        <div class="flex items-center gap-3">
-          ${walletDisplay}
+        <div class="flex flex-col items-end gap-0.5 whitespace-nowrap sm:flex-row sm:items-center sm:gap-3">
+          <span class="hidden sm:inline">${walletDisplay}</span>
           ${kwhBadge}
           ${tokensBadge}
         </div>
