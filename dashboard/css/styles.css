@@ -318,3 +318,23 @@ body {
   .intro-key { row-gap: 0.5rem; }
   .metric-label { letter-spacing: 0.02em; }
 }
+
+/* --- Map legend: own column beside the map (below it on phones) --- */
+.map-legend {
+  background: rgba(17,24,39,0.92);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  color: #d1d5db;
+  line-height: 2;
+  user-select: none;
+}
+.map-legend-layers { display: grid; grid-template-columns: 1fr; }
+#community-cats { display: grid; grid-template-columns: 1fr; }
+@media (max-width: 767px) {
+  .map-legend-layers, #community-cats { grid-template-columns: 1fr 1fr; column-gap: 8px; }
+}
+.map-legend-row { display: flex; align-items: center; gap: 6px; padding: 4px 0; font-size: 0.75rem; line-height: 1.35; }
+#community-cats .map-legend-row { padding-left: 22px; }
+@media (max-width: 767px) { #community-cats .map-legend-row { padding-left: 0; } }
+@media (max-width: 767px) { #map { height: 320px !important; } }

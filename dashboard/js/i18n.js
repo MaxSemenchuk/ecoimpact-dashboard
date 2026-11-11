@@ -35,8 +35,8 @@
       'Кожне поселення випускає на Sarafu власний цифровий ваучер — місцеву валюту для спільної роботи та взаємодопомоги — і веде звіти про свою діяльність.',
     'Donations, grants and eco-credit sales that support the network. Giveth is a donation platform for public-good projects; Karma tracks community grants and milestones.':
       'Пожертви, гранти та продаж еко-кредитів, що підтримують мережу. Giveth — платформа пожертв для проєктів суспільного блага; Karma відстежує гранти громад і досягнення.',
-    'Ecovillages, solar stations, rainwater systems and tree-planting projects across Ukraine. Use the layer toggles on the map to show or hide each type.':
-      'Екоселища, сонячні станції, системи збору дощової води та проєкти висадки дерев по всій Україні. Перемикачі шарів на карті дозволяють показати або сховати кожен тип.',
+    'Ecovillages, solar stations, rainwater systems and tree-planting projects across Ukraine. Use the layer toggles next to the map to show or hide each type.':
+      'Екоселища, сонячні станції, системи збору дощової води та проєкти висадки дерев по всій Україні. Перемикачі шарів біля карти дозволяють показати або сховати кожен тип.',
 
     // Energy
     'Clean energy generated': 'Вироблено чистої енергії',

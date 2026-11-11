@@ -194,10 +194,11 @@ function initMap(data) {
   birdLayer.addTo(map);
 
   // --- Interactive Legend with toggles ---
-  const legend = L.control({ position: 'bottomleft' });
-  legend.onAdd = function () {
-    const div = L.DomUtil.create('div', 'map-legend');
-    div.style.cssText = 'background: rgba(17,24,39,0.92); padding: 10px 14px; border-radius: 8px; font-size: 0.7rem; color: #d1d5db; line-height: 2; user-select: none;';
+  // Rendered in its own column next to the map (below it on phones), not as an overlay,
+  // so it never covers markers on small screens.
+  const div = document.getElementById('map-legend');
+  if (div) {
+    div.className += ' map-legend';
 
     const layers = [
       { key: 'Communities', label: T('Communities'), icon: '<span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#45a368;opacity:0.75;"></span>', layer: communitiesLayer },
@@ -207,27 +208,28 @@ function initMap(data) {
       { key: 'Bird Stations', label: T('Bird Stations'), icon: '<span style="font-size:14px;">🐦</span>', layer: birdLayer },
     ];
 
-    let html = '<div style="font-weight:600; margin-bottom:2px; color:#e5e7eb; font-size:0.72rem;">' + T('Layers') + '</div>';
+    let html = '<div style="font-weight:600; margin-bottom:2px; color:#e5e7eb; font-size:0.72rem;">' + T('Layers') + '</div><div class="map-legend-layers">';
 
     layers.forEach(({ key, label, icon }) => {
       const id = 'layer-' + key.replace(/\s/g, '-').toLowerCase();
-      html += `<label style="display:flex; align-items:center; gap:6px; cursor:pointer; padding:1px 0;">
-        <input type="checkbox" id="${id}" checked style="width:13px; height:13px; cursor:pointer;">
-        ${icon}
+      html += `<label class="map-legend-row" style="cursor:pointer;">
+        <input type="checkbox" id="${id}" checked style="width:13px; height:13px; margin:0; cursor:pointer;">
+        <span style="width:16px; display:inline-flex; justify-content:center;">${icon}</span>
         <span>${label}</span>
       </label>`;
     });
 
+    html += '</div>';
+
     // Community sub-categories
-    html += '<div id="community-cats" style="margin-top:6px; padding-top:5px; border-top:1px solid rgba(255,255,255,0.1); font-size:0.65rem;">';
+    html += '<div id="community-cats" style="margin-top:6px; padding-top:5px; border-top:1px solid rgba(255,255,255,0.1);">';
     Object.entries(categoryColors).forEach(([cat, col]) => {
-      html += `<div style="padding:0 0 0 20px;"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${col};margin-right:5px;vertical-align:middle;"></span>${T(cat)}</div>`;
+      // Same row size as the layer toggles above: 13px slot (checkbox width), 6px gap, same font
+      html += `<div class="map-legend-row"><span style="width:13px; display:inline-flex; justify-content:center;"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${col};"></span></span><span>${T(cat)}</span></div>`;
     });
     html += '</div>';
 
     div.innerHTML = html;
-
-    L.DomEvent.disableClickPropagation(div);
 
     // Wire up toggles
     setTimeout(() => {
@@ -246,7 +248,5 @@ function initMap(data) {
       });
     }, 0);
 
-    return div;
-  };
-  legend.addTo(map);
+  }
 }
