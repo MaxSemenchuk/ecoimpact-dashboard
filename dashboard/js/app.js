@@ -74,8 +74,20 @@ function populateEcology(data) {
   animateValue(document.getElementById('eco-projects'), eco.biodiversityProjects);
   const treesEl = document.getElementById('eco-trees');
   if (treesEl) {
-    if (eco.treesPlanted != null) animateValue(treesEl, eco.treesPlanted);
-    else treesEl.textContent = '—';
+    // Silvi projects have not reported tree counts yet, so fall back to the trees stated
+    // in the network's on-chain Hypercert claim instead of showing an empty dash.
+    const certs = (data.hypercerts && data.hypercerts.certs) || BLOCKCHAIN_CONFIG.hypercerts.certs;
+    const certTrees = certs.reduce((sum, c) => sum + ((c.metrics && c.metrics.trees) || 0), 0);
+    if (eco.treesPlanted != null) {
+      animateValue(treesEl, eco.treesPlanted);
+      treesEl.title = T('Trees recorded in Silvi: tracked trees, or GPS-tagged planting photos (the points on the Silvi map)');
+    } else if (certTrees > 0) {
+      animateValue(treesEl, certTrees);
+      treesEl.title = T('From the Hypercert claim of the network (Silvi projects have not reported tree counts yet)');
+    } else {
+      treesEl.textContent = '—';
+      treesEl.title = T('Not reported yet');
+    }
   }
   animateValue(document.getElementById('eco-hectares'), eco.habitatRestored, ' ' + T('ha'));
 
