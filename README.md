@@ -75,6 +75,10 @@ dashboard/
 scripts/            snapshot generators
 ```
 
+## Analytics
+
+The page includes the [Vercel Web Analytics](https://vercel.com/docs/analytics) snippet (cookie-less page-view counts). It only works when the site is hosted on Vercel with Web Analytics enabled; elsewhere it is a harmless 404. Remove the two `<script>` lines in `dashboard/index.html` if you fork and do not want it.
+
 ## Contributing
 
 Issues and pull requests are welcome — new data sources, translations, accessibility, and design improvements especially. Please keep the site dependency-free (no build step) and put any text that users see through `T()`.
