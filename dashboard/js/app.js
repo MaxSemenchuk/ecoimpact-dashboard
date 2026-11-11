@@ -105,20 +105,13 @@ function populateEcology(data) {
       const nameHtml = mapUrl
         ? `<a href="${mapUrl}" target="_blank" class="text-gray-300 hover:text-lime-400 hover:underline">${p.name}</a>`
         : `<span class="text-gray-300">${p.name}</span>`;
-      const statusHtml = silviProject
-        ? `<span class="text-[0.6rem] ${(silviProject.status === 'Verified' || silviProject.status === 'Approved') ? 'text-green-400' : 'text-yellow-400'}">${T(silviProject.status)}</span>`
-        : '';
       return `
         <div class="flex items-center justify-between gap-3 text-xs py-1.5 border-b border-dark-600/50">
           <div class="flex items-center gap-2 min-w-0">
             <span class="w-1.5 h-1.5 rounded-full flex-shrink-0" style="background:#a3e635"></span>
-            <div class="min-w-0">
-              ${nameHtml}
-              <div class="sm:hidden">${statusHtml}</div>
-            </div>
+            <div class="min-w-0">${nameHtml}</div>
           </div>
           <div class="flex items-center gap-3 text-gray-500 flex-shrink-0">
-            <span class="hidden sm:inline">${statusHtml}</span>
             ${treesLabel ? `<span class="whitespace-nowrap">${treesLabel}</span>` : ''}
             <span class="whitespace-nowrap">${p.hectares.toLocaleString(LOCALE)} ${T('ha')}</span>
           </div>

@@ -66,8 +66,8 @@
     'Each card is a Hypercert: a public, tamper-proof record of work done (hectares restored, water systems built) that anyone can check or fund.':
       'Кожна картка — це Hypercert: публічний запис про виконану роботу (відновлені гектари, збудовані водні системи), який не можна підробити і який будь-хто може перевірити чи профінансувати.',
     'Tree planting projects': 'Проєкти висадки дерев',
-    "Silvi is a tree-tracking platform. Each project is mapped and reviewed; 'Approved' means Silvi has verified it. Tree counts show up once projects report them.":
-      'Silvi — платформа обліку дерев. Кожен проєкт нанесено на мапу й перевірено; «Підтверджено» означає, що Silvi його верифікувала. Кількість дерев з’явиться, щойно проєкти її нададуть.',
+    'Silvi is a tree-tracking platform. Only projects that Silvi has reviewed and approved are shown.':
+      'Silvi — платформа обліку дерев. Показано лише проєкти, які Silvi перевірила й підтвердила.',
     'Projects': 'Проєкти',
     'Trees planted': 'Висаджено дерев',
     "Number of trees reported by projects. '—' means not reported yet.": 'Кількість дерев, заявлена проєктами. «—» означає, що даних ще немає.',

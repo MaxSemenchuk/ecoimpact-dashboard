@@ -55,11 +55,10 @@ const MOCK_DATA = {
 
   // --- Ecology Block (source: Silvi — tree tracking; list from the "Sarafu Arkreen" Google Sheet, Silvi tab) ---
   ecology: {
-    biodiversityProjects: 12,
+    biodiversityProjects: 11, // approved Silvi projects only
     treesPlanted: null, // Silvi does not report tree counts for these projects
     habitatRestored: 2847, // hectares (sum of Silvi projects)
     projects: [
-      { name: "Ukrainian Forest-Steppe Regeneration", platform: 'Silvi', trees: null, hectares: 0.0 },
       { name: "Establishment of a windbreak", platform: 'Silvi', trees: null, hectares: 0.11 },
       { name: "Biodiversity Monitoring in the Yemelyanivka Family Homestead Settlement", platform: 'Silvi', trees: null, hectares: 524.84 },
       { name: "Jivoy Dom", platform: 'Silvi', trees: null, hectares: 0.56 },
@@ -77,7 +76,6 @@ const MOCK_DATA = {
   // --- Silvi Forestry Projects (detailed) ---
   // lat/lng are null until coordinates are provided — projects without them are not drawn on the map.
   silviProjects: [
-    { id: 41, name: "Ukrainian Forest-Steppe Regeneration", desc: "Мережева ініціатива з регенерації лісостепу. Кількість дерев не вказана", status: "No status", lat: null, lng: null, hectares: 0.0, zones: 0, updated: "2026-03" },
     { id: 44, name: "Establishment of a windbreak", desc: "Створення лісосмуги. Види й кількість дерев не вказані", status: "Approved", lat: null, lng: null, hectares: 0.11, zones: 1, updated: "2026-03" },
     { id: 49, name: "Biodiversity Monitoring in the Yemelyanivka Family Homestead Settlement", desc: "Моніторинг біорізноманіття в Омелянівці", status: "Approved", lat: null, lng: null, hectares: 524.84, zones: 1, updated: "2026-03" },
     { id: 52, name: "Jivoy Dom", desc: "За описом проєкту, у Дудківці висадили понад 500 дерев за 5 років", status: "Approved", lat: null, lng: null, hectares: 0.56, zones: 1, updated: "2026-03" },

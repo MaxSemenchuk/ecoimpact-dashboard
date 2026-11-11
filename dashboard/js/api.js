@@ -570,9 +570,17 @@ function mergeSilviIntoData(data, silvi) {
       : typeof s.logs === 'number' && s.logs > 0 ? s.logs : null;
   });
 
+  // Show approved projects only (drafts are not verified by Silvi yet)
+  data.silviProjects = (data.silviProjects || []).filter(p => {
+    const s = byId.get(p.id);
+    return !s || s.status === 'approved';
+  });
+
   // Keep the ecology block in step with the (now authoritative) Silvi numbers
   const eco = data.ecology;
   if (eco) {
+    eco.projects = (eco.projects || []).filter(ep => data.silviProjects.some(x => x.name === ep.name));
+    eco.biodiversityProjects = data.silviProjects.length;
     (eco.projects || []).forEach(ep => {
       const sp = (data.silviProjects || []).find(x => x.name === ep.name);
       if (sp) { ep.hectares = sp.hectares; ep.trees = sp.trees; }

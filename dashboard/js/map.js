@@ -158,15 +158,13 @@ function initMap(data) {
     silviLayer.clearLayers();
     (d.silviProjects || []).forEach(p => {
       if (!Number.isFinite(p.lat) || !Number.isFinite(p.lng)) return; // no position yet
-      const ok = p.status === 'Verified' || p.status === 'Approved';
-      const statusColor = ok ? '#4ade80' : p.status === 'Pending' || p.status === 'Draft' ? '#fbbf24' : '#fb923c';
       const url = `https://app.silvi.earth/?asset=zone&sourceProject=${p.id}&sourceProjectTitle=${encodeURIComponent(p.name)}`;
       L.marker([p.lat, p.lng], { icon: makeProjectIcon('🌳') })
         .bindPopup(`
           <div>
             <strong style="color: #a3e635; font-size: 0.9rem;">🌳 ${p.name}</strong>
             <div style="margin-top: 4px; color: #d1d5db; font-size: 0.75rem;">${T(p.desc || '')}</div>
-            <div style="margin-top: 2px; color: #9ca3af; font-size: 0.7rem;">${p.hectares.toLocaleString(LOCALE)} ${T('ha')} · <span style="color:${statusColor}">${T(p.status)}</span></div>
+            <div style="margin-top: 2px; color: #9ca3af; font-size: 0.7rem;">${p.hectares.toLocaleString(LOCALE)} ${T('ha')}</div>
             <a href="${url}" target="_blank" style="color: #a3e635; font-size: 0.7rem; text-decoration: underline;">${T('View on Silvi →')}</a>
           </div>
         `)
