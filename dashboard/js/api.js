@@ -570,6 +570,24 @@ function mergeSilviIntoData(data, silvi) {
       : typeof s.logs === 'number' && s.logs > 0 ? s.logs : null;
   });
 
+  // Projects in the snapshot that the static list doesn't know yet (e.g. a key added to .env later)
+  const known = new Set((data.silviProjects || []).map(p => p.id));
+  silvi.projects.filter(s => !known.has(s.id)).forEach(s => {
+    const trees = typeof s.trees === 'number' && s.trees > 0 ? s.trees
+      : typeof s.logs === 'number' && s.logs > 0 ? s.logs : null;
+    const hectares = typeof s.areaHa === 'number' ? s.areaHa : 0;
+    data.silviProjects = data.silviProjects || [];
+    data.silviProjects.push({
+      id: s.id, name: s.title, desc: '', status: statusLabel(s.status),
+      lat: Number.isFinite(s.lat) ? s.lat : null, lng: Number.isFinite(s.lng) ? s.lng : null,
+      hectares, zones: s.zones, trees,
+    });
+    if (data.ecology) {
+      data.ecology.projects = data.ecology.projects || [];
+      data.ecology.projects.push({ name: s.title, platform: 'Silvi', trees, hectares });
+    }
+  });
+
   // Show approved projects only (drafts are not verified by Silvi yet)
   data.silviProjects = (data.silviProjects || []).filter(p => {
     const s = byId.get(p.id);
