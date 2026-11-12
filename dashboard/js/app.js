@@ -514,6 +514,33 @@ function updateFooterLabel(isLive) {
     : T('Demo version — mock data · GEN Ukraine © 2026');
 }
 
+// === Tabs: Dashboard (overview) and Places; #places in the URL opens the second one ===
+const mapsReady = {};
+function showTab(tab) {
+  if (tab !== 'places') tab = 'overview';
+  document.querySelectorAll('[data-tab-panel]').forEach(p => p.classList.toggle('hidden', p.dataset.tabPanel !== tab));
+  document.querySelectorAll('[data-tab]').forEach(b => {
+    const on = b.dataset.tab === tab;
+    b.classList.toggle('tab-on', on);
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+  // A map failure (e.g. zero-size container → NaN LatLng) must not abort the rest of the page
+  try {
+    if (tab === 'overview' && !mapsReady.overview) { mapsReady.overview = true; initHromadaMap(); if (window.drawHromadaLayers) drawHromadaLayers(); }
+    if (tab === 'places' && !mapsReady.places) { mapsReady.places = true; initMap(MOCK_DATA); }
+  } catch (err) { console.warn('[App] Map init failed:', err); }
+  const map = tab === 'places' ? window.placesMap : window.dashboardMap;
+  if (map) map.invalidateSize();
+  const hash = tab === 'places' ? '#places' : '';
+  if (location.hash !== hash) history.replaceState(null, '', location.pathname + location.search + hash);
+}
+window.showTab = showTab;
+
+function initTabs() {
+  document.querySelectorAll('[data-tab]').forEach(b => b.addEventListener('click', () => showTab(b.dataset.tab)));
+  showTab(location.hash === '#places' ? 'places' : 'overview');
+}
+
 // === Init everything ===
 document.addEventListener('DOMContentLoaded', async () => {
   // 1. Show mock data immediately for fast first paint
@@ -524,8 +551,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   populateCarbon(MOCK_DATA);
   populateCommunity(MOCK_DATA);
   // (energy chart is drawn once live data arrives — a mock chart would flash wrong numbers first)
-  // A map failure (e.g. zero-size container → NaN LatLng) must not abort the rest of init
-  try { initMap(MOCK_DATA); } catch (err) { console.warn('[App] Map init failed:', err); }
+  // Tabs (each map is created the first time its tab is visible), then places + hromadas
+  initTabs();
+  renderLocations(MOCK_DATA);
 
   // 2. Render static data that doesn't need API (Giveth/Karma)
   if (typeof fetchGivethKarmaData === 'function') {

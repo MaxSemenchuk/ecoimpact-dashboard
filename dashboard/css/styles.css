@@ -371,3 +371,10 @@ body {
 .goal-ours { display: inline-block; margin-left: 4px; font-size: 0.62rem; padding: 0 0.4rem; border-radius: 9999px; background: rgba(45,212,191,0.15); color: #5eead4; }
 #hromada-cats .map-legend-row { padding-left: 22px; }
 @media (max-width: 767px) { #hromada-cats { display: grid; grid-template-columns: 1fr 1fr; column-gap: 8px; } #hromada-cats .map-legend-row { padding-left: 0; } }
+
+/* --- Tabs --- */
+.tabs { display: flex; gap: 0.25rem; border-bottom: 1px solid #1f2937; }
+.tab { padding: 0.55rem 1rem; font-size: 0.85rem; font-weight: 600; color: #9ca3af; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.tab:hover { color: #e5e7eb; }
+.tab-on { color: #e5e7eb; border-bottom-color: #2dd4bf; }
+.map-legend-tip { margin-top: 6px; padding-top: 5px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.68rem; line-height: 1.4; color: #9ca3af; }

@@ -286,6 +286,15 @@
     'Show only hromadas with platform data': 'Показати лише громади з даними платформ',
     'Show {n} more hromadas with ecovillages from the community map': ['Показати ще {n} громаду з екопоселеннями з мапи спільноти', 'Показати ще {n} громади з екопоселеннями з мапи спільноти', 'Показати ще {n} громад з екопоселеннями з мапи спільноти'],
     'already here': 'вже тут',
+    'Dashboard': 'Дашборд',
+    'Sections': 'Розділи',
+    'Hromada strategies': 'Стратегії громад',
+    'Places on the map': 'Локації на карті',
+    'Click a hromada to see what the network has there.': 'Натисніть на громаду, щоб побачити, що там є в мережі.',
+    'Hromadas (territorial communities) where the network has places, and hromadas whose strategies have eco goals we could support. Click a hromada to see everything the network has there; the points themselves are on the Places tab.':
+      'Громади, де є локації мережі, і громади, у стратегіях яких є екоцілі, які ми могли б підтримати. Натисніть на громаду, щоб побачити все, що там є в мережі; самі точки на вкладці «Локації».',
+    'Places where the network has something on a platform: solar stations, rainwater systems, tree-planting projects, bird stations and community vouchers. The full community map (pomistya.club) is an extra layer, off by default.':
+      'Місця, де мережа має щось на платформах: сонячні станції, системи збору дощової води, посадки дерев, станції птахів і ваучери спільнот. Повна мапа спільноти (pomistya.club) — додатковий шар, за замовчуванням вимкнений.',
     'Show fewer': 'Згорнути',
     'Show all {n} places': ['Показати всі {n} локацію', 'Показати всі {n} локації', 'Показати всі {n} локацій'],
     '{n} people': ['{n} мешканець', '{n} мешканці', '{n} мешканців'],

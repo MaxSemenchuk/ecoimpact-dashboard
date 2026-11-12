@@ -2,13 +2,15 @@
 // GEN Ukraine Impact Dashboard — Map (Leaflet + OpenStreetMap)
 // ============================================================
 
-function initMap(data) {
-  const mapEl = document.getElementById('map');
-  if (!mapEl) return;
+// Two maps share one basemap setup:
+//   #map         (Dashboard tab) hromadas only: where the network is and where it could grow
+//   #places-map  (Places tab)    points: our places, solar, water, Silvi, birds, community map
+// Each map is created the first time its tab is shown (a hidden container has no size).
 
+function createBaseMap(elId) {
   // Ukraine only: fit to its bounds and keep panning close to it
   const ukraineBounds = L.latLngBounds([44.18, 22.14], [52.38, 40.23]);
-  const map = L.map('map', {
+  const map = L.map(elId, {
     zoomControl: false,
     attributionControl: false,
     maxBounds: ukraineBounds.pad(0.15),
@@ -63,6 +65,59 @@ function initMap(data) {
     });
   });
   L.control.attribution({ position: 'bottomleft', prefix: false }).addTo(map);
+  return map;
+}
+
+// Toggle rows for a legend column; layers: [{ id, label, icon, layer, checked?, onToggle? }]
+function legendToggles(map, layers) {
+  return {
+    html: layers.map(({ id, label, icon, checked }) => `<label class="map-legend-row" style="cursor:pointer;">
+        <input type="checkbox" id="${id}" ${checked === false ? '' : 'checked'} style="width:13px; height:13px; margin:0; cursor:pointer;">
+        <span style="width:16px; display:inline-flex; justify-content:center;">${icon}</span>
+        <span>${label}</span>
+      </label>`).join(''),
+    wire() {
+      layers.forEach(({ id, layer, onToggle }) => {
+        const cb = document.getElementById(id);
+        if (!cb) return;
+        cb.addEventListener('change', function () {
+          if (this.checked) map.addLayer(layer); else map.removeLayer(layer);
+          if (onToggle) onToggle(this.checked);
+        });
+      });
+    },
+  };
+}
+
+// --- Dashboard tab: hromada map (shapes are drawn by js/locations.js) ---
+function initHromadaMap() {
+  if (!document.getElementById('map')) return;
+  const map = createBaseMap('map');
+  const ourHromadaLayer = L.layerGroup().addTo(map);
+  const goalHromadaLayer = L.layerGroup().addTo(map);
+  window.hromadaLayers = { ours: ourHromadaLayer, goals: goalHromadaLayer };
+  window.dashboardMap = map;
+
+  const div = document.getElementById('map-legend');
+  if (!div) return;
+  div.className += ' map-legend';
+  const t = legendToggles(map, [
+    { id: 'layer-our-hromadas', label: T('Hromadas with our places'), icon: '<span style="display:inline-block;width:11px;height:11px;border-radius:2px;border:1px solid #2dd4bf;background:rgba(45,212,191,0.3);"></span>', layer: ourHromadaLayer },
+    { id: 'layer-eco-goal-hromadas', label: T('Hromadas with eco goals'), icon: '<span style="display:inline-block;width:11px;height:11px;border-radius:2px;background:linear-gradient(135deg,#22c55e 50%,#a78bfa 50%);opacity:0.8;"></span>', layer: goalHromadaLayer,
+      onToggle: on => { const c = document.getElementById('hromada-cats'); if (c) c.style.display = on ? '' : 'none'; } },
+  ]);
+  div.innerHTML = '<div style="font-weight:600; margin-bottom:2px; color:#e5e7eb; font-size:0.72rem;">' + T('Layers') + '</div>'
+    + '<div class="map-legend-layers">' + t.html + '</div>'
+    + '<div id="hromada-cats" style="margin-top:6px; padding-top:5px; border-top:1px solid rgba(255,255,255,0.1);"></div>'
+    + '<p class="map-legend-tip">' + T('Click a hromada to see what the network has there.') + '</p>';
+  t.wire();
+}
+
+// --- Places tab: point map ---
+function initMap(data) {
+  if (!document.getElementById('places-map')) return;
+  const map = createBaseMap('places-map');
+  window.placesMap = map;
 
   // Community category colors — muted tones so project layers pop
   const categoryColors = {
@@ -118,7 +173,11 @@ function initMap(data) {
       `)
       .addTo(communitiesLayer);
   });
-  communitiesLayer.addTo(map);
+  // Off by default: most of these points have no platform data yet
+
+  // --- Layer: our places from the registry (filled by js/locations.js) ---
+  const placesLayer = L.layerGroup().addTo(map);
+  window.placesLayer = placesLayer;
 
   // --- Layer: Solar Stations ---
   const solarLayer = L.layerGroup();
@@ -173,6 +232,7 @@ function initMap(data) {
   };
   window.refreshSilviMarkers(data);
   silviLayer.addTo(map);
+  if (window.refreshPlacesMarkers) window.refreshPlacesMarkers();
 
   // --- Layer: Bird monitoring stations (drawn once BirdWeather data arrives) ---
   const birdLayer = L.layerGroup();
@@ -191,29 +251,23 @@ function initMap(data) {
         .addTo(birdLayer);
     });
   };
+  window.refreshBirdMarkers(data);
   birdLayer.addTo(map);
-
-  // --- Layers: hromada shapes (filled by js/locations.js once data/hromadas.geojson loads) ---
-  const ourHromadaLayer = L.layerGroup().addTo(map);
-  const goalHromadaLayer = L.layerGroup().addTo(map);
-  window.hromadaLayers = { ours: ourHromadaLayer, goals: goalHromadaLayer };
-  window.dashboardMap = map;
 
   // --- Interactive Legend with toggles ---
   // Rendered in its own column next to the map (below it on phones), not as an overlay,
   // so it never covers markers on small screens.
-  const div = document.getElementById('map-legend');
+  const div = document.getElementById('places-legend');
   if (div) {
     div.className += ' map-legend';
 
     const layers = [
+      { key: 'Our Places', label: T('Our places'), icon: '<span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:#2dd4bf;border:2px solid #0f172a;box-shadow:0 0 0 1px #2dd4bf;"></span>', layer: placesLayer },
       { key: 'Communities', label: T('Communities'), icon: '<span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#45a368;opacity:0.75;"></span>', layer: communitiesLayer },
       { key: 'Solar Stations', label: T('Solar Stations'), icon: '<span style="font-size:14px;">☀️</span>', layer: solarLayer },
       { key: 'Rainwater Harvesting', label: T('Rainwater Harvesting'), icon: '<span style="font-size:14px;">💧</span>', layer: rainwaterLayer },
       { key: 'Silvi Forestry', label: T('Silvi Forestry'), icon: '<span style="font-size:14px;">🌳</span>', layer: silviLayer },
       { key: 'Bird Stations', label: T('Bird Stations'), icon: '<span style="font-size:14px;">🐦</span>', layer: birdLayer },
-      { key: 'Our Hromadas', label: T('Hromadas with our places'), icon: '<span style="display:inline-block;width:11px;height:11px;border-radius:2px;border:1px solid #2dd4bf;background:rgba(45,212,191,0.25);"></span>', layer: ourHromadaLayer },
-      { key: 'Eco Goal Hromadas', label: T('Hromadas with eco goals'), icon: '<span style="display:inline-block;width:11px;height:11px;border-radius:2px;background:linear-gradient(135deg,#22c55e 50%,#a78bfa 50%);opacity:0.8;"></span>', layer: goalHromadaLayer },
     ];
 
     let html = '<div style="font-weight:600; margin-bottom:2px; color:#e5e7eb; font-size:0.72rem;">' + T('Layers') + '</div><div class="map-legend-layers">';
@@ -221,7 +275,7 @@ function initMap(data) {
     layers.forEach(({ key, label, icon }) => {
       const id = 'layer-' + key.replace(/\s/g, '-').toLowerCase();
       html += `<label class="map-legend-row" style="cursor:pointer;">
-        <input type="checkbox" id="${id}" checked style="width:13px; height:13px; margin:0; cursor:pointer;">
+        <input type="checkbox" id="${id}" ${key === 'Communities' ? '' : 'checked'} style="width:13px; height:13px; margin:0; cursor:pointer;">
         <span style="width:16px; display:inline-flex; justify-content:center;">${icon}</span>
         <span>${label}</span>
       </label>`;
@@ -230,14 +284,12 @@ function initMap(data) {
     html += '</div>';
 
     // Community sub-categories
-    html += '<div id="community-cats" style="margin-top:6px; padding-top:5px; border-top:1px solid rgba(255,255,255,0.1);">';
+    html += '<div id="community-cats" style="display:none; margin-top:6px; padding-top:5px; border-top:1px solid rgba(255,255,255,0.1);">';
     Object.entries(categoryColors).forEach(([cat, col]) => {
       // Same row size as the layer toggles above: 13px slot (checkbox width), 6px gap, same font
       html += `<div class="map-legend-row"><span style="width:13px; display:inline-flex; justify-content:center;"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${col};"></span></span><span>${T(cat)}</span></div>`;
     });
     html += '</div>';
-    // Eco-goal categories (rows filled by js/locations.js)
-    html += '<div id="hromada-cats" style="margin-top:6px; padding-top:5px; border-top:1px solid rgba(255,255,255,0.1);"></div>';
 
     div.innerHTML = html;
 
@@ -254,10 +306,7 @@ function initMap(data) {
             const cats = document.getElementById('community-cats');
             if (cats) cats.style.display = this.checked ? '' : 'none';
           }
-          if (key === 'Eco Goal Hromadas') {
-            const cats = document.getElementById('hromada-cats');
-            if (cats) cats.style.display = this.checked ? '' : 'none';
-          }
+
         });
       });
     }, 0);
