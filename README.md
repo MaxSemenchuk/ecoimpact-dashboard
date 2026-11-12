@@ -75,6 +75,8 @@ dashboard/
 scripts/            snapshot generators
 ```
 
+Local-only material (API keys in `.env`, notes in `private/`, raw data in `import/`) is git-ignored and never published.
+
 ## Analytics
 
 The page includes the [Vercel Web Analytics](https://vercel.com/docs/analytics) snippet (cookie-less page-view counts). It only works when the site is hosted on Vercel with Web Analytics enabled; elsewhere it is a harmless 404. Remove the two `<script>` lines in `dashboard/index.html` if you fork and do not want it.
