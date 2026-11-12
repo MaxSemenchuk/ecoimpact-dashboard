@@ -4,7 +4,7 @@ An open, bilingual (EN / UK) dashboard for the ecovillage network of Ukraine: wh
 
 **Live:** https://ecoimpact.genukraine.com.ua
 
-> Українською: відкрита двомовна панель впливу екоселищ України — сонячна енергія, відновлення природи, місцева економіка, фінансування та моніторинг птахів. Усі цифри беруться з публічних блокчейнів і платформ. Нижче — як запустити, оновити дані й адаптувати панель для своєї мережі.
+> Українською: відкрита двомовна панель впливу екопоселень України — сонячна енергія, відновлення природи, місцева економіка, фінансування та моніторинг птахів. Усі цифри беруться з публічних блокчейнів і платформ. Нижче — як запустити, оновити дані й адаптувати панель для своєї мережі.
 
 It is a plain static site — HTML, [Tailwind](https://tailwindcss.com) (CDN), [Chart.js](https://www.chartjs.org), [Leaflet](https://leafletjs.com) + [MapLibre](https://maplibre.org). No build step, no framework, no backend.
 

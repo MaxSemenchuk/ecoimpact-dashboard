@@ -12,11 +12,11 @@
   // Array values are plural forms [one, few, many] for strings that contain {n}.
   const UK = {
     // Header / intro
-    'Ukraine Ecovillage': 'Екоселища України',
+    'Ukraine Ecovillage': 'Екопоселення України',
     'Impact Dashboard': 'Панель впливу',
-    'Global Ecovillage Network — Ukraine': 'Глобальна мережа екоселищ — Україна',
+    'Global Ecovillage Network — Ukraine': 'Глобальна мережа екопоселень — Україна',
     'Loading...': 'Завантаження…',
-    'A network of ecovillages across Ukraine, tracked in the open.': 'Мережа екоселищ України, дані якої відкриті для всіх.',
+    'A network of ecovillages across Ukraine, tracked in the open.': 'Мережа екопоселень України, дані якої відкриті для всіх.',
     'Badge': 'Мітка',
     'What is this?': 'Що це?',
 
@@ -28,7 +28,7 @@
     'Where We Are': 'Де ми є',
 
     'Solar panels at ecovillages are connected to Arkreen, which records every kilowatt-hour they generate and rewards it with tokens.':
-      'Сонячні панелі екоселищ підключені до Arkreen: платформа фіксує кожну згенеровану кіловат-годину та винагороджує її токенами.',
+      'Сонячні панелі екопоселень підключені до Arkreen: платформа фіксує кожну згенеровану кіловат-годину та винагороджує її токенами.',
     'Projects that plant trees and restore land and water, recorded on independent platforms so the results can be verified.':
       'Проєкти, що садять дерева та відновлюють землю й воду. Результати фіксуються на незалежних платформах, тож їх можна перевірити.',
     'Each village issues its own digital voucher on Sarafu — a local currency for shared work and mutual help — and logs what it does as activity reports.':
@@ -36,7 +36,7 @@
     'Donations, grants and eco-credit sales that support the network. Giveth is a donation platform for public-good projects; Karma tracks community grants and milestones.':
       'Пожертви, гранти та продаж еко-кредитів, що підтримують мережу. Giveth — платформа пожертв для проєктів суспільного блага; Karma відстежує гранти громад і досягнення.',
     'Ecovillages, solar stations, rainwater systems and tree-planting projects across Ukraine. Use the layer toggles next to the map to show or hide each type.':
-      'Екоселища, сонячні станції, системи збору дощової води та проєкти висадки дерев по всій Україні. Перемикачі шарів біля карти дозволяють показати або сховати кожен тип.',
+      'Екопоселення, сонячні станції, системи збору дощової води та проєкти висадки дерев по всій Україні. Перемикачі шарів біля карти дозволяють показати або сховати кожен тип.',
 
     // Energy
     'Clean energy generated': 'Вироблено чистої енергії',
@@ -88,11 +88,11 @@
     '{n} lakes restored': ['{n} відновлене озеро', '{n} відновлені озера', '{n} відновлених озер'],
     '{n}k L storage': 'запас {n} тис. л',
     '{n}+ livestock': '{n}+ голів худоби',
-    '{n} ecovillages': ['{n} екоселище', '{n} екоселища', '{n} екоселищ'],
+    '{n} ecovillages': ['{n} екопоселення', '{n} екопоселення', '{n} екопоселень'],
     'ecosystem restoration': 'відновлення екосистем',
     'water infrastructure': 'водна інфраструктура',
-    'Ecovillage Network GEN Ukraine': 'Мережа екоселищ GEN Ukraine',
-    'Water Save System for Ecovillages': 'Система збереження води для екоселищ',
+    'Ecovillage Network GEN Ukraine': 'Мережа екопоселень GEN Ukraine',
+    'Water Save System for Ecovillages': 'Система збереження води для екопоселень',
     'Approved': 'Підтверджено',
     'Verified': 'Верифіковано',
     'Pending': 'На розгляді',
@@ -181,10 +181,10 @@
     'Source code on GitHub': 'Код на GitHub',
     'Live: {when}': 'Оновлено: {when}',
     'Demo — mock data': 'Демо — тестові дані',
-    'Demo version — mock data · Ukraine Ecovillage © 2026': 'Демо-версія — тестові дані · Екоселища України © 2026',
+    'Demo version — mock data · Ukraine Ecovillage © 2026': 'Демо-версія — тестові дані · Екопоселення України © 2026',
     'Demo version — mock data · GEN Ukraine © 2026': 'Демо-версія — тестові дані · GEN Ukraine © 2026',
     'Live blockchain data · GEN Ukraine © {year}': 'Дані з блокчейну в реальному часі · GEN Ukraine © {year}',
-    'Ukraine Ecovillage Impact Dashboard': 'Панель впливу екоселищ України',
+    'Ukraine Ecovillage Impact Dashboard': 'Панель впливу екопоселень України',
 
     // Names (settlements, stations, projects, pools)
     'Drago': 'Драго', 'Kazkove': 'Казкове', 'Tepla Gora': 'Тепла Гора', 'Zhyvyi Dim': 'Живий Дім',
@@ -192,7 +192,7 @@
     'Omelyanivka': 'Омелянівка', 'Living Home': 'Живий Дім', 'Svitanok': 'Світанок', 'Charivne': 'Чарівне',
     'Etnokod': 'Етнокод', 'Velyka Rodyna': 'Велика Родина', 'Prostir Lyubovi': 'Простір Любові',
     'Tepla Hora': 'Тепла Гора', 'MaistryMy': 'МайстриМи', 'Radaria': 'Радарія',
-    'Sunrise Ecovillage': 'Екоселище «Світанок»', 'Ohra Workshop': 'Майстерня «Охра»', 'New Mayapur': 'Нова Маяпур',
+    'Sunrise Ecovillage': 'Екопоселення «Світанок»', 'Ohra Workshop': 'Майстерня «Охра»', 'New Mayapur': 'Нова Маяпур',
     'Potoky': 'Потоки', 'Pokuttya School': 'Школа «Покуття»', 'Veloselo': 'Велосело',
     'Lubodarove EcoHub': 'Екохаб «Любодарове»', 'Veseli Kurkuli': 'Веселі Куркулі', 'Bushanska Toloka': 'Бушанська Толока',
     'Rodniki': 'Родники', 'Space of Love': 'Простір Любові', 'Eco-center School Life': 'Екоцентр «Школа Життя»',
@@ -203,7 +203,7 @@
     'solar / energy': 'сонце / енергія', 'microgrants': 'мікрогранти', 'community': 'громада',
 
     // Sarafu report tags
-    'Ecovillage': 'Екоселище', 'Volunteer': 'Волонтерство', 'Common Spaces': 'Спільні простори', 'Construction': 'Будівництво',
+    'Ecovillage': 'Екопоселення', 'Volunteer': 'Волонтерство', 'Common Spaces': 'Спільні простори', 'Construction': 'Будівництво',
     'Cleaning': 'Прибирання', 'Gathering': 'Зустрічі', 'Permaculture': 'Пермакультура', 'Youth': 'Молодь', 'Care': 'Догляд',
     'House building': 'Будівництво житла', 'Tree Planting': 'Висадка дерев', 'Housekeeping': 'Господарство',
     'Regenerative Agriculture': 'Регенеративне землеробство', 'Collaboration': 'Співпраця', 'Biodiversity': 'Біорізноманіття',
@@ -252,7 +252,7 @@
 
   // Complex static paragraphs (contain inline tags): key = data-i18n-html attribute
   const UK_HTML = {
-    'intro-text': 'Тут видно, що екоселища <b>виробляють і відновлюють</b> (сонячна енергія, ліси, вода), як вони <b>торгують і допомагають одне одному</b> на місцях і яке <b>фінансування</b> залучили. Цифри беруться з публічних блокчейнів і платформ, тому їх може перевірити будь-хто; блоки, де ще показано приклади даних, позначені у футері.',
+    'intro-text': 'Тут видно, що екопоселення <b>виробляють і відновлюють</b> (сонячна енергія, ліси, вода), як вони <b>торгують і допомагають одне одному</b> на місцях і яке <b>фінансування</b> залучили. Цифри беруться з публічних блокчейнів і платформ, тому їх може перевірити будь-хто; блоки, де ще показано приклади даних, позначені у футері.',
     'intro-key': '<span class="hint hint-static">i</span> наведіть або торкніться, щоб побачити пояснення &nbsp;·&nbsp; <span class="card-badge badge-arkreen">Мітка</span> — звідки дані',
   };
 
