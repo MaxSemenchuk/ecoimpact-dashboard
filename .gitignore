@@ -2,3 +2,12 @@
 .vercel
 .DS_Store
 node_modules
+
+# Private working material — kept next to the code locally, never published
+/private/
+/import/
+.claude/
+CLAUDE.md
+AGENTS.md
+.gitnexus/
+*.transcript.txt
