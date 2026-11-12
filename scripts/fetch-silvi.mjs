@@ -3,7 +3,7 @@
 // recorded trees, GPS photo logs (map points), seed beds / potted beds per project.
 // Docs: https://api.silvi.earth/public-api/docs/
 //
-// Silvi issues one API key per project. Put them in gen/.env (gitignored), one per line:
+// Silvi issues one API key per project. Put them in .env (gitignored), one per line:
 //   SILVI_KEY_<ANY_LABEL>=silvi_...
 // Usage: node scripts/fetch-silvi.mjs
 
@@ -14,7 +14,7 @@ import path from 'node:path';
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const BASE = 'https://api.silvi.earth/public-api';
 
-// --- keys from the environment or gen/.env ---
+// --- keys from the environment or .env ---
 const keys = {};
 for (const [k, v] of Object.entries(process.env)) if (k.startsWith('SILVI_KEY_') && v) keys[k.slice(10)] = v;
 const envFile = path.join(root, '.env');
@@ -24,7 +24,7 @@ if (existsSync(envFile)) {
   }
 }
 if (!Object.keys(keys).length) {
-  console.error('No SILVI_KEY_* found (environment or gen/.env).');
+  console.error('No SILVI_KEY_* found (environment or .env).');
   process.exit(1);
 }
 
