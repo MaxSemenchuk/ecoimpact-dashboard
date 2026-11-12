@@ -160,19 +160,19 @@ function initMap(data) {
     });
   }
 
-  // --- Layer: Communities ---
+  // --- Layer: Communities (pomistya.club; re-drawn when data/pomistya.json arrives) ---
   const communitiesLayer = L.layerGroup();
-  data.ecovillages.forEach(v => {
-    const color = categoryColors[v.category] || '#4ade80';
-    L.marker([v.lat, v.lng], { icon: makeDot(color) })
-      .bindPopup(`
-        <div>
-          <strong style="color: #a7f3d0; font-size: 0.9rem;">${T(v.name)}</strong>
-          <div style="margin-top: 4px; color: #9ca3af; font-size: 0.75rem;">${T(v.category)}</div>
-        </div>
-      `)
-      .addTo(communitiesLayer);
-  });
+  window.refreshCommunityMarkers = function (list) {
+    communitiesLayer.clearLayers();
+    (list || []).forEach(v => {
+      if (!Number.isFinite(v.lat) || !Number.isFinite(v.lng)) return;
+      const color = categoryColors[v.category] || '#4ade80';
+      L.marker([v.lat, v.lng], { icon: makeDot(color) })
+        .bindPopup(() => (window.communityPopup ? window.communityPopup(v) : `<strong style="color:#a7f3d0;">${T(v.name)}</strong>`))
+        .addTo(communitiesLayer);
+    });
+  };
+  window.refreshCommunityMarkers(data.ecovillages);
   // Off by default: most of these points have no platform data yet
 
   // --- Layer: our places from the registry (filled by js/locations.js) ---
@@ -263,7 +263,7 @@ function initMap(data) {
 
     const layers = [
       { key: 'Our Places', label: T('Our places'), icon: '<span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:#2dd4bf;border:2px solid #0f172a;box-shadow:0 0 0 1px #2dd4bf;"></span>', layer: placesLayer },
-      { key: 'Communities', label: T('Communities'), icon: '<span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#45a368;opacity:0.75;"></span>', layer: communitiesLayer },
+      { key: 'Communities', label: T('Ecovillages from the community map'), icon: '<span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#45a368;opacity:0.75;"></span>', layer: communitiesLayer },
       { key: 'Solar Stations', label: T('Solar Stations'), icon: '<span style="font-size:14px;">☀️</span>', layer: solarLayer },
       { key: 'Rainwater Harvesting', label: T('Rainwater Harvesting'), icon: '<span style="font-size:14px;">💧</span>', layer: rainwaterLayer },
       { key: 'Silvi Forestry', label: T('Silvi Forestry'), icon: '<span style="font-size:14px;">🌳</span>', layer: silviLayer },

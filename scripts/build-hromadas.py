@@ -3,7 +3,8 @@
 
 Reads
   dashboard/data/locations.json      location registry (hand-curated)
-  dashboard/js/data.js               ecovillage points from pomistya.club (MOCK_DATA.ecovillages)
+  dashboard/data/pomistya.json       ecovillage points from the community map (pomistya.club/map/table/);
+                                     falls back to MOCK_DATA.ecovillages in dashboard/js/data.js
   scripts/hromada-ecogoals.json      hromadas with concrete eco goals (expansion candidates)
   KSE Loc Data Hub (MIT)             hromada boundaries + 2022 population, downloaded from GitHub
                                      https://github.com/kse-ua/KSE-Loc-Data-Hub
@@ -59,7 +60,11 @@ def round_coords(geo, nd=4):
     return {'type': geo['type'], 'coordinates': r(geo['coordinates'])}
 
 
-def ecovillages_from_datajs():
+def ecovillages():
+    pom = DATA / 'pomistya.json'
+    if pom.exists():
+        rows = json.loads(pom.read_text(encoding='utf-8'))['settlements']
+        return [r for r in rows if r.get('lat') is not None]
     src = (ROOT / 'dashboard' / 'js' / 'data.js').read_text(encoding='utf-8')
     block = src[src.index('ecovillages: ['):]
     block = block[:block.index('],')]
@@ -104,7 +109,7 @@ def main():
         elif loc.get('lat') is not None:
             print(f"  ! {loc['id']}: no hromada contains the point")
 
-    for v in ecovillages_from_datajs():
+    for v in ecovillages():
         code = find(v['lat'], v['lng'])
         if code:
             used.setdefault(code, {'locations': [], 'ecovillages': []})['ecovillages'].append(v['name'])

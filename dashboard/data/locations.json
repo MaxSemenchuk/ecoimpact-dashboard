@@ -1,5 +1,5 @@
 {
-  "_about": "Location registry: one row per place, with its IDs on every platform. Hand-curated from the names and coordinates already in the dashboard (pomistya.club map, KML files, Silvi, Arkreen, Sarafu, INAT, BirdWeather). 'unsure' lists matches made only by a similar name or a nearby point; ask the network coordinator to confirm them. The 'hromada' field is filled by scripts/build-hromadas.py (do not edit it by hand).",
+  "_about": "Location registry: one row per place, with its IDs on every platform. Hand-curated from the names and coordinates already in the dashboard (pomistya.club community map: ids of pomistya.club/map/<id>/, KML files, Silvi, Arkreen, Sarafu, INAT, BirdWeather). 'unsure' lists matches made only by a similar name or a nearby point; ask the network coordinator to confirm them. The 'hromada' field is filled by scripts/build-hromadas.py (do not edit it by hand).",
   "locations": [
     {
       "id": "happy-people",
@@ -9,7 +9,7 @@
       "lng": 36.3213,
       "links": {
         "pomistya": [
-          "Щасливі Люди"
+          20
         ],
         "silvi": [
           71
@@ -34,7 +34,7 @@
       "lng": 29.1097,
       "links": {
         "pomistya": [
-          "Ємельянівка"
+          2
         ],
         "silvi": [
           49
@@ -59,7 +59,7 @@
       "lng": 36.1989,
       "links": {
         "pomistya": [
-          "Живий Дім"
+          42
         ],
         "silvi": [
           52
@@ -87,7 +87,7 @@
       "lng": 35.5481,
       "links": {
         "pomistya": [
-          "Рассвєт_Самара"
+          31
         ],
         "arkreen": [
           "site_sv_samara"
@@ -115,7 +115,7 @@
       "lng": 35.5445,
       "links": {
         "pomistya": [
-          "Поселення Майстрів"
+          13
         ],
         "sarafu": [
           "MaistryMy"
@@ -134,7 +134,7 @@
       "lng": 35.5483,
       "links": {
         "pomistya": [
-          "Hobbit Terra"
+          56
         ],
         "sarafu": [
           "Hobbit Terra"
@@ -167,7 +167,7 @@
       "lng": 27.9781,
       "links": {
         "pomistya": [
-          "Простір Любові"
+          38
         ],
         "silvi": [
           44,
@@ -191,7 +191,7 @@
       "lng": 29.0939,
       "links": {
         "pomistya": [
-          "Велика родина"
+          52
         ],
         "sarafu": [
           "Velyka Rodyna"
@@ -210,7 +210,7 @@
       "lng": 29.5735,
       "links": {
         "pomistya": [
-          "Радарія"
+          37
         ],
         "sarafu": [
           "Radaria"
@@ -232,7 +232,7 @@
       "lng": 29.5529,
       "links": {
         "pomistya": [
-          "Ладославне"
+          54
         ],
         "solar": [
           "Kedravushka / Ladoslavne"
@@ -248,7 +248,7 @@
       "lng": 36.0006,
       "links": {
         "pomistya": [
-          "Озаріння"
+          39
         ],
         "solar": [
           "Ozarinnya"
@@ -264,7 +264,7 @@
       "lng": 25.5072,
       "links": {
         "pomistya": [
-          "Покуття"
+          100
         ],
         "sarafu": [
           "Pokuttya School"
@@ -283,7 +283,7 @@
       "lng": 24.9673,
       "links": {
         "pomistya": [
-          "Тепла Гора"
+          18
         ],
         "arkreen": [
           "site_tepla_gora"
@@ -308,7 +308,7 @@
       "lng": 29.564,
       "links": {
         "pomistya": [
-          "ГОЛОКА"
+          95
         ],
         "rainwater": [
           "Goloka"
@@ -327,7 +327,7 @@
       "lng": 32.4789,
       "links": {
         "pomistya": [
-          "Чарівне"
+          17
         ],
         "sarafu": [
           "Charivne"
@@ -346,7 +346,7 @@
       "lng": 36.2638,
       "links": {
         "pomistya": [
-          "Великая Гомильша"
+          85
         ],
         "silvi": [
           87
@@ -362,7 +362,7 @@
       "lng": 28.2343,
       "links": {
         "pomistya": [
-          "Потоки"
+          63
         ],
         "silvi": [
           91
@@ -384,7 +384,7 @@
       "lng": 29.6593,
       "links": {
         "pomistya": [
-          "Казкове"
+          53
         ],
         "arkreen": [
           "site_kazkove"
@@ -455,7 +455,7 @@
       "lng": 34.8055,
       "links": {
         "pomistya": [
-          "Новий Маяпур"
+          69
         ],
         "sarafu": [
           "New Mayapur"
@@ -471,7 +471,7 @@
       "lng": 24.7237,
       "links": {
         "pomistya": [
-          "Dzin Space"
+          64
         ],
         "sarafu": [
           "Dzin Space"
@@ -487,7 +487,7 @@
       "lng": 27.9664,
       "links": {
         "pomistya": [
-          "Любодарове"
+          21
         ],
         "sarafu": [
           "Lubodarove EcoHub"
@@ -503,7 +503,7 @@
       "lng": 28.0888,
       "links": {
         "pomistya": [
-          "Душевний Простір Бушанської Толоки"
+          57
         ],
         "sarafu": [
           "Bushanska Toloka"
@@ -519,7 +519,7 @@
       "lng": 35.8656,
       "links": {
         "pomistya": [
-          "Родники"
+          3
         ],
         "sarafu": [
           "Rodniki"
@@ -535,7 +535,7 @@
       "lng": 30.1676,
       "links": {
         "pomistya": [
-          "Школа Життя"
+          22
         ],
         "sarafu": [
           "Eco-center School Life"
@@ -551,7 +551,7 @@
       "lng": 26.0116,
       "links": {
         "pomistya": [
-          "Світанок"
+          1
         ],
         "sarafu": [
           "Sunrise Ecovillage"

@@ -286,6 +286,13 @@
     'Show only hromadas with platform data': 'Показати лише громади з даними платформ',
     'Show {n} more hromadas with ecovillages from the community map': ['Показати ще {n} громаду з екопоселеннями з мапи спільноти', 'Показати ще {n} громади з екопоселеннями з мапи спільноти', 'Показати ще {n} громад з екопоселеннями з мапи спільноти'],
     'already here': 'вже тут',
+    '{n} plots taken': ['{n} ділянка зайнята', '{n} ділянки зайняті', '{n} ділянок зайнято'],
+    '{n} free': ['{n} вільна', '{n} вільні', '{n} вільних'],
+    '{n} families all year': ['{n} сім\'я живе цілий рік', '{n} сім\'ї живуть цілий рік', '{n} сімей живуть цілий рік'],
+    '{n} children': ['{n} дитина', '{n} дитини', '{n} дітей'],
+    'since {y}': 'з {y} року',
+    'On the community map →': 'На мапі спільноти →',
+    'Ecovillages from the community map': 'Екопоселення з мапи спільноти',
     'Dashboard': 'Дашборд',
     'Sections': 'Розділи',
     'Hromada strategies': 'Стратегії громад',
@@ -326,6 +333,9 @@
     '{n} ecovillages': ['{n} ecovillage', '{n} ecovillages'],
     '{n} trees': ['{n} tree', '{n} trees'],
     '{n} people': ['{n} person', '{n} people'],
+    '{n} plots taken': ['{n} plot taken', '{n} plots taken'],
+    '{n} families all year': ['{n} family all year', '{n} families all year'],
+    '{n} children': ['{n} child', '{n} children'],
     'Show {n} more hromadas with ecovillages from the community map': ['Show {n} more hromada with ecovillages from the community map', 'Show {n} more hromadas with ecovillages from the community map'],
   };
 

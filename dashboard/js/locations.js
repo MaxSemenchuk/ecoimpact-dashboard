@@ -16,6 +16,7 @@ const LOC_SOURCES = {
   solar:       { label: 'Solar',       badge: 'badge-arkreen' },
   rainwater:   { label: 'Water',       badge: 'badge-birdweather' },
   birdweather: { label: 'BirdWeather', badge: 'badge-birdweather' },
+  pomistya:    { label: 'pomistya.club', badge: 'badge-regen' },
 };
 
 const LOC_FILTERS = [
@@ -33,9 +34,15 @@ const locName = l => (LANG === 'uk' ? l.name : l.nameEn || l.name);
 
 async function loadLocationFiles() {
   const get = u => fetchWithTimeout(u, 10000).then(r => (r.ok ? r.json() : null)).catch(() => null);
-  const [reg, geo] = await Promise.all([get('data/locations.json'), get('data/hromadas.geojson')]);
+  const [reg, geo, pom] = await Promise.all([get('data/locations.json'), get('data/hromadas.geojson'), get('data/pomistya.json')]);
   LOCATIONS.reg = reg;
   LOCATIONS.geo = geo;
+  // Community map table (pomistya.club): replaces the static ecovillage list in data.js
+  if (pom && Array.isArray(pom.settlements)) {
+    LOCATIONS.pom = pom.settlements;
+    if (typeof MOCK_DATA !== 'undefined') MOCK_DATA.ecovillages = pom.settlements;
+    if (window.refreshCommunityMarkers) window.refreshCommunityMarkers(pom.settlements);
+  }
   return !!reg;
 }
 
@@ -88,9 +95,35 @@ function locationStats(loc, data) {
     s.birds.detections += st.detections || 0;
     s.birds.species = Math.max(s.birds.species, st.speciesCount || 0);
   });
+  s.pom = (L.pomistya || []).map(pomById).filter(Boolean);
+  s.pom.forEach(p => s.urls.push({ src: 'pomistya', label: p.name, url: pomUrl(p) }));
   s.sources = Object.keys(L).filter(k => k !== 'pomistya' && (L[k] || []).length);
   return s;
 }
+
+const pomById = id => (LOCATIONS.pom || []).find(p => p.id === id);
+const pomByName = name => (LOCATIONS.pom || []).find(p => p.name === name);
+const pomUrl = p => `https://pomistya.club/map/${p.id}/`;
+
+// "15 plots taken · 9 families winter here · 4 children" from the community map table
+function pomFacts(p) {
+  const f = [];
+  if (p.plotsTaken) f.push(T('{n} plots taken', { n: p.plotsTaken }));
+  if (p.plotsFree) f.push(T('{n} free', { n: p.plotsFree }));
+  if (p.winteringFamilies) f.push(T('{n} families all year', { n: p.winteringFamilies }));
+  if (p.children) f.push(T('{n} children', { n: p.children }));
+  return f.join(' · ');
+}
+
+window.communityPopup = function (p) {
+  const line = t => `<div style="margin-top:3px;color:#d1d5db;font-size:0.75rem;">${t}</div>`;
+  let html = `<div><strong style="color:#a7f3d0;font-size:0.9rem;">${esc(p.name)}</strong>`;
+  html += `<div style="color:#9ca3af;font-size:0.72rem;">${esc([p.type, p.region, p.founded ? T('since {y}', { y: p.founded }) : ''].filter(Boolean).join(' · '))}</div>`;
+  const facts = pomFacts(p);
+  if (facts) html += line(facts);
+  if (p.id) html += `<a href="${pomUrl(p)}" target="_blank" rel="noopener" style="color:#a7f3d0;font-size:0.7rem;text-decoration:underline;">${T('On the community map →')}</a>`;
+  return html + '</div>';
+};
 
 function hromadaProps(code) {
   const f = LOCATIONS.geo && LOCATIONS.geo.features.find(x => x.properties.code === code);
@@ -113,6 +146,7 @@ function metricRows(s) {
   s.rain.forEach(d => rows.push(['💧', T(d)]));
   if (s.reports) rows.push(['🤝', T('{n} reports', { n: s.reports })]);
   if (s.credits) rows.push(['💳', `${T('{n} credits', { n: s.credits })} · $${fmtN(s.usd, 2)}`]);
+  s.pom.forEach(p => { const f = pomFacts(p); if (f) rows.push(['🏡', f]); });
   if (s.birds) rows.push(['🐦', `${T('{n} detections', { n: fmtN(s.birds.detections) })} · ${T('{n} species', { n: s.birds.species })}`]);
   return rows;
 }
@@ -242,7 +276,13 @@ function hromadaPopup(p) {
     const m = [s.trees ? T('{n} trees', { n: fmtN(s.trees) }) : '', s.kwh ? `${fmtN(s.kwh)} ${T('kWh')}` : '', s.reports ? T('{n} reports', { n: s.reports }) : '', s.usd ? `$${fmtN(s.usd, 0)} ${T('credits')}` : ''].filter(Boolean);
     if (m.length) html += line(m.join(' · '));
   }
-  if (p.ecovillages.length) html += line(`<b>${T('Ecovillages')}:</b> ${p.ecovillages.map(n => esc(T(n))).join(', ')}`);
+  if (p.ecovillages.length) {
+    html += line(`<b>${T('Ecovillages')}:</b> ${p.ecovillages.map(n => esc(n)).join(', ')}`);
+    const pom = p.ecovillages.map(pomByName).filter(Boolean);
+    const sum = k => pom.reduce((a, x) => a + (x[k] || 0), 0);
+    const facts = pomFacts({ plotsTaken: sum('plotsTaken'), winteringFamilies: sum('winteringFamilies'), children: sum('children') });
+    if (facts) html += line(facts);
+  }
   if (cat) html += `<div style="margin-top:6px;padding-top:5px;border-top:1px solid rgba(255,255,255,0.1);font-size:0.75rem;"><span style="color:${cat.color};font-weight:600;">${esc(LANG === 'uk' ? cat.uk : cat.en)}</span><div style="color:#d1d5db;">${esc(LANG === 'uk' ? p.ecoGoal.uk : p.ecoGoal.en)}</div></div>`;
   return html + '</div>';
 }
