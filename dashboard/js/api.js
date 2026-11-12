@@ -689,6 +689,7 @@ function mergeArkreenIntoData(data, arkreenLive) {
 
   // Build nodes list: one entry per solar site
   data.energy.nodes = (arkreenLive.miners || []).map(m => ({
+    id: m.id,
     name: m.name,
     wallet: m.address.slice(0, 6) + '...' + m.address.slice(-4),
     walletFull: m.address,

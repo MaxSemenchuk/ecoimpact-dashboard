@@ -338,3 +338,36 @@ body {
 #community-cats .map-legend-row { padding-left: 22px; }
 @media (max-width: 767px) { #community-cats .map-legend-row { padding-left: 0; } }
 @media (max-width: 767px) { #map { height: 320px !important; } }
+
+/* --- Places (location cards) and hromadas --- */
+.loc-card { background: rgba(26,35,50,0.5); border: 1px solid #243044; border-radius: 0.6rem; padding: 0.75rem 0.85rem; font-size: 0.75rem; }
+.loc-card:hover { border-color: #374151; }
+.loc-name { font-weight: 600; font-size: 0.85rem; color: #e5e7eb; line-height: 1.3; }
+.loc-sub { color: #9ca3af; font-size: 0.7rem; margin-top: 2px; }
+.loc-pin { flex-shrink: 0; font-size: 0.9rem; line-height: 1; padding: 4px; border-radius: 6px; background: rgba(255,255,255,0.04); }
+.loc-pin:hover { background: rgba(255,255,255,0.1); }
+.loc-hromada { color: #5eead4; text-align: left; }
+.loc-hromada:hover { text-decoration: underline; }
+.loc-metrics { margin-top: 0.55rem; display: grid; gap: 3px; color: #d1d5db; }
+.loc-metrics > div { display: flex; gap: 6px; }
+.loc-metrics > div > span:first-child { width: 1.1rem; flex-shrink: 0; text-align: center; }
+.loc-empty { margin-top: 0.55rem; color: #6b7280; }
+.loc-links { margin-top: 0.5rem; display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 0.68rem; }
+.loc-links a { color: #9ca3af; } .loc-links a:hover { color: #e5e7eb; text-decoration: underline; }
+.loc-unsure { margin-top: 0.4rem; color: #fbbf24; font-size: 0.66rem; opacity: 0.85; line-height: 1.35; }
+.loc-chip { font-size: 0.72rem; padding: 0.25rem 0.65rem; border-radius: 9999px; border: 1px solid #243044; color: #9ca3af; background: transparent; }
+.loc-chip span { color: #6b7280; margin-left: 2px; }
+.loc-chip:hover { border-color: #374151; color: #e5e7eb; }
+.loc-chip-on { border-color: #2dd4bf; color: #e5e7eb; background: rgba(45,212,191,0.1); }
+.loc-chip-on span { color: #5eead4; }
+.loc-more { margin-top: 0.5rem; font-size: 0.72rem; color: #5eead4; } .loc-more:hover { text-decoration: underline; }
+.hromada-table { width: 100%; font-size: 0.75rem; border-collapse: collapse; }
+.hromada-table th { text-align: left; font-weight: 500; color: #6b7280; font-size: 0.68rem; padding: 0.35rem 0.6rem 0.35rem 0; border-bottom: 1px solid #243044; white-space: nowrap; }
+.hromada-table td { padding: 0.45rem 0.6rem 0.45rem 0; border-bottom: 1px solid rgba(36,48,68,0.5); color: #d1d5db; vertical-align: top; white-space: nowrap; }
+.hromada-table td.hromada-places { white-space: normal; min-width: 12rem; color: #9ca3af; }
+.hromada-goal-dot { display: inline-block; width: 0.45rem; height: 0.45rem; border-radius: 9999px; margin-left: 0.35rem; vertical-align: middle; }
+.goal-item { font-size: 0.75rem; line-height: 1.4; }
+.goal-item p { color: #9ca3af; font-size: 0.7rem; margin-top: 1px; }
+.goal-ours { display: inline-block; margin-left: 4px; font-size: 0.62rem; padding: 0 0.4rem; border-radius: 9999px; background: rgba(45,212,191,0.15); color: #5eead4; }
+#hromada-cats .map-legend-row { padding-left: 22px; }
+@media (max-width: 767px) { #hromada-cats { display: grid; grid-template-columns: 1fr 1fr; column-gap: 8px; } #hromada-cats .map-legend-row { padding-left: 0; } }

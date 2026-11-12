@@ -193,6 +193,12 @@ function initMap(data) {
   };
   birdLayer.addTo(map);
 
+  // --- Layers: hromada shapes (filled by js/locations.js once data/hromadas.geojson loads) ---
+  const ourHromadaLayer = L.layerGroup().addTo(map);
+  const goalHromadaLayer = L.layerGroup().addTo(map);
+  window.hromadaLayers = { ours: ourHromadaLayer, goals: goalHromadaLayer };
+  window.dashboardMap = map;
+
   // --- Interactive Legend with toggles ---
   // Rendered in its own column next to the map (below it on phones), not as an overlay,
   // so it never covers markers on small screens.
@@ -206,6 +212,8 @@ function initMap(data) {
       { key: 'Rainwater Harvesting', label: T('Rainwater Harvesting'), icon: '<span style="font-size:14px;">💧</span>', layer: rainwaterLayer },
       { key: 'Silvi Forestry', label: T('Silvi Forestry'), icon: '<span style="font-size:14px;">🌳</span>', layer: silviLayer },
       { key: 'Bird Stations', label: T('Bird Stations'), icon: '<span style="font-size:14px;">🐦</span>', layer: birdLayer },
+      { key: 'Our Hromadas', label: T('Hromadas with our places'), icon: '<span style="display:inline-block;width:11px;height:11px;border-radius:2px;border:1px solid #2dd4bf;background:rgba(45,212,191,0.25);"></span>', layer: ourHromadaLayer },
+      { key: 'Eco Goal Hromadas', label: T('Hromadas with eco goals'), icon: '<span style="display:inline-block;width:11px;height:11px;border-radius:2px;background:linear-gradient(135deg,#22c55e 50%,#a78bfa 50%);opacity:0.8;"></span>', layer: goalHromadaLayer },
     ];
 
     let html = '<div style="font-weight:600; margin-bottom:2px; color:#e5e7eb; font-size:0.72rem;">' + T('Layers') + '</div><div class="map-legend-layers">';
@@ -228,6 +236,8 @@ function initMap(data) {
       html += `<div class="map-legend-row"><span style="width:13px; display:inline-flex; justify-content:center;"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${col};"></span></span><span>${T(cat)}</span></div>`;
     });
     html += '</div>';
+    // Eco-goal categories (rows filled by js/locations.js)
+    html += '<div id="hromada-cats" style="margin-top:6px; padding-top:5px; border-top:1px solid rgba(255,255,255,0.1);"></div>';
 
     div.innerHTML = html;
 
@@ -242,6 +252,10 @@ function initMap(data) {
           else map.removeLayer(layer);
           if (key === 'Communities') {
             const cats = document.getElementById('community-cats');
+            if (cats) cats.style.display = this.checked ? '' : 'none';
+          }
+          if (key === 'Eco Goal Hromadas') {
+            const cats = document.getElementById('hromada-cats');
             if (cats) cats.style.display = this.checked ? '' : 'none';
           }
         });

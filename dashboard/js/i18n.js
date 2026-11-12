@@ -165,7 +165,7 @@
 
     // Map
     'Layers': 'Шари',
-    'Communities': 'Громади',
+    'Communities': 'Екопоселення',
     'Solar Stations': 'Сонячні станції',
     'Rainwater Harvesting': 'Збір дощової води',
     'Silvi Forestry': 'Лісівництво Silvi',
@@ -234,6 +234,73 @@
     '9×1,000L tanks, UV + reverse osmosis + mineralization': '9 баків по 1 000 л, УФ + зворотний осмос + мінералізація',
     'Roof-to-tank from 2 buildings, 40,000+L captured in 2025': 'Збір з дахів 2 будівель у баки, 40 000+ л зібрано у 2025 році',
     'Cascading lake & dam system, biodiversity restoration': 'Каскад озер і гребель, відновлення біорізноманіття',
+
+    // Places (location registry) and hromadas
+    'Places': 'Локації',
+    'Draft registry': 'Чернетка реєстру',
+    'One card per place, joining what Silvi, Arkreen, Sarafu, INAT, BirdWeather and the network maps know about it. The same ecovillage often has a different name on each platform; here they are merged into one. Matches marked ⚠ were made by a similar name or a nearby point and still need confirming.':
+      'Одна картка на одне місце: тут зібрано все, що про нього знають Silvi, Arkreen, Sarafu, INAT, BirdWeather і мапи мережі. Те саме екопоселення часто має різні назви на різних платформах, тут вони об\'єднані. Збіги з позначкою ⚠ зроблено за схожою назвою або близькою точкою, їх ще треба підтвердити.',
+    'Hromadas': 'Громади',
+    'KSE · strategies': 'KSE · стратегії',
+    'Which territorial communities (hromadas) our places are in, and what is already measured there. Click a hromada to see it on the map. Boundaries and population: KSE Loc Data Hub.':
+      'У яких громадах розташовані наші локації і що там уже вимірюється. Натисніть на громаду, щоб побачити її на карті. Межі та населення: KSE Loc Data Hub.',
+    'Where we could grow': 'Де можна розширитися',
+    'Hromadas whose development strategy has a concrete, measurable eco goal that fits nature or carbon credits and digital monitoring. Picked from 395 parsed strategies (out of 1,463 hromadas), so the list is not complete. On the map they are filled with the colour of their group.':
+      'Громади, у стратегії розвитку яких є конкретна вимірювана екоціль, під яку підходять природні чи вуглецеві кредити або цифровий моніторинг. Відібрано з 395 розпарсених стратегій (з 1 463 громад), тож список неповний. На карті вони зафарбовані кольором своєї групи.',
+    'Ecovillages, solar stations, rainwater systems, tree-planting projects and hromadas across Ukraine. Use the layer toggles next to the map to show or hide each type.':
+      'Екопоселення, сонячні станції, системи збору дощової води, проєкти висадки дерев і громади по всій Україні. Перемикачі шарів біля карти дозволяють показати або сховати кожен тип.',
+    'Hromadas with our places': 'Громади з нашими локаціями',
+    'Hromadas with eco goals': 'Громади з екоцілями',
+    'All': 'Усі',
+    'Trees': 'Дерева',
+    'Solar energy': 'Сонячна енергія',
+    'Local economy': 'Місцева економіка',
+    'Eco-credits': 'Екокредити',
+    'Water': 'Вода',
+    'Birds': 'Птахи',
+    'Solar': 'Сонце',
+    '{n} trees': ['{n} дерево', '{n} дерева', '{n} дерев'],
+    'no coordinates yet': 'координат ще немає',
+    'outside hromada boundaries': 'поза межами громад',
+    'Show on map': 'Показати на карті',
+    'Listed on a platform; no numbers yet': 'Є на платформі, цифр поки немає',
+    'Nothing matches this filter': 'За цим фільтром нічого немає',
+    'Places in the registry': 'Локацій у реєстрі',
+    'Every place that appears on at least one platform or on the network maps, merged by name and position.':
+      'Усі місця, що є хоча б на одній платформі або на мапах мережі, об\'єднані за назвою і координатами.',
+    'Seen on 2+ platforms': 'Є на 2+ платформах',
+    'Places whose data could be joined across platforms, for example Silvi trees and Sarafu reports for the same ecovillage.':
+      'Локації, дані яких вдалося зв\'язати між платформами, наприклад дерева в Silvi і звіти в Sarafu для того самого екопоселення.',
+    'Territorial communities (municipalities) the places with coordinates fall into.': 'Територіальні громади, у межах яких лежать локації з координатами.',
+    'No coordinates / to confirm': 'Без координат / перевірити',
+    'Places with no position yet, and matches made only by a similar name or a nearby point.':
+      'Локації без координат і збіги, зроблені лише за схожою назвою або близькою точкою.',
+    'Hromada': 'Громада',
+    'Population': 'Населення',
+    'Ecovillages': 'Екопоселення',
+    'Our places': 'Наші локації',
+    'Reports': 'Звіти',
+    'Credits, $': 'Кредити, $',
+    'credits': 'кредити',
+    'Has an eco goal in its strategy': 'У стратегії є екоціль',
+    'Show only hromadas with platform data': 'Показати лише громади з даними платформ',
+    'Show {n} more hromadas with ecovillages from the community map': ['Показати ще {n} громаду з екопоселеннями з мапи спільноти', 'Показати ще {n} громади з екопоселеннями з мапи спільноти', 'Показати ще {n} громад з екопоселеннями з мапи спільноти'],
+    'already here': 'вже тут',
+    'Show fewer': 'Згорнути',
+    'Show all {n} places': ['Показати всі {n} локацію', 'Показати всі {n} локації', 'Показати всі {n} локацій'],
+    '{n} people': ['{n} мешканець', '{n} мешканці', '{n} мешканців'],
+    // Registry notes (data/locations.json "unsure")
+    'Sarafu «Svitanok» could also be Світанок in Rivne region': 'Sarafu «Svitanok» може бути й Світанком на Рівненщині',
+    'Sarafu «MaistryMy» matched by name': 'Sarafu «MaistryMy» зіставлено за назвою',
+    'Silvi 74 (forest belts) sits 200 m from the nursery, so both are treated as one place': 'Silvi 74 (лісосмуги) за 200 м від розсадника, тому це одна локація',
+    'The rainwater point is 30 km from the pomistya.club point; matched by name': 'Точка системи дощової води за 30 км від точки на pomistya.club; зіставлено за назвою',
+    'Silvi 91 (Maze Garden) is 0.8 km from Потоки': 'Silvi 91 (Казковий сад) за 0,8 км від Потоків',
+    '6 km from Казкове; may be the same community': 'За 6 км від Казкового; можливо, та сама спільнота',
+    'Sarafu «Sunrise Ecovillage» matched by name (Світанок = sunrise)': 'Sarafu «Sunrise Ecovillage» зіставлено за назвою (Sunrise = Світанок)',
+    '1.7 km from Зелені кручі; may be the same place': 'За 1,7 км від Зелених круч; можливо, те саме місце',
+    'Approximate station position': 'Приблизне розташування станції',
+    'No coordinates or matching name in other sources': 'Немає координат і схожої назви в інших джерелах',
+    'No coordinates': 'Немає координат',
   };
 
   // English singular forms for the strings that carry a count ([one, other])
@@ -248,6 +315,9 @@
     '{n} species': ['{n} species', '{n} species'],
     '{n} water systems': ['{n} water system', '{n} water systems'],
     '{n} ecovillages': ['{n} ecovillage', '{n} ecovillages'],
+    '{n} trees': ['{n} tree', '{n} trees'],
+    '{n} people': ['{n} person', '{n} people'],
+    'Show {n} more hromadas with ecovillages from the community map': ['Show {n} more hromada with ecovillages from the community map', 'Show {n} more hromadas with ecovillages from the community map'],
   };
 
   // Complex static paragraphs (contain inline tags): key = data-i18n-html attribute

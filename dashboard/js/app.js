@@ -574,11 +574,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         initSarafuReportsChart(liveData);
         populateSettlements(liveData);
       }
+      renderLocations(liveData);
       updateTimestamp(true);
       updateFooterLabel(true);
     } catch (err) {
       console.warn('[App] Live data fetch failed, keeping mock data:', err);
       initEnergyChart(MOCK_DATA);
+      renderLocations(MOCK_DATA);
       updateTimestamp(false);
     }
   }

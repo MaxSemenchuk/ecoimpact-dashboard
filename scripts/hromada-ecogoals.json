@@ -1,0 +1,37 @@
+{
+  "_about": "Hromadas whose development strategy has a concrete, measurable eco goal (picked by hand from the 395 parsed strategies of the hromada-strategy-collab dataset, CC BY 4.0, doi:10.5281/zenodo.22552879). Shown on the map as possible places to expand. Join key: KATOTTG code.",
+  "categories": {
+    "nature": { "uk": "Відновлення природи", "en": "Nature restoration", "color": "#22c55e" },
+    "climate": { "uk": "CO₂ і кліматична нейтральність", "en": "CO₂ and climate neutrality", "color": "#38bdf8" },
+    "monitoring": { "uk": "Цифровий моніторинг", "en": "Digital monitoring", "color": "#a78bfa" },
+    "agro": { "uk": "Сертифікація агропродукції", "en": "Farm produce certification", "color": "#fbbf24" }
+  },
+  "hromadas": [
+    { "katottg": "UA53020130000091122", "category": "nature", "uk": "Відтворення лісів і лісосмуг до 100 га, рекультивація до 50 га, 474 га ПЗФ, місцева екомережа", "en": "Restore up to 100 ha of forest and shelterbelts, reclaim up to 50 ha, 474 ha protected areas, local eco-network" },
+    { "katottg": "UA32080010000060215", "category": "nature", "uk": "ПЗФ до 10% площі громади, біорізноманіття, кластер органічного землеробства, моніторинг екології", "en": "Protected areas up to 10% of territory, biodiversity, organic farming cluster, environmental monitoring" },
+    { "katottg": "UA63080110000021737", "category": "nature", "uk": "Збільшення лісистості, відновлення деградованих ґрунтів", "en": "More forest cover, restoring degraded soils" },
+    { "katottg": "UA53080310000072384", "category": "nature", "uk": "Екомережа, рекультивація", "en": "Eco-network, land reclamation" },
+    { "katottg": "UA53080470000053547", "category": "nature", "uk": "Нові лісосмуги, моніторинг води й енергії", "en": "New shelterbelts, water and energy monitoring" },
+    { "katottg": "UA59080290000021284", "category": "nature", "uk": "ПЗФ, лісове господарство, моніторинг води й повітря", "en": "Protected areas, forestry, water and air monitoring" },
+    { "katottg": "UA21120170000080579", "category": "nature", "uk": "Екомережі НПП «Синевир» / ЮНЕСКО, органіка", "en": "Synevyr National Park / UNESCO eco-networks, organic farming" },
+    { "katottg": "UA63040070000092606", "category": "nature", "uk": "Відновлення територій після бойових дій", "en": "Restoring land after hostilities" },
+    { "katottg": "UA56060130000072276", "category": "nature", "uk": "Деградовані землі, лісосмуги", "en": "Degraded land, shelterbelts" },
+    { "katottg": "UA56060190000073111", "category": "nature", "uk": "Деградовані землі, лісосмуги", "en": "Degraded land, shelterbelts" },
+    { "katottg": "UA74100230000068041", "category": "climate", "uk": "«Зменшення викидів СО₂»", "en": "\"Reducing CO₂ emissions\"" },
+    { "katottg": "UA59020070000032449", "category": "climate", "uk": "Скорочення CO₂ через ВДЕ", "en": "Cutting CO₂ through renewables" },
+    { "katottg": "UA21100030000089881", "category": "climate", "uk": "«Кліматично нейтральна громада»", "en": "\"Climate-neutral hromada\"" },
+    { "katottg": "UA32120050000067577", "category": "climate", "uk": "Кліматична нейтральність, відновлення екосистем", "en": "Climate neutrality, ecosystem restoration" },
+    { "katottg": "UA18040190000029215", "category": "climate", "uk": "Проєкт «Україна на шляху до вуглецевої нейтральності» (CINEA/ЄС)", "en": "\"Ukraine on the way to carbon neutrality\" project (CINEA/EU)" },
+    { "katottg": "UA74100310000091595", "category": "monitoring", "uk": "«Система загального моніторингу стану довкілля»; те саме формулювання в Ріпкинській, можна один пілот на дві громади", "en": "\"Environmental monitoring system\"; same wording as Ripky, one pilot could serve both" },
+    { "katottg": "UA74100330000029082", "category": "monitoring", "uk": "«Система загального моніторингу стану довкілля»; те саме формулювання в Остерській, можна один пілот на дві громади", "en": "\"Environmental monitoring system\"; same wording as Oster, one pilot could serve both" },
+    { "katottg": "UA53020030000081709", "category": "monitoring", "uk": "Енергоменеджмент і енергомоніторинг (ПДСЕР, Угода мерів)", "en": "Energy management and monitoring (SECAP, Covenant of Mayors)" },
+    { "katottg": "UA05060050000058111", "category": "monitoring", "uk": "Енергоменеджмент і енергомоніторинг (ПДСЕР, Угода мерів)", "en": "Energy management and monitoring (SECAP, Covenant of Mayors)" },
+    { "katottg": "UA32080090000011038", "category": "monitoring", "uk": "Енергоменеджмент і енергомоніторинг (ПДСЕР, Угода мерів)", "en": "Energy management and monitoring (SECAP, Covenant of Mayors)" },
+    { "katottg": "UA44160090000075695", "category": "monitoring", "uk": "Енергоменеджмент і енергомоніторинг (ПДСЕР, Угода мерів)", "en": "Energy management and monitoring (SECAP, Covenant of Mayors)" },
+    { "katottg": "UA63060050000033240", "category": "agro", "uk": "Інфраструктура для сертифікації й маркування", "en": "Infrastructure for certification and labelling" },
+    { "katottg": "UA59060070000040784", "category": "agro", "uk": "Підтримка органіки", "en": "Support for organic farming" },
+    { "katottg": "UA32080070000050759", "category": "agro", "uk": "Підтримка органіки", "en": "Support for organic farming" },
+    { "katottg": "UA12060270000017282", "category": "agro", "uk": "Підтримка органіки", "en": "Support for organic farming" },
+    { "katottg": "UA05100010000023453", "category": "agro", "uk": "Підтримка органіки", "en": "Support for organic farming" }
+  ]
+}
