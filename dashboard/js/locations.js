@@ -32,6 +32,19 @@ const LOC_FILTERS = [
 const fmtN = (n, d = 0) => Number(n).toLocaleString(LOCALE, { maximumFractionDigits: d });
 const locName = l => (LANG === 'uk' ? l.name : l.nameEn || l.name);
 
+// One name per place everywhere on the page: a platform item linked in the registry shows the
+// registry name; its own title stays as a small second line only when the place has several such items.
+function placeName(src, key, original) {
+  const reg = LOCATIONS.reg;
+  const l = reg && key != null && reg.locations.find(x => ((x.links || {})[src] || []).includes(key));
+  if (!l) return { name: original, sub: '' };
+  return { name: locName(l), sub: (l.links[src] || []).length > 1 ? original : '', id: l.id };
+}
+function placeNameHtml(src, key, original) {
+  const n = placeName(src, key, original);
+  return esc(n.name) + (n.sub ? ` <span class="text-gray-500">· ${esc(n.sub)}</span>` : '');
+}
+
 async function loadLocationFiles() {
   const get = u => fetchWithTimeout(u, 10000).then(r => (r.ok ? r.json() : null)).catch(() => null);
   const [reg, geo, pom] = await Promise.all([get('data/locations.json'), get('data/hromadas.geojson'), get('data/pomistya.json')]);
@@ -434,8 +447,9 @@ function wireLocationClicks() {
 // Called with mock data on first paint, then again once live data has merged
 async function renderLocations(data) {
   LOCATIONS.data = data;
-  if (!LOCATIONS.reg) {
-    const ok = await loadLocationFiles();
+  if (!LOCATIONS.wired) {
+    LOCATIONS.wired = true;
+    const ok = LOCATIONS.reg || await loadLocationFiles();
     if (!ok) { const b = document.getElementById('block-locations'); if (b) b.classList.add('hidden'); return; }
     wireLocationClicks();
     const m = location.hash.match(/^#places\/(.+)$/);
