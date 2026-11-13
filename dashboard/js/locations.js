@@ -301,8 +301,8 @@ window.drawPins = function () {
 };
 
 // --- Places tab: hromada list, from the most complete to the ones proposed for growth ---
-LOCATIONS.hromadaShowAll = false;
-const HROMADA_ECO_FIRST = 12;
+LOCATIONS.hromadaPage = {};
+const HROMADA_PAGE = 8;
 
 function hromadaRow(p, places) {
   const cats = LOCATIONS.geo.categories;
@@ -341,20 +341,46 @@ function renderHromadaList() {
     const places = byCode[p.code] || [];
     const sources = new Set(places.flatMap(l => locationStats(l, LOCATIONS.data).sources));
     return { p, places, score: sources.size * 10 + places.length * 3 + (p.ecoGoal ? 5 : 0) + p.ecovillages.length };
-  }).filter(r => r.places.length || r.p.ecovillages.length || r.p.ecoGoal);
+  }).filter(r => r.places.length || r.p.ecovillages.length);
   const byScore = (a, b) => b.score - a.score || a.p.name.localeCompare(b.p.name, 'uk');
+  // Growth candidates (eco goal, nothing of ours yet) have their own block: renderHromadaGoals
   const groups = [
-    { title: T('Where the network works'), desc: T('Our places with data on the platforms'), list: rows.filter(r => r.places.length).sort(byScore) },
-    { title: T('Ecovillages on the community map'), desc: T('No platform data yet'), list: rows.filter(r => !r.places.length && r.p.ecovillages.length).sort(byScore), cut: HROMADA_ECO_FIRST },
-    { title: T('Where we could grow'), desc: T('Eco goals in the hromada strategy, none of our places yet'), list: rows.filter(r => !r.places.length && !r.p.ecovillages.length).sort((a, b) => a.p.ecoGoal.category.localeCompare(b.p.ecoGoal.category) || byScore(a, b)) },
+    { key: 'ours', title: T('Where the network works'), desc: T('Our places with data on the platforms'), list: rows.filter(r => r.places.length).sort(byScore) },
+    { key: 'eco', title: T('Ecovillages on the community map'), desc: T('No platform data yet'), list: rows.filter(r => !r.places.length && r.p.ecovillages.length).sort(byScore) },
   ];
   el.innerHTML = groups.filter(g => g.list.length).map(g => {
-    const shown = g.cut && !LOCATIONS.hromadaShowAll ? g.list.slice(0, g.cut) : g.list;
-    return `<div class="hrom-group">
+    const pages = Math.ceil(g.list.length / HROMADA_PAGE);
+    const page = Math.min(LOCATIONS.hromadaPage[g.key] || 0, pages - 1);
+    const shown = g.list.slice(page * HROMADA_PAGE, (page + 1) * HROMADA_PAGE);
+    const dots = pages > 1 ? `<div class="pager">${Array.from({ length: pages }, (_, i) =>
+      `<button type="button" class="pager-dot${i === page ? ' pager-dot-on' : ''}" data-hromada-page="${g.key}:${i}" aria-label="${T('Page {n} of {total}', { n: i + 1, total: pages })}" aria-current="${i === page}"></button>`).join('')}</div>` : '';
+    return `<div class="hrom-group" data-hromada-group="${g.key}">
       <p class="col-title">${g.title} <span class="text-gray-500 font-normal ml-1">${g.list.length}</span></p>
       <p class="hrom-desc">${g.desc}</p>
       <div class="space-y-2">${shown.map(r => hromadaRow(r.p, r.places)).join('')}</div>
-      ${shown.length < g.list.length ? `<button type="button" class="loc-more" data-hromada-more>${T('Show all {n}', { n: g.list.length })}</button>` : ''}
+      ${dots}
+    </div>`;
+  }).join('');
+}
+
+// --- Where we could grow: eco-goal hromadas with none of our places, in columns by goal category ---
+function renderHromadaGoals() {
+  const el = document.getElementById('hromada-goals');
+  if (!el || !LOCATIONS.geo) return;
+  const cats = LOCATIONS.geo.categories;
+  const goals = LOCATIONS.geo.features.map(f => f.properties).filter(p => p.ecoGoal);
+  el.innerHTML = Object.entries(cats).map(([key, c]) => {
+    const list = goals.filter(p => p.ecoGoal.category === key);
+    if (!list.length) return '';
+    return `<div>
+      <p class="col-title mb-2"><span class="col-dot" style="background:${c.color}"></span>${esc(LANG === 'uk' ? c.uk : c.en)} <span class="text-gray-500 font-normal ml-1">${list.length}</span></p>
+      <div class="space-y-2">${list.map(p => `
+        <div class="goal-item">
+          <span class="text-gray-200">${esc(hromadaLabel(p))}</span>
+          <span class="text-gray-500"> · ${esc(oblastLabel(p))}</span>
+          ${p.ecovillages.length ? `<span class="goal-ours">${T('{n} ecovillages', { n: p.ecovillages.length })} ${T('already here')}</span>` : ''}
+          <p>${esc(LANG === 'uk' ? p.ecoGoal.uk : p.ecoGoal.en)}</p>
+        </div>`).join('')}</div>
     </div>`;
   }).join('');
 }
@@ -443,7 +469,15 @@ function wireLocationClicks() {
     const open = e.target.closest('[data-open-loc]');
     if (open) { openLocationDetail(open.dataset.openLoc); return; }
     if (e.target.closest('[data-close-pin]')) { selectPin(null); return; }
-    if (e.target.closest('[data-hromada-more]')) { LOCATIONS.hromadaShowAll = true; renderHromadaList(); return; }
+    const pg = e.target.closest('[data-hromada-page]');
+    if (pg) {
+      const [key, i] = pg.dataset.hromadaPage.split(':');
+      LOCATIONS.hromadaPage[key] = Number(i);
+      renderHromadaList();
+      const grp = document.querySelector(`[data-hromada-group="${key}"]`);
+      if (grp && grp.getBoundingClientRect().top < 0) grp.scrollIntoView({ block: 'start' });
+      return;
+    }
     if (e.target.closest('[data-close-detail]') || e.target.id === 'loc-detail') closeLocationDetail();
   }, true);
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !document.querySelector('.rb-overlay')) closeLocationDetail(); });
@@ -464,6 +498,7 @@ async function renderLocations(data) {
   renderLocationFilters();
   renderLocationCards();
   renderHromadaList();
+  renderHromadaGoals();
   window.drawPins();
   // An open place detail was drawn from the earlier data (e.g. mock on a deep link): redraw it with the new numbers
   const open = document.getElementById('loc-detail');

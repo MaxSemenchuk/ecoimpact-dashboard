@@ -320,6 +320,8 @@
     'Our places': 'Наші локації',
     'Hromadas where the network already has something, from the most complete down to the ones proposed for growth. Eco goals come from hromada development strategies: picked from 395 parsed strategies (out of 1,463 hromadas), so the list is not complete.':
       'Громади, де мережа вже щось має: від найповніших до запропонованих для розширення. Екоцілі взято зі стратегій розвитку громад: відібрано з 395 розпарсених стратегій (з 1 463 громад), тож список неповний.',
+    'Hromadas where the network already has something: first our places with platform data, then ecovillages from the community map.':
+      'Громади, де мережа вже щось має: спершу наші місця з даними платформ, потім екопоселення з мапи спільноти.',
     'Where the network works': 'Де працює мережа',
     'Our places with data on the platforms': 'Наші локації з даними на платформах',
     'Ecovillages on the community map': 'Екопоселення з мапи спільноти',
