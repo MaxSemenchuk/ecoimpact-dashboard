@@ -349,7 +349,7 @@
       </div>
     </section>
 
-    <!-- ===== HROMADAS (data/hromadas.geojson) ===== -->
+    <!-- ===== HROMADAS (data/hromadas.geojson + hromada strategies) ===== -->
     <section>
       <div class="dashboard-card" id="block-hromadas">
         <div class="card-header">
@@ -357,30 +357,11 @@
             <span class="inline-block w-3 h-3 rounded-full bg-blue-400 mr-2"></span>
             Hromadas
           </h2>
-        </div>
-        <div class="card-body space-y-3">
-          <p class="card-desc">Hromadas (territorial communities) where the network has places, and hromadas whose strategies have eco goals we could support. Click a hromada to see everything the network has there.</p>
-          <div class="pin-wrap">
-            <div id="hromada-map" class="pin-map rounded-lg overflow-hidden"></div>
-            <aside id="hromada-panel" class="pin-panel" aria-live="polite"></aside>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== WHERE WE COULD GROW (eco-goal hromadas, data/hromadas.geojson) ===== -->
-    <section>
-      <div class="dashboard-card" id="block-grow">
-        <div class="card-header">
-          <h2 class="card-title">
-            <span class="inline-block w-3 h-3 rounded-full bg-purple-400 mr-2"></span>
-            Where we could grow
-          </h2>
           <span class="card-badge badge-giveth">Hromada strategies</span>
         </div>
-        <div class="card-body space-y-3">
-          <p class="card-desc">Hromadas whose development strategy has a concrete, measurable eco goal that fits nature or carbon credits and digital monitoring. Picked from 395 parsed strategies (out of 1,463 hromadas), so the list is not complete.</p>
-          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5" id="hromada-goals"></div>
+        <div class="card-body space-y-5">
+          <p class="card-desc">Hromadas where the network already has something, from the most complete down to the ones proposed for growth. Eco goals come from hromada development strategies: picked from 395 parsed strategies (out of 1,463 hromadas), so the list is not complete.</p>
+          <div class="space-y-6" id="hromada-list"></div>
         </div>
       </div>
     </section>

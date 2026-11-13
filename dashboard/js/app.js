@@ -527,10 +527,8 @@ function showTab(tab) {
   // A map failure (e.g. zero-size container → NaN LatLng) must not abort the rest of the page
   try {
     if (tab === 'overview' && !mapsReady.overview) { mapsReady.overview = true; initPinMap(); if (window.drawPins) window.drawPins(); }
-    if (tab === 'places' && !mapsReady.places) { mapsReady.places = true; initHromadaMap(); if (window.drawHromadas) window.drawHromadas(); }
   } catch (err) { console.warn('[App] Map init failed:', err); }
   if (tab === 'overview' && window.dashboardMap) window.dashboardMap.invalidateSize();
-  if (tab === 'places' && window.hromadaMap) window.hromadaMap.invalidateSize();
   const hash = tab === 'places' ? (location.hash.startsWith('#places') ? location.hash : '#places') : '';
   if (location.hash !== hash) history.replaceState(null, '', location.pathname + location.search + hash);
 }
