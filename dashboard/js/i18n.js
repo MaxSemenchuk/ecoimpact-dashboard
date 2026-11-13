@@ -235,6 +235,46 @@
     'Roof-to-tank from 2 buildings, 40,000+L captured in 2025': 'Збір з дахів 2 будівель у баки, 40 000+ л зібрано у 2025 році',
     'Cascading lake & dam system, biodiversity restoration': 'Каскад озер і гребель, відновлення біорізноманіття',
 
+    // Regen Bank checkout (js/regenbank.js)
+    'Buy': 'Купити',
+    'Sold out': 'Розпродано',
+    'Support an ecovillage directly: press «Buy» next to a project and pay in USDC from a crypto wallet. The credits arrive in your wallet.':
+      'Підтримайте екопоселення напряму: натисніть «Купити» біля проєкту й оплатіть USDC з криптогаманця. Кредити надійдуть на ваш гаманець.',
+    'Buy eco-credits': 'Купити еко-кредити',
+    'Stewardship credits for the biodiversity this ecovillage monitors on iNaturalist. You get them as tokens in your wallet; the money goes to the project, plus 10% to the Regen Bank cooperative fund.':
+      'Кредити опікунства за біорізноманіття, яке це екопоселення відстежує на iNaturalist. Ви отримуєте їх як токени на свій гаманець; гроші йдуть проєкту, а ще 10% — до кооперативного фонду Regen Bank.',
+    'Powered by': 'Працює на',
+    'Celo blockchain': 'блокчейн Celo',
+    'All credits of this project are sold out for now.': 'Усі кредити цього проєкту наразі розпродано.',
+    'Could not read the listing from Celo. Try again later.': 'Не вдалося прочитати пропозицію з Celo. Спробуйте пізніше.',
+    'Credits': 'Кредити',
+    '{price} per credit · {n} available': '{price} за кредит · доступно {n}',
+    'Cooperative fund (10%)': 'Кооперативний фонд (10%)',
+    'Total': 'Разом',
+    'Pay with': 'Спосіб оплати',
+    'Crypto wallet (USDC on Celo)': 'Криптогаманець (USDC у мережі Celo)',
+    'Bank card': 'Банківська картка',
+    'Pay {sum}': 'Оплатити {sum}',
+    'Confirm in your wallet…': 'Підтвердьте в гаманці…',
+    'Try again': 'Спробувати ще раз',
+    'You need USDC on Celo for the payment and a little CELO for the network fee.':
+      'Для оплати потрібні USDC у мережі Celo і трохи CELO на комісію мережі.',
+    'No wallet found. Open this page in a wallet app (MiniPay, Valora, MetaMask) or install the <a href="https://metamask.io/download/" target="_blank" rel="noopener">MetaMask</a> extension.':
+      'Гаманець не знайдено. Відкрийте цю сторінку в застосунку гаманця (MiniPay, Valora, MetaMask) або встановіть розширення <a href="https://metamask.io/download/" target="_blank" rel="noopener">MetaMask</a>.',
+    'Connect wallet and switch to Celo': 'Підключити гаманець і перейти в мережу Celo',
+    'Allow the Marketplace to take USDC': 'Дозволити маркетплейсу списати USDC',
+    'Buy the credits': 'Купити кредити',
+    'No crypto wallet found in this browser.': 'У цьому браузері не знайдено криптогаманця.',
+    'Not enough credits left in this listing.': 'У цій пропозиції залишилося менше кредитів.',
+    'Not enough USDC on Celo: you have {have}, you need {need}.': 'Недостатньо USDC у мережі Celo: є {have}, потрібно {need}.',
+    'The transaction was reverted on-chain.': 'Транзакцію відхилено в блокчейні.',
+    'Still waiting for the transaction. Check it in your wallet.': 'Транзакція ще не підтверджена. Перевірте її в гаманці.',
+    'You cancelled the request in your wallet.': 'Ви скасували запит у гаманці.',
+    'Something went wrong.': 'Щось пішло не так.',
+    'Thank you! The purchase went through.': 'Дякуємо! Покупку здійснено.',
+    'The credits are now tokens in your wallet {addr}. The dashboard totals update with the next data refresh.':
+      'Кредити тепер — токени на вашому гаманці {addr}. Підсумки на панелі оновляться з наступним оновленням даних.',
+    'See the transaction on Celoscan': 'Транзакція на Celoscan',
     // Places (location registry) and hromadas
     'Places': 'Локації',
     'One card per place, joining what Silvi, Arkreen, Sarafu, INAT, BirdWeather and the network maps know about it. The same ecovillage often has a different name on each platform; here they are merged into one. Matches marked ⚠ were made by a similar name or a nearby point and still need confirming.':

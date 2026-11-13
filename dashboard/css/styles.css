@@ -321,6 +321,70 @@ body {
 
 @media (max-width: 767px) { #map { height: 320px !important; } }
 
+/* --- Regen Bank checkout (js/regenbank.js) --- */
+.rb-buy-btn {
+  font-size: 0.68rem; font-weight: 600; line-height: 1; padding: 0.3rem 0.6rem;
+  border-radius: 9999px; border: 1px solid #4ade80; color: #4ade80; background: transparent;
+  cursor: pointer; white-space: nowrap; transition: background .15s, color .15s;
+}
+.rb-buy-btn:hover:not(:disabled), .rb-buy-btn:focus-visible { background: #4ade80; color: #0a0f1a; outline: none; }
+.rb-buy-btn:disabled { border-color: #374151; color: #6b7280; cursor: default; }
+.rb-cta { font-size: 0.68rem; color: #6b7280; margin-top: 0.5rem; line-height: 1.45; }
+
+.rb-overlay {
+  position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,0.65);
+  display: flex; align-items: center; justify-content: center; padding: 16px;
+}
+.rb-modal {
+  width: 100%; max-width: 420px; max-height: calc(100vh - 32px); overflow-y: auto;
+  background: #111827; border: 1px solid #243044; border-radius: 14px; padding: 1.25rem;
+  color: #e5e7eb; font-size: 0.82rem; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+.rb-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+.rb-title { font-size: 1.05rem; font-weight: 700; color: #f3f4f6; }
+.rb-sub { color: #4ade80; font-size: 0.82rem; margin-top: 0.15rem; }
+.rb-x { font-size: 1.5rem; line-height: 1; color: #9ca3af; background: none; border: 0; cursor: pointer; padding: 0 0.25rem; }
+.rb-x:hover { color: #f3f4f6; } .rb-x:disabled { opacity: .3; cursor: default; }
+.rb-desc { color: #9ca3af; font-size: 0.74rem; line-height: 1.5; margin: 0.6rem 0 0.9rem; }
+.rb-muted { color: #9ca3af; font-size: 0.72rem; }
+.rb-row { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; margin-bottom: 0.4rem; }
+.rb-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; color: #9ca3af; font-weight: 600; }
+.rb-qty { display: flex; border: 1px solid #243044; border-radius: 10px; overflow: hidden; }
+.rb-qty button { width: 3rem; font-size: 1.1rem; color: #d1d5db; background: rgba(255,255,255,0.03); border: 0; cursor: pointer; }
+.rb-qty button:hover:not(:disabled) { background: rgba(255,255,255,0.08); }
+.rb-qty input { flex: 1; min-width: 0; text-align: center; font-size: 1.1rem; font-weight: 600; padding: 0.55rem 0; background: transparent; color: #f3f4f6; border: 0; -moz-appearance: textfield; }
+.rb-qty input::-webkit-outer-spin-button, .rb-qty input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.rb-qty :disabled { opacity: .5; }
+.rb-sum { margin-top: 0.8rem; border: 1px solid #243044; border-radius: 10px; padding: 0.7rem 0.8rem; }
+.rb-sum > div { display: flex; justify-content: space-between; gap: 0.5rem; padding: 0.15rem 0; color: #9ca3af; }
+.rb-sum > div span:last-child { color: #e5e7eb; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.rb-sum .rb-total { border-top: 1px solid #243044; margin-top: 0.35rem; padding-top: 0.45rem; color: #f3f4f6; font-weight: 600; }
+.rb-sum .rb-total span:last-child { color: #4ade80; }
+.rb-methods { display: flex; gap: 0.4rem; margin-top: 0.8rem; }
+.rb-methods button { flex: 1; padding: 0.45rem; border-radius: 8px; border: 1px solid #243044; color: #9ca3af; background: transparent; cursor: pointer; font-size: 0.72rem; }
+.rb-methods button.on { border-color: #4ade80; color: #4ade80; }
+.rb-method-one { margin-top: 0.7rem; }
+.rb-steps { list-style: none; margin: 0.8rem 0 0; padding: 0; font-size: 0.74rem; color: #6b7280; }
+.rb-steps li { display: flex; align-items: center; gap: 0.5rem; padding: 0.2rem 0; }
+.rb-steps .rb-step-x { margin-left: auto; font-family: ui-monospace, monospace; font-size: 0.68rem; }
+.rb-dot { width: 0.5rem; height: 0.5rem; border-radius: 9999px; border: 1px solid #4b5563; flex-shrink: 0; }
+.rb-steps li.active { color: #e5e7eb; } .rb-steps li.active .rb-dot { border-color: #4ade80; animation: rb-pulse 1s infinite; }
+.rb-steps li.done { color: #4ade80; } .rb-steps li.done .rb-dot { background: #4ade80; border-color: #4ade80; }
+.rb-steps li.failed { color: #f87171; } .rb-steps li.failed .rb-dot { background: #f87171; border-color: #f87171; }
+@keyframes rb-pulse { 50% { background: #4ade80; } }
+.rb-error { color: #f87171; font-size: 0.74rem; margin-top: 0.7rem; line-height: 1.45; }
+.rb-note { color: #fbbf24; font-size: 0.78rem; }
+.rb-pay {
+  width: 100%; margin-top: 0.9rem; padding: 0.7rem 1rem; border-radius: 10px; border: 0;
+  background: #22c55e; color: #052e16; font-weight: 700; font-size: 0.85rem; cursor: pointer;
+}
+.rb-pay:hover:not(:disabled) { background: #4ade80; }
+.rb-pay:disabled { opacity: .5; cursor: default; }
+.rb-hint { color: #6b7280; font-size: 0.68rem; margin-top: 0.55rem; line-height: 1.45; text-align: center; }
+.rb-hint a, .rb-foot a, .rb-success a { color: #38bdf8; text-decoration: underline; }
+.rb-foot { color: #6b7280; font-size: 0.65rem; margin-top: 0.9rem; text-align: center; }
+.rb-success { border: 1px solid #166534; background: rgba(22,101,52,0.18); border-radius: 10px; padding: 0.8rem; display: grid; gap: 0.35rem; }
+.rb-success-title { color: #4ade80; font-weight: 700; }
 /* --- Places (location cards) and hromadas --- */
 .loc-card { display: block; width: 100%; text-align: left; background: rgba(26,35,50,0.5); border: 1px solid #243044; border-radius: 0.6rem; padding: 0.75rem 0.85rem; font-size: 0.75rem; cursor: pointer; transition: border-color 0.15s, transform 0.15s; }
 .loc-card:hover { border-color: #2dd4bf; transform: translateY(-1px); }
