@@ -127,6 +127,20 @@
       "pottedBeds": null
     },
     {
+      "id": 81,
+      "title": "Дендропарк",
+      "status": "draft",
+      "website": null,
+      "areaHa": 10.15,
+      "zones": 1,
+      "lat": 50.54036,
+      "lng": 27.96634,
+      "trees": 0,
+      "logs": 765,
+      "seedBeds": null,
+      "pottedBeds": null
+    },
+    {
       "id": 84,
       "title": "Jiviy Dim Zaporozhye",
       "status": "approved",
@@ -169,5 +183,5 @@
       "pottedBeds": null
     }
   ],
-  "fetchedAt": "2026-11-11T19:15:08.829Z"
+  "fetchedAt": "2026-11-13T07:42:52.396Z"
 }
