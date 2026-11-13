@@ -2,13 +2,15 @@
 // GEN Ukraine Impact Dashboard — Map (Leaflet + OpenStreetMap)
 // ============================================================
 
-function initMap(data) {
-  const mapEl = document.getElementById('map');
-  if (!mapEl) return;
+// Maps share one basemap setup:
+//   #map            (Dashboard tab) one pin per place that has data on a platform
+//   #loc-detail-map (place detail)  the place and its hromada outline
+// A map is created only once its container is visible (a hidden container has no size).
 
+function createBaseMap(elId) {
   // Ukraine only: fit to its bounds and keep panning close to it
   const ukraineBounds = L.latLngBounds([44.18, 22.14], [52.38, 40.23]);
-  const map = L.map('map', {
+  const map = L.map(elId, {
     zoomControl: false,
     attributionControl: false,
     maxBounds: ukraineBounds.pad(0.15),
@@ -63,190 +65,14 @@ function initMap(data) {
     });
   });
   L.control.attribution({ position: 'bottomleft', prefix: false }).addTo(map);
-
-  // Community category colors — muted tones so project layers pop
-  const categoryColors = {
-    'Family Estate':        '#2d8a4e',
-    'Eco-settlement':       '#45a368',
-    'Eco-community':        '#6dbf8b',
-    'Spiritual Community':  '#8b7ec8',
-    'Various Communities':  '#a0a0a0',
-  };
-
-  // Community dot icon (small, subtle)
-  function makeDot(color) {
-    return L.divIcon({
-      className: 'custom-marker',
-      html: `<div style="
-        width: 9px; height: 9px;
-        background: ${color};
-        border: 1.5px solid rgba(0,0,0,0.4);
-        border-radius: 50%;
-        opacity: 0.75;
-      "></div>`,
-      iconSize: [9, 9],
-      iconAnchor: [4, 4],
-      popupAnchor: [0, -6],
-    });
-  }
-
-  // Project icon (solar / rainwater) — emoji-based, larger, high contrast
-  function makeProjectIcon(emoji) {
-    return L.divIcon({
-      className: 'custom-marker',
-      html: `<div style="
-        font-size: 20px;
-        line-height: 1;
-        filter: drop-shadow(0 0 4px rgba(0,0,0,0.7));
-      ">${emoji}</div>`,
-      iconSize: [24, 24],
-      iconAnchor: [12, 12],
-      popupAnchor: [0, -14],
-    });
-  }
-
-  // --- Layer: Communities ---
-  const communitiesLayer = L.layerGroup();
-  data.ecovillages.forEach(v => {
-    const color = categoryColors[v.category] || '#4ade80';
-    L.marker([v.lat, v.lng], { icon: makeDot(color) })
-      .bindPopup(`
-        <div>
-          <strong style="color: #a7f3d0; font-size: 0.9rem;">${T(v.name)}</strong>
-          <div style="margin-top: 4px; color: #9ca3af; font-size: 0.75rem;">${T(v.category)}</div>
-        </div>
-      `)
-      .addTo(communitiesLayer);
-  });
-  communitiesLayer.addTo(map);
-
-  // --- Layer: Solar Stations ---
-  const solarLayer = L.layerGroup();
-  if (data.solarStations) {
-    data.solarStations.forEach(s => {
-      L.marker([s.lat, s.lng], { icon: makeProjectIcon('☀️') })
-        .bindPopup(`
-          <div>
-            <strong style="color: #fde68a; font-size: 0.9rem;">☀️ ${T(s.name)}</strong>
-            <div style="margin-top: 4px; color: #d1d5db; font-size: 0.75rem;">${T(s.desc)}</div>
-          </div>
-        `)
-        .addTo(solarLayer);
-    });
-  }
-  solarLayer.addTo(map);
-
-  // --- Layer: Rainwater Harvesting ---
-  const rainwaterLayer = L.layerGroup();
-  if (data.rainwaterSystems) {
-    data.rainwaterSystems.forEach(r => {
-      L.marker([r.lat, r.lng], { icon: makeProjectIcon('💧') })
-        .bindPopup(`
-          <div>
-            <strong style="color: #7dd3fc; font-size: 0.9rem;">💧 ${T(r.name)}</strong>
-            <div style="margin-top: 4px; color: #d1d5db; font-size: 0.75rem;">${T(r.desc)}</div>
-          </div>
-        `)
-        .addTo(rainwaterLayer);
-    });
-  }
-  rainwaterLayer.addTo(map);
-
-  // --- Layer: Silvi Forestry Projects (re-drawn when Silvi positions arrive with the live data) ---
-  const silviLayer = L.layerGroup();
-  window.refreshSilviMarkers = function (d) {
-    silviLayer.clearLayers();
-    (d.silviProjects || []).forEach(p => {
-      if (!Number.isFinite(p.lat) || !Number.isFinite(p.lng)) return; // no position yet
-      const url = `https://app.silvi.earth/?asset=zone&sourceProject=${p.id}&sourceProjectTitle=${encodeURIComponent(p.name)}`;
-      L.marker([p.lat, p.lng], { icon: makeProjectIcon('🌳') })
-        .bindPopup(`
-          <div>
-            <strong style="color: #a3e635; font-size: 0.9rem;">🌳 ${p.name}</strong>
-            <div style="margin-top: 4px; color: #d1d5db; font-size: 0.75rem;">${T(p.desc || '')}</div>
-            <div style="margin-top: 2px; color: #9ca3af; font-size: 0.7rem;">${p.hectares.toLocaleString(LOCALE)} ${T('ha')}</div>
-            <a href="${url}" target="_blank" style="color: #a3e635; font-size: 0.7rem; text-decoration: underline;">${T('View on Silvi →')}</a>
-          </div>
-        `)
-        .addTo(silviLayer);
-    });
-  };
-  window.refreshSilviMarkers(data);
-  silviLayer.addTo(map);
-
-  // --- Layer: Bird monitoring stations (drawn once BirdWeather data arrives) ---
-  const birdLayer = L.layerGroup();
-  window.refreshBirdMarkers = function (d) {
-    birdLayer.clearLayers();
-    ((d.birds && d.birds.stations) || []).forEach(s => {
-      L.marker([s.lat, s.lng], { icon: makeProjectIcon('🐦') })
-        .bindPopup(`
-          <div>
-            <strong style="color: #7dd3fc; font-size: 0.9rem;">🐦 ${T(s.name)}</strong>
-            <div style="margin-top: 4px; color: #d1d5db; font-size: 0.75rem;">${T('{n} detections', { n: s.detections.toLocaleString(LOCALE) })} · ${T('{n} species', { n: s.speciesCount })}</div>
-            ${s.approx ? `<div style="margin-top: 2px; color: #9ca3af; font-size: 0.7rem;">${T('approximate location')}</div>` : ''}
-            <a href="https://app.birdweather.com/stations/${s.id}" target="_blank" style="color: #7dd3fc; font-size: 0.7rem; text-decoration: underline;">${T('View on BirdWeather →')}</a>
-          </div>
-        `)
-        .addTo(birdLayer);
-    });
-  };
-  birdLayer.addTo(map);
-
-  // --- Interactive Legend with toggles ---
-  // Rendered in its own column next to the map (below it on phones), not as an overlay,
-  // so it never covers markers on small screens.
-  const div = document.getElementById('map-legend');
-  if (div) {
-    div.className += ' map-legend';
-
-    const layers = [
-      { key: 'Communities', label: T('Communities'), icon: '<span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#45a368;opacity:0.75;"></span>', layer: communitiesLayer },
-      { key: 'Solar Stations', label: T('Solar Stations'), icon: '<span style="font-size:14px;">☀️</span>', layer: solarLayer },
-      { key: 'Rainwater Harvesting', label: T('Rainwater Harvesting'), icon: '<span style="font-size:14px;">💧</span>', layer: rainwaterLayer },
-      { key: 'Silvi Forestry', label: T('Silvi Forestry'), icon: '<span style="font-size:14px;">🌳</span>', layer: silviLayer },
-      { key: 'Bird Stations', label: T('Bird Stations'), icon: '<span style="font-size:14px;">🐦</span>', layer: birdLayer },
-    ];
-
-    let html = '<div style="font-weight:600; margin-bottom:2px; color:#e5e7eb; font-size:0.72rem;">' + T('Layers') + '</div><div class="map-legend-layers">';
-
-    layers.forEach(({ key, label, icon }) => {
-      const id = 'layer-' + key.replace(/\s/g, '-').toLowerCase();
-      html += `<label class="map-legend-row" style="cursor:pointer;">
-        <input type="checkbox" id="${id}" checked style="width:13px; height:13px; margin:0; cursor:pointer;">
-        <span style="width:16px; display:inline-flex; justify-content:center;">${icon}</span>
-        <span>${label}</span>
-      </label>`;
-    });
-
-    html += '</div>';
-
-    // Community sub-categories
-    html += '<div id="community-cats" style="margin-top:6px; padding-top:5px; border-top:1px solid rgba(255,255,255,0.1);">';
-    Object.entries(categoryColors).forEach(([cat, col]) => {
-      // Same row size as the layer toggles above: 13px slot (checkbox width), 6px gap, same font
-      html += `<div class="map-legend-row"><span style="width:13px; display:inline-flex; justify-content:center;"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${col};"></span></span><span>${T(cat)}</span></div>`;
-    });
-    html += '</div>';
-
-    div.innerHTML = html;
-
-    // Wire up toggles
-    setTimeout(() => {
-      layers.forEach(({ key, layer }) => {
-        const id = 'layer-' + key.replace(/\s/g, '-').toLowerCase();
-        const cb = document.getElementById(id);
-        if (!cb) return;
-        cb.addEventListener('change', function () {
-          if (this.checked) map.addLayer(layer);
-          else map.removeLayer(layer);
-          if (key === 'Communities') {
-            const cats = document.getElementById('community-cats');
-            if (cats) cats.style.display = this.checked ? '' : 'none';
-          }
-        });
-      });
-    }, 0);
-
-  }
+  return map;
 }
+
+// --- Dashboard tab: one pin per place from the registry (pins are drawn by js/locations.js) ---
+function initPinMap() {
+  if (!document.getElementById('map')) return;
+  const map = createBaseMap('map');
+  window.pinLayer = L.layerGroup().addTo(map);
+  window.dashboardMap = map;
+}
+
