@@ -526,19 +526,17 @@ function showTab(tab) {
   });
   // A map failure (e.g. zero-size container → NaN LatLng) must not abort the rest of the page
   try {
-    if (tab === 'overview' && !mapsReady.overview) { mapsReady.overview = true; initHromadaMap(); if (window.drawHromadaLayers) drawHromadaLayers(); }
-    if (tab === 'places' && !mapsReady.places) { mapsReady.places = true; initMap(MOCK_DATA); }
+    if (tab === 'overview' && !mapsReady.overview) { mapsReady.overview = true; initPinMap(); if (window.drawPins) window.drawPins(); }
   } catch (err) { console.warn('[App] Map init failed:', err); }
-  const map = tab === 'places' ? window.placesMap : window.dashboardMap;
-  if (map) map.invalidateSize();
-  const hash = tab === 'places' ? '#places' : '';
+  if (tab === 'overview' && window.dashboardMap) window.dashboardMap.invalidateSize();
+  const hash = tab === 'places' ? (location.hash.startsWith('#places') ? location.hash : '#places') : '';
   if (location.hash !== hash) history.replaceState(null, '', location.pathname + location.search + hash);
 }
 window.showTab = showTab;
 
 function initTabs() {
   document.querySelectorAll('[data-tab]').forEach(b => b.addEventListener('click', () => showTab(b.dataset.tab)));
-  showTab(location.hash === '#places' ? 'places' : 'overview');
+  showTab(location.hash.startsWith('#places') ? 'places' : 'overview');
 }
 
 // === Init everything ===
@@ -595,9 +593,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (liveData.fundraising) populateFundraising(liveData);
       renderKarma(liveData);
       populateBirds(liveData);
-      if (window.refreshBirdMarkers) window.refreshBirdMarkers(liveData);
       populateEcology(liveData);
-      if (window.refreshSilviMarkers) window.refreshSilviMarkers(liveData);
       if (liveData.sarafuReports) {
         initSarafuReportsChart(liveData);
         populateSettlements(liveData);

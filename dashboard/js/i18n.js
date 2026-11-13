@@ -286,6 +286,21 @@
     'Show only hromadas with platform data': 'Показати лише громади з даними платформ',
     'Show {n} more hromadas with ecovillages from the community map': ['Показати ще {n} громаду з екопоселеннями з мапи спільноти', 'Показати ще {n} громади з екопоселеннями з мапи спільноти', 'Показати ще {n} громад з екопоселеннями з мапи спільноти'],
     'already here': 'вже тут',
+    'Places where the network has data on at least one platform: trees, solar energy, water, birds, eco-credits or community activity. A bigger pin means more platforms. Click a pin for its numbers and the full card.':
+      'Місця, де мережа має дані хоча б на одній платформі: дерева, сонячна енергія, вода, птахи, екокредити чи активність спільноти. Що більший пін, то більше платформ. Натисніть на пін, щоб побачити цифри й повну картку.',
+    'One card per place, joining what Silvi, Arkreen, Sarafu, INAT, BirdWeather and the community map know about it. Click a card for everything about the place, with a map. Matches marked ⚠ were made by a similar name or a nearby point and still need confirming.':
+      'Одна картка на одне місце: усе, що про нього знають Silvi, Arkreen, Sarafu, INAT, BirdWeather і мапа спільноти. Натисніть на картку, щоб побачити все про місце разом із картою. Збіги з позначкою ⚠ зроблено за схожою назвою або близькою точкою, їх ще треба підтвердити.',
+    'Hromadas whose development strategy has a concrete, measurable eco goal that fits nature or carbon credits and digital monitoring. Picked from 395 parsed strategies (out of 1,463 hromadas), so the list is not complete.':
+      'Громади, у стратегії розвитку яких є конкретна вимірювана екоціль, під яку підходять природні чи вуглецеві кредити або цифровий моніторинг. Відібрано з 395 розпарсених стратегій (з 1 463 громад), тож список неповний.',
+    'Match to confirm': 'Збіг треба підтвердити',
+    'Open {name}': 'Відкрити: {name}',
+    'Details': 'Детальніше',
+    'Also here': 'Також тут',
+    'What is measured here': 'Що тут вимірюється',
+    'Community map': 'Мапа спільноти',
+    'Sources': 'Джерела',
+    'Close': 'Закрити',
+    'No coordinates yet. Ask the network coordinator where this place is.': 'Координат ще немає. Уточніть у координатора мережі, де це місце.',
     '{n} plots taken': ['{n} ділянка зайнята', '{n} ділянки зайняті', '{n} ділянок зайнято'],
     '{n} free': ['{n} вільна', '{n} вільні', '{n} вільних'],
     '{n} families all year': ['{n} сім\'я живе цілий рік', '{n} сім\'ї живуть цілий рік', '{n} сімей живуть цілий рік'],

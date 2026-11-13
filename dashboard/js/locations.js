@@ -41,7 +41,6 @@ async function loadLocationFiles() {
   if (pom && Array.isArray(pom.settlements)) {
     LOCATIONS.pom = pom.settlements;
     if (typeof MOCK_DATA !== 'undefined') MOCK_DATA.ecovillages = pom.settlements;
-    if (window.refreshCommunityMarkers) window.refreshCommunityMarkers(pom.settlements);
   }
   return !!reg;
 }
@@ -115,16 +114,6 @@ function pomFacts(p) {
   return f.join(' · ');
 }
 
-window.communityPopup = function (p) {
-  const line = t => `<div style="margin-top:3px;color:#d1d5db;font-size:0.75rem;">${t}</div>`;
-  let html = `<div><strong style="color:#a7f3d0;font-size:0.9rem;">${esc(p.name)}</strong>`;
-  html += `<div style="color:#9ca3af;font-size:0.72rem;">${esc([p.type, p.region, p.founded ? T('since {y}', { y: p.founded }) : ''].filter(Boolean).join(' · '))}</div>`;
-  const facts = pomFacts(p);
-  if (facts) html += line(facts);
-  if (p.id) html += `<a href="${pomUrl(p)}" target="_blank" rel="noopener" style="color:#a7f3d0;font-size:0.7rem;text-decoration:underline;">${T('On the community map →')}</a>`;
-  return html + '</div>';
-};
-
 function hromadaProps(code) {
   const f = LOCATIONS.geo && LOCATIONS.geo.features.find(x => x.properties.code === code);
   return f ? f.properties : null;
@@ -165,27 +154,21 @@ function renderLocationCards() {
   const cut = !LOCATIONS.showAllCards && total > LOC_CARDS_FIRST + 3;
   wrap.innerHTML = (cut ? items.slice(0, LOC_CARDS_FIRST) : items).map(({ l, s }) => {
     const h = l.hromada && hromadaProps(l.hromada);
-    const where = h ? `<button type="button" class="loc-hromada" data-hromada="${h.code}">${esc(hromadaLabel(h))}</button> · ${esc(oblastLabel(h))}`
+    const where = h ? `${esc(hromadaLabel(h))} · ${esc(oblastLabel(h))}`
       : l.lat == null ? `<span class="text-gray-600">${T('no coordinates yet')}</span>`
       : `<span class="text-gray-600">${T('outside hromada boundaries')}</span>`;
     const badges = s.sources.map(k => `<span class="card-badge ${LOC_SOURCES[k].badge}">${T(LOC_SOURCES[k].label)}</span>`).join('');
     const rows = metricRows(s);
-    const links = s.urls.map(u => `<a href="${u.url}" target="_blank" rel="noopener" title="${esc(u.label)}">${esc(LOC_SOURCES[u.src].label)}: ${esc(u.label)} →</a>`).join('');
-    const unsure = (l.unsure || []).map(t => `<p class="loc-unsure">⚠ ${esc(T(t))}</p>`).join('');
+    const unsure = (l.unsure || []).length ? `<span class="loc-unsure-mark" title="${esc(T('Match to confirm'))}">⚠</span>` : '';
+    const shown = rows.filter(([i]) => i !== '🔆' && i !== '💧').slice(0, 3);
     return `
-      <div class="loc-card">
-        <div class="flex items-start justify-between gap-2">
-          <div class="min-w-0">
-            <p class="loc-name">${esc(locName(l))}</p>
-            <p class="loc-sub">${where}</p>
-          </div>
-          ${l.lat != null ? `<button type="button" class="loc-pin" data-loc="${l.id}" title="${T('Show on map')}" aria-label="${T('Show on map')}">📍</button>` : ''}
-        </div>
+      <button type="button" class="loc-card" data-open-loc="${l.id}" aria-label="${esc(T('Open {name}', { name: locName(l) }))}">
+        <p class="loc-name">${esc(locName(l))} ${unsure}</p>
+        <p class="loc-sub">${where}</p>
         <div class="flex flex-wrap gap-1 mt-2">${badges}</div>
-        ${rows.length ? `<div class="loc-metrics">${rows.map(([i, t]) => `<div><span>${i}</span><span>${t}</span></div>`).join('')}</div>` : `<p class="loc-empty">${T('Listed on a platform; no numbers yet')}</p>`}
-        ${links ? `<div class="loc-links">${links}</div>` : ''}
-        ${unsure}
-      </div>`;
+        ${shown.length ? `<div class="loc-metrics">${shown.map(([i, t]) => `<div><span>${i}</span><span>${t}</span></div>`).join('')}</div>` : `<p class="loc-empty">${T('Listed on a platform; no numbers yet')}</p>`}
+        <span class="loc-open">${T('Details')} →</span>
+      </button>`;
   }).join('') || `<p class="text-xs text-gray-500">${T('Nothing matches this filter')}</p>`;
   const more = document.getElementById('loc-more');
   if (more) {
@@ -231,15 +214,12 @@ function renderLocationSummary() {
     box(`${noCoords} / ${unsure}`, T('No coordinates / to confirm'), T('Places with no position yet, and matches made only by a similar name or a nearby point.'));
 }
 
-// --- Hromada table ---
+// --- Hromada facts (used in the place detail) ---
 function hromadaStats(data) {
   const byCode = {};
   LOCATIONS.reg.locations.forEach(l => {
     if (!l.hromada) return;
-    const s = locationStats(l, data);
-    const h = (byCode[l.hromada] = byCode[l.hromada] || { places: [], trees: 0, kwh: 0, reports: 0, usd: 0, credits: 0 });
-    h.places.push(l);
-    h.trees += s.trees; h.kwh += s.kwh; h.reports += s.reports; h.usd += s.usd; h.credits += s.credits;
+    (byCode[l.hromada] = byCode[l.hromada] || []).push(l);
   });
   return byCode;
 }
@@ -255,7 +235,7 @@ function renderHromadaGoals() {
       <p class="col-title mb-2"><span class="col-dot" style="background:${c.color}"></span>${esc(LANG === 'uk' ? c.uk : c.en)} <span class="text-gray-500 font-normal ml-1">${list.length}</span></p>
       <div class="space-y-2">${list.map(p => `
         <div class="goal-item">
-          <button type="button" class="loc-hromada" data-hromada="${p.code}">${esc(p.name)}</button>
+          <span class="text-gray-200">${esc(p.name)}</span>
           <span class="text-gray-500"> · ${esc(oblastLabel(p))}</span>
           ${p.ecovillages.length ? `<span class="goal-ours">${T('{n} ecovillages', { n: p.ecovillages.length })} ${T('already here')}</span>` : ''}
           <p>${esc(LANG === 'uk' ? p.ecoGoal.uk : p.ecoGoal.en)}</p>
@@ -264,122 +244,115 @@ function renderHromadaGoals() {
   }).join('');
 }
 
-// --- Map: hromada shapes (layer groups are created by map.js) ---
-function hromadaPopup(p) {
-  const s = hromadaStats(LOCATIONS.data)[p.code];
-  const cat = p.ecoGoal && LOCATIONS.geo.categories[p.ecoGoal.category];
-  const line = (t) => `<div style="margin-top:3px;color:#d1d5db;font-size:0.75rem;">${t}</div>`;
-  let html = `<div><strong style="color:#e5e7eb;font-size:0.9rem;">${esc(hromadaLabel(p))}</strong>`;
-  html += `<div style="color:#9ca3af;font-size:0.72rem;">${esc(oblastLabel(p))}${p.population ? ' · ' + T('{n} people', { n: fmtN(p.population) }) : ''}</div>`;
-  if (s) {
-    html += line(`<b>${T('Our places')}:</b> ${s.places.map(l => esc(locName(l))).join(', ')}`);
-    const m = [s.trees ? T('{n} trees', { n: fmtN(s.trees) }) : '', s.kwh ? `${fmtN(s.kwh)} ${T('kWh')}` : '', s.reports ? T('{n} reports', { n: s.reports }) : '', s.usd ? `$${fmtN(s.usd, 0)} ${T('credits')}` : ''].filter(Boolean);
-    if (m.length) html += line(m.join(' · '));
-  }
-  if (p.ecovillages.length) {
-    html += line(`<b>${T('Ecovillages')}:</b> ${p.ecovillages.map(n => esc(n)).join(', ')}`);
-    const pom = p.ecovillages.map(pomByName).filter(Boolean);
-    const sum = k => pom.reduce((a, x) => a + (x[k] || 0), 0);
-    const facts = pomFacts({ plotsTaken: sum('plotsTaken'), winteringFamilies: sum('winteringFamilies'), children: sum('children') });
-    if (facts) html += line(facts);
-  }
-  if (cat) html += `<div style="margin-top:6px;padding-top:5px;border-top:1px solid rgba(255,255,255,0.1);font-size:0.75rem;"><span style="color:${cat.color};font-weight:600;">${esc(LANG === 'uk' ? cat.uk : cat.en)}</span><div style="color:#d1d5db;">${esc(LANG === 'uk' ? p.ecoGoal.uk : p.ecoGoal.en)}</div></div>`;
-  return html + '</div>';
-}
-
-window.drawHromadaLayers = drawHromadaLayers;
-function drawHromadaLayers() {
-  const layers = window.hromadaLayers;
-  if (!layers || !LOCATIONS.geo || typeof L === 'undefined') return;
-  layers.ours.clearLayers();
-  layers.goals.clearLayers();
-  LOCATIONS.shapes = {};
-  const cats = LOCATIONS.geo.categories;
-  LOCATIONS.geo.features.forEach(f => {
-    const p = f.properties;
-    const ours = p.locations.length || p.ecovillages.length;
-    const cat = p.ecoGoal && cats[p.ecoGoal.category];
-    const style = cat
-      ? { color: cat.color, weight: 1.5, fillColor: cat.color, fillOpacity: 0.28, dashArray: ours ? null : '4 3' }
-      : { color: '#2dd4bf', weight: 1.2, fillColor: '#2dd4bf', fillOpacity: p.locations.length ? 0.35 : 0.12 };
-    const shape = L.geoJSON(f, { style }).bindPopup(() => hromadaPopup(p), { maxWidth: 280 });
-    shape.addTo(cat ? layers.goals : layers.ours);
-    LOCATIONS.shapes[p.code] = shape;
-  });
-  const legend = document.getElementById('hromada-cats');
-  if (legend) {
-    legend.innerHTML = Object.values(cats).map(c =>
-      `<div class="map-legend-row"><span style="width:13px;display:inline-flex;justify-content:center;"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:${c.color};opacity:0.7;"></span></span><span>${esc(LANG === 'uk' ? c.uk : c.en)}</span></div>`
-    ).join('');
-  }
-}
-
-function focusOnMap(latlngOrBounds, popupHtml, layer) {
-  // Hromada shapes live on the Dashboard tab map, place points on the Places tab map
-  const tab = layer ? 'overview' : 'places';
-  if (window.showTab) window.showTab(tab);
-  const map = layer ? window.dashboardMap : window.placesMap;
-  const block = document.getElementById(layer ? 'block-map' : 'block-places-map');
-  if (!map || !block) return;
-  block.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  setTimeout(() => {
-    if (latlngOrBounds.getNorthEast) map.flyToBounds(latlngOrBounds, { maxZoom: 9, duration: 0.8 });
-    else map.flyTo(latlngOrBounds, 10, { duration: 0.8 });
-    map.once('moveend', () => {
-      if (layer) {
-        if (!map.hasLayer(layer)) layer.addTo(map);
-        layer.openPopup(latlngOrBounds.getCenter ? latlngOrBounds.getCenter() : latlngOrBounds);
-      } else if (popupHtml) L.popup().setLatLng(latlngOrBounds).setContent(popupHtml).openOn(map);
-    });
-  }, 350);
-}
-
+// --- Dashboard map: one pin per place with coordinates ---
 function locationPopup(l) {
   const s = locationStats(l, LOCATIONS.data);
   const h = l.hromada && hromadaProps(l.hromada);
   return `<div><strong style="color:#a7f3d0;font-size:0.9rem;">${esc(locName(l))}</strong>
     ${h ? `<div style="color:#9ca3af;font-size:0.72rem;">${esc(hromadaLabel(h))} · ${esc(oblastLabel(h))}</div>` : ''}
-    ${metricRows(s).map(([i, t]) => `<div style="margin-top:3px;color:#d1d5db;font-size:0.75rem;">${i} ${t}</div>`).join('')}</div>`;
+    ${metricRows(s).filter(([i]) => i !== '🔆' && i !== '💧').map(([i, t]) => `<div style="margin-top:3px;color:#d1d5db;font-size:0.75rem;">${i} ${t}</div>`).join('')}
+    <button type="button" data-open-loc="${l.id}" style="margin-top:6px;color:#5eead4;font-size:0.75rem;text-decoration:underline;">${T('Details')} →</button></div>`;
 }
 
-// Teal dots for every registry place with coordinates (Places tab map)
-window.refreshPlacesMarkers = function () {
-  const layer = window.placesLayer;
+window.drawPins = function () {
+  const layer = window.pinLayer;
   if (!layer || !LOCATIONS.reg || typeof L === 'undefined') return;
   layer.clearLayers();
-  const icon = L.divIcon({
-    className: 'custom-marker',
-    html: '<div style="width:11px;height:11px;border-radius:50%;background:#2dd4bf;border:2px solid #0f172a;box-shadow:0 0 0 1px #2dd4bf;"></div>',
-    iconSize: [11, 11], iconAnchor: [5, 5], popupAnchor: [0, -6],
-  });
   LOCATIONS.reg.locations.forEach(l => {
     if (l.lat == null) return;
-    L.marker([l.lat, l.lng], { icon, zIndexOffset: -100 }).bindPopup(() => locationPopup(l)).addTo(layer);
+    const n = locationStats(l, LOCATIONS.data).sources.length;
+    const size = 10 + Math.min(n, 5) * 2;
+    const icon = L.divIcon({
+      className: 'custom-marker',
+      html: `<div class="loc-dot" style="width:${size}px;height:${size}px;"></div>`,
+      iconSize: [size, size], iconAnchor: [size / 2, size / 2], popupAnchor: [0, -size / 2],
+    });
+    L.marker([l.lat, l.lng], { icon, title: locName(l) }).bindPopup(() => locationPopup(l), { maxWidth: 260 }).addTo(layer);
   });
 };
 
+// --- Place detail (modal): everything about one place, with its own map ---
+let detailMap = null;
+
+function closeLocationDetail() {
+  const el = document.getElementById('loc-detail');
+  if (!el || el.classList.contains('hidden')) return;
+  el.classList.add('hidden');
+  document.body.style.overflow = '';
+  if (detailMap) { detailMap.remove(); detailMap = null; }
+  if (location.hash.startsWith('#places/')) history.replaceState(null, '', location.pathname + location.search + '#places');
+}
+
+function openLocationDetail(id) {
+  const l = LOCATIONS.reg && LOCATIONS.reg.locations.find(x => x.id === id);
+  const el = document.getElementById('loc-detail');
+  if (!l || !el) return;
+  if (window.showTab) window.showTab('places');
+  const s = locationStats(l, LOCATIONS.data);
+  const h = l.hromada && hromadaProps(l.hromada);
+  const cat = h && h.ecoGoal && LOCATIONS.geo.categories[h.ecoGoal.category];
+  const neighbours = h ? (hromadaStats(LOCATIONS.data)[h.code] || []).filter(x => x.id !== l.id) : [];
+  const section = (title, body) => body ? `<div class="loc-d-sec"><p class="loc-d-title">${title}</p>${body}</div>` : '';
+  const rows = metricRows(s);
+
+  const community = s.pom.map(p => `<div class="loc-d-row"><span>🏡</span><span><b>${esc(p.name)}</b>${p.type ? ' · ' + esc(p.type) : ''}${p.founded ? ' · ' + T('since {y}', { y: p.founded }) : ''}${pomFacts(p) ? '<br>' + pomFacts(p) : ''}</span></div>`).join('');
+  let hromada = '';
+  if (h) {
+    hromada += `<div class="loc-d-row"><span>🏛</span><span><b>${esc(hromadaLabel(h))}</b> · ${esc(oblastLabel(h))}${h.population ? ' · ' + T('{n} people', { n: fmtN(h.population) }) : ''}</span></div>`;
+    if (neighbours.length) hromada += `<div class="loc-d-row"><span>📍</span><span>${T('Also here')}: ${neighbours.map(x => `<button type="button" class="loc-link" data-open-loc="${x.id}">${esc(locName(x))}</button>`).join(', ')}</span></div>`;
+    if (h.ecovillages.length) hromada += `<div class="loc-d-row"><span>🌱</span><span>${T('Ecovillages')}: ${h.ecovillages.map(esc).join(', ')}</span></div>`;
+    if (cat) hromada += `<div class="loc-d-row"><span>🎯</span><span><b style="color:${cat.color}">${esc(LANG === 'uk' ? cat.uk : cat.en)}</b>: ${esc(LANG === 'uk' ? h.ecoGoal.uk : h.ecoGoal.en)}</span></div>`;
+  }
+  const links = s.urls.map(u => `<a href="${u.url}" target="_blank" rel="noopener">${esc(LOC_SOURCES[u.src].label)}: ${esc(u.label)} →</a>`).join('');
+  const unsure = (l.unsure || []).map(t => `<p class="loc-unsure">⚠ ${esc(T(t))}</p>`).join('');
+
+  el.querySelector('.loc-d-body').innerHTML = `
+    <div class="loc-d-head">
+      <div class="min-w-0">
+        <h3 class="loc-d-name">${esc(locName(l))}</h3>
+        <p class="loc-sub">${h ? esc(hromadaLabel(h)) + ' · ' + esc(oblastLabel(h)) : l.lat == null ? T('no coordinates yet') : T('outside hromada boundaries')}</p>
+        <div class="flex flex-wrap gap-1 mt-2">${s.sources.map(k => `<span class="card-badge ${LOC_SOURCES[k].badge}">${T(LOC_SOURCES[k].label)}</span>`).join('')}</div>
+      </div>
+      <button type="button" class="loc-d-close" data-close-detail aria-label="${T('Close')}">✕</button>
+    </div>
+    <div class="loc-d-grid">
+      <div>${l.lat != null ? '<div id="loc-detail-map"></div>' : `<div class="loc-d-nomap">${T('No coordinates yet. Ask the network coordinator where this place is.')}</div>`}</div>
+      <div>
+        ${section(T('What is measured here'), rows.length ? rows.map(([i, t]) => `<div class="loc-d-row"><span>${i}</span><span>${t}</span></div>`).join('') : `<p class="loc-empty">${T('Listed on a platform; no numbers yet')}</p>`)}
+        ${section(T('Community map'), community)}
+        ${section(T('Hromada'), hromada)}
+        ${section(T('Sources'), links ? `<div class="loc-links">${links}</div>` : '')}
+        ${unsure}
+      </div>
+    </div>`;
+  el.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  history.replaceState(null, '', location.pathname + location.search + '#places/' + l.id);
+
+  if (detailMap) { detailMap.remove(); detailMap = null; }
+  if (l.lat != null && typeof L !== 'undefined') {
+    try {
+      detailMap = createBaseMap('loc-detail-map');
+      const f = h && LOCATIONS.geo.features.find(x => x.properties.code === h.code);
+      if (f) {
+        const shape = L.geoJSON(f, { style: { color: '#2dd4bf', weight: 1.5, fillColor: '#2dd4bf', fillOpacity: 0.12 }, interactive: false }).addTo(detailMap);
+        detailMap.fitBounds(shape.getBounds(), { padding: [20, 20], maxZoom: 12 });
+      } else detailMap.setView([l.lat, l.lng], 11);
+      const others = LOCATIONS.reg.locations.filter(x => x.lat != null && x.id !== l.id);
+      others.forEach(x => L.marker([x.lat, x.lng], { icon: L.divIcon({ className: 'custom-marker', html: '<div class="loc-dot loc-dot-dim"></div>', iconSize: [10, 10], iconAnchor: [5, 5] }), title: locName(x) })
+        .on('click', () => openLocationDetail(x.id)).addTo(detailMap));
+      L.marker([l.lat, l.lng], { icon: L.divIcon({ className: 'custom-marker', html: '<div class="loc-dot loc-dot-on"></div>', iconSize: [18, 18], iconAnchor: [9, 9] }), zIndexOffset: 1000 }).addTo(detailMap);
+    } catch (err) { console.warn('[Places] detail map failed:', err); }
+  }
+}
+
 function wireLocationClicks() {
   document.addEventListener('click', e => {
-    const pin = e.target.closest('[data-loc]');
-    if (pin) {
-      const l = LOCATIONS.reg.locations.find(x => x.id === pin.dataset.loc);
-      if (l && l.lat != null) focusOnMap(L.latLng(l.lat, l.lng), locationPopup(l));
-      return;
-    }
-    const hb = e.target.closest('[data-hromada]');
-    if (hb && LOCATIONS.shapes && LOCATIONS.shapes[hb.dataset.hromada]) {
-      const shape = LOCATIONS.shapes[hb.dataset.hromada];
-      if (window.showTab) window.showTab('overview');
-      const parent = window.hromadaLayers && (window.hromadaLayers.goals.hasLayer(shape) ? window.hromadaLayers.goals : window.hromadaLayers.ours);
-      const map = window.dashboardMap;
-      if (map && parent && !map.hasLayer(parent)) {
-        parent.addTo(map);
-        const cb = document.getElementById(parent === window.hromadaLayers.goals ? 'layer-eco-goal-hromadas' : 'layer-our-hromadas');
-        if (cb) cb.checked = true;
-      }
-      focusOnMap(shape.getBounds(), null, shape);
-    }
-  });
+    const open = e.target.closest('[data-open-loc]');
+    if (open) { openLocationDetail(open.dataset.openLoc); return; }
+    if (e.target.closest('[data-close-detail]') || e.target.id === 'loc-detail') closeLocationDetail();
+  }, true); // capture: Leaflet popups stop click propagation
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLocationDetail(); });
 }
 
 // Called with mock data on first paint, then again once live data has merged
@@ -389,11 +362,12 @@ async function renderLocations(data) {
     const ok = await loadLocationFiles();
     if (!ok) { const b = document.getElementById('block-locations'); if (b) b.classList.add('hidden'); return; }
     wireLocationClicks();
+    const m = location.hash.match(/^#places\/(.+)$/);
+    if (m) setTimeout(() => openLocationDetail(decodeURIComponent(m[1])), 0);
   }
   renderLocationSummary();
   renderLocationFilters();
   renderLocationCards();
   renderHromadaGoals();
-  drawHromadaLayers();
-  window.refreshPlacesMarkers();
+  window.drawPins();
 }
