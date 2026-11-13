@@ -199,9 +199,10 @@
   // ---------- modal ----------
   let modal = null;
 
-  function close(force) {
+  // Always closes, even while a wallet request is pending: the wallet keeps its own prompt,
+  // and a late result is simply dropped (pay() checks that its modal is still open).
+  function close() {
     if (!modal) return;
-    if (modal.busy && !force) return;
     modal.el.remove();
     document.removeEventListener('keydown', onKey);
     modal = null;
@@ -209,7 +210,7 @@
   function onKey(e) { if (e.key === 'Escape') close(); }
 
   function open(project) {
-    close(true);
+    close();
     const el = document.createElement('div');
     el.className = 'rb-overlay';
     el.innerHTML = `
@@ -321,7 +322,6 @@
     btn.disabled = true;
     btn.textContent = t('Confirm in your wallet…');
     m.busy = true;
-    m.el.querySelector('.rb-x').disabled = true;
     const ui = {
       step(id, state, extra) {
         const li = list.querySelector(`[data-step="${id}"]`);
@@ -334,7 +334,7 @@
     try {
       const res = await m.method.pay({ listingId: m.project.listing, qty: m.qty, project: m.project }, ui);
       track('regenbank_purchase', { project: m.project.name, qty: m.qty, method: m.method.id, usd: toUsd(res.total) });
-      renderDone(m, res);
+      if (modal === m) renderDone(m, res);
     } catch (e) {
       list.querySelectorAll('li.active').forEach(li => { li.className = 'failed'; });
       err.textContent = friendlyError(e);
@@ -344,8 +344,6 @@
       m.el.querySelectorAll('.rb-qty button, .rb-qty input, [data-rb-method]').forEach(x => { x.disabled = false; });
     } finally {
       m.busy = false;
-      const x = m.el.querySelector('.rb-x');
-      if (x) x.disabled = false;
     }
   }
 
