@@ -237,7 +237,6 @@
 
     // Places (location registry) and hromadas
     'Places': 'Локації',
-    'Draft registry': 'Чернетка реєстру',
     'One card per place, joining what Silvi, Arkreen, Sarafu, INAT, BirdWeather and the network maps know about it. The same ecovillage often has a different name on each platform; here they are merged into one. Matches marked ⚠ were made by a similar name or a nearby point and still need confirming.':
       'Одна картка на одне місце: тут зібрано все, що про нього знають Silvi, Arkreen, Sarafu, INAT, BirdWeather і мапи мережі. Те саме екопоселення часто має різні назви на різних платформах, тут вони об\'єднані. Збіги з позначкою ⚠ зроблено за схожою назвою або близькою точкою, їх ще треба підтвердити.',
     'Hromadas': 'Громади',
@@ -279,6 +278,9 @@
     'Population': 'Населення',
     'Ecovillages': 'Екопоселення',
     'Our places': 'Наші локації',
+    'Only ecovillages from the community map': 'Лише екопоселення з мапи спільноти',
+    'Eco goal in the strategy': 'Екоціль у стратегії',
+    'Dashed outline: no places of ours there yet.': 'Пунктирний контур: наших місць там ще немає.',
     'Reports': 'Звіти',
     'Credits, $': 'Кредити, $',
     'credits': 'кредити',
@@ -286,8 +288,8 @@
     'Show only hromadas with platform data': 'Показати лише громади з даними платформ',
     'Show {n} more hromadas with ecovillages from the community map': ['Показати ще {n} громаду з екопоселеннями з мапи спільноти', 'Показати ще {n} громади з екопоселеннями з мапи спільноти', 'Показати ще {n} громад з екопоселеннями з мапи спільноти'],
     'already here': 'вже тут',
-    'Places where the network has data on at least one platform: trees, solar energy, water, birds, eco-credits or community activity. A bigger pin means more platforms. Click a pin for its numbers and the full card.':
-      'Місця, де мережа має дані хоча б на одній платформі: дерева, сонячна енергія, вода, птахи, екокредити чи активність спільноти. Що більший пін, то більше платформ. Натисніть на пін, щоб побачити цифри й повну картку.',
+    'Places where the network has data on at least one platform: trees, solar energy, water, birds, eco-credits or community activity. A bigger pin means more platforms. Click a pin to see its numbers next to the map.':
+      'Місця, де мережа має дані хоча б на одній платформі: дерева, сонячна енергія, вода, птахи, екокредити чи активність спільноти. Що більший пін, то більше платформ. Натисніть на пін, і поруч з мапою з’являться його цифри.',
     'One card per place, joining what Silvi, Arkreen, Sarafu, INAT, BirdWeather and the community map know about it. Click a card for everything about the place, with a map. Matches marked ⚠ were made by a similar name or a nearby point and still need confirming.':
       'Одна картка на одне місце: усе, що про нього знають Silvi, Arkreen, Sarafu, INAT, BirdWeather і мапа спільноти. Натисніть на картку, щоб побачити все про місце разом із картою. Збіги з позначкою ⚠ зроблено за схожою назвою або близькою точкою, їх ще треба підтвердити.',
     'Hromadas whose development strategy has a concrete, measurable eco goal that fits nature or carbon credits and digital monitoring. Picked from 395 parsed strategies (out of 1,463 hromadas), so the list is not complete.':
@@ -295,6 +297,9 @@
     'Match to confirm': 'Збіг треба підтвердити',
     'Open {name}': 'Відкрити: {name}',
     'Details': 'Детальніше',
+    'Click a pin on the map to see what the network knows about that place.': 'Натисніть на пін на мапі, щоб побачити, що мережа знає про це місце.',
+    '{n} places on the map': ['{n} місце на мапі', '{n} місця на мапі', '{n} місць на мапі'],
+    'Full card with map and sources': 'Повна картка з мапою і джерелами',
     'Also here': 'Також тут',
     'What is measured here': 'Що тут вимірюється',
     'Community map': 'Мапа спільноти',
@@ -313,8 +318,8 @@
     'Hromada strategies': 'Стратегії громад',
     'Places on the map': 'Локації на карті',
     'Click a hromada to see what the network has there.': 'Натисніть на громаду, щоб побачити, що там є в мережі.',
-    'Hromadas (territorial communities) where the network has places, and hromadas whose strategies have eco goals we could support. Click a hromada to see everything the network has there; the points themselves are on the Places tab.':
-      'Громади, де є локації мережі, і громади, у стратегіях яких є екоцілі, які ми могли б підтримати. Натисніть на громаду, щоб побачити все, що там є в мережі; самі точки на вкладці «Локації».',
+    'Hromadas (territorial communities) where the network has places, and hromadas whose strategies have eco goals we could support. Click a hromada to see everything the network has there.':
+      'Громади, де є локації мережі, і громади, у стратегіях яких є екоцілі, які ми могли б підтримати. Натисніть на громаду, щоб побачити все, що там є в мережі.',
     'Places where the network has something on a platform: solar stations, rainwater systems, tree-planting projects, bird stations and community vouchers. The full community map (pomistya.club) is an extra layer, off by default.':
       'Місця, де мережа має щось на платформах: сонячні станції, системи збору дощової води, посадки дерев, станції птахів і ваучери спільнот. Повна мапа спільноти (pomistya.club) — додатковий шар, за замовчуванням вимкнений.',
     'Show fewer': 'Згорнути',
@@ -336,6 +341,7 @@
 
   // English singular forms for the strings that carry a count ([one, other])
   const EN_PLURAL = {
+    '{n} places on the map': ['{n} place on the map', '{n} places on the map'],
     '{n} updates': ['{n} update', '{n} updates'],
     '{n} projects': ['{n} project', '{n} projects'],
     '{n} reports': ['{n} report', '{n} reports'],

@@ -371,3 +371,20 @@ body {
 .loc-d-row { display: flex; gap: 8px; font-size: 0.8rem; color: #d1d5db; line-height: 1.45; padding: 2px 0; }
 .loc-d-row > span:first-child { width: 1.2rem; flex-shrink: 0; text-align: center; }
 .loc-link { color: #5eead4; } .loc-link:hover { text-decoration: underline; }
+
+/* Dashboard pin map + side panel */
+.pin-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 0.75rem; }
+.pin-map { height: 480px; width: 100%; }
+.pin-panel { background: #0f172a; border: 1px solid #243044; border-radius: 0.6rem; padding: 0.9rem 1rem; height: 480px; overflow-y: auto; }
+.pin-panel .loc-d-name { font-size: 1.05rem; }
+.pin-hint { color: #9ca3af; font-size: 0.85rem; margin-top: 0.25rem; }
+.pin-hint-sub { color: #6b7280; font-size: 0.75rem; margin-top: 0.4rem; }
+.pin-open { margin-top: 0.9rem; color: #5eead4; font-size: 0.82rem; text-decoration: underline; text-underline-offset: 2px; }
+.loc-dot-sel { background: #fbbf24 !important; box-shadow: 0 0 0 2px #fbbf24, 0 0 12px rgba(251,191,36,0.6) !important; }
+@media (max-width: 767px) {
+  .pin-wrap { grid-template-columns: 1fr; }
+  .pin-map { height: 340px; }
+  .pin-panel { height: auto; max-height: none; }
+}
+.hrom-sw { display: inline-block; width: 12px; height: 12px; border-radius: 3px; border: 1.5px solid; margin-top: 3px; flex-shrink: 0; }
+.loc-hromada { color: #e5e7eb; text-decoration: underline dotted; text-underline-offset: 3px; text-align: left; } .loc-hromada:hover { color: #5eead4; }

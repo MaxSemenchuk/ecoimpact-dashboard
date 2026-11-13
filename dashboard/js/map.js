@@ -75,3 +75,11 @@ function initPinMap() {
   window.pinLayer = L.layerGroup().addTo(map);
   window.dashboardMap = map;
 }
+
+// --- Places tab: hromada map (shapes and side panel are drawn by js/locations.js) ---
+function initHromadaMap() {
+  if (!document.getElementById('hromada-map')) return;
+  const map = createBaseMap('hromada-map');
+  window.hromadaLayer = L.layerGroup().addTo(map);
+  window.hromadaMap = map;
+}

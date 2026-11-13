@@ -316,9 +316,53 @@
           </h2>
         </div>
         <div class="card-body space-y-3">
-          <p class="card-desc">Places where the network has data on at least one platform: trees, solar energy, water, birds, eco-credits or community activity. A bigger pin means more platforms. Click a pin for its numbers and the full card.</p>
-          <div class="flex flex-col md:flex-row gap-3">
-            <div id="map" class="w-full rounded-lg overflow-hidden" style="height: 460px;"></div>
+          <p class="card-desc">Places where the network has data on at least one platform: trees, solar energy, water, birds, eco-credits or community activity. A bigger pin means more platforms. Click a pin to see its numbers next to the map.</p>
+          <div class="pin-wrap">
+            <div id="map" class="pin-map rounded-lg overflow-hidden"></div>
+            <aside id="pin-panel" class="pin-panel" aria-live="polite"></aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    </div>
+
+    <div data-tab-panel="places" class="space-y-6 hidden">
+    <!-- ===== LOCATIONS (registry: data/locations.json) ===== -->
+    <section>
+      <div class="dashboard-card" id="block-locations">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="inline-block w-3 h-3 rounded-full bg-accent-teal mr-2"></span>
+            Places
+          </h2>
+        </div>
+        <div class="card-body space-y-4">
+          <p class="card-desc">One card per place, joining what Silvi, Arkreen, Sarafu, INAT, BirdWeather and the community map know about it. Click a card for everything about the place, with a map. Matches marked ⚠ were made by a similar name or a nearby point and still need confirming.</p>
+          <div class="flex flex-wrap gap-2" id="loc-filters"></div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-3" id="loc-cards">
+            <p class="text-xs text-gray-500">Loading...</p>
+          </div>
+          <button type="button" class="loc-more hidden" id="loc-more"></button>
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-3" id="loc-summary"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== HROMADAS (data/hromadas.geojson) ===== -->
+    <section>
+      <div class="dashboard-card" id="block-hromadas">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="inline-block w-3 h-3 rounded-full bg-blue-400 mr-2"></span>
+            Hromadas
+          </h2>
+        </div>
+        <div class="card-body space-y-3">
+          <p class="card-desc">Hromadas (territorial communities) where the network has places, and hromadas whose strategies have eco goals we could support. Click a hromada to see everything the network has there.</p>
+          <div class="pin-wrap">
+            <div id="hromada-map" class="pin-map rounded-lg overflow-hidden"></div>
+            <aside id="hromada-panel" class="pin-panel" aria-live="polite"></aside>
           </div>
         </div>
       </div>
@@ -337,30 +381,6 @@
         <div class="card-body space-y-3">
           <p class="card-desc">Hromadas whose development strategy has a concrete, measurable eco goal that fits nature or carbon credits and digital monitoring. Picked from 395 parsed strategies (out of 1,463 hromadas), so the list is not complete.</p>
           <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5" id="hromada-goals"></div>
-        </div>
-      </div>
-    </section>
-    </div>
-
-    <div data-tab-panel="places" class="space-y-6 hidden">
-    <!-- ===== LOCATIONS (registry: data/locations.json) ===== -->
-    <section>
-      <div class="dashboard-card" id="block-locations">
-        <div class="card-header">
-          <h2 class="card-title">
-            <span class="inline-block w-3 h-3 rounded-full bg-accent-teal mr-2"></span>
-            Places
-          </h2>
-          <span class="card-badge badge-regen">Draft registry</span>
-        </div>
-        <div class="card-body space-y-4">
-          <p class="card-desc">One card per place, joining what Silvi, Arkreen, Sarafu, INAT, BirdWeather and the community map know about it. Click a card for everything about the place, with a map. Matches marked ⚠ were made by a similar name or a nearby point and still need confirming.</p>
-          <div class="flex flex-wrap gap-2" id="loc-filters"></div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-3" id="loc-cards">
-            <p class="text-xs text-gray-500">Loading...</p>
-          </div>
-          <button type="button" class="loc-more hidden" id="loc-more"></button>
-          <div class="grid grid-cols-2 lg:grid-cols-4 gap-3" id="loc-summary"></div>
         </div>
       </div>
     </section>
