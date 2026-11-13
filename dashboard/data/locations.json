@@ -1,0 +1,740 @@
+{
+  "_about": "Location registry: one row per place, with its IDs on every platform. Hand-curated from the names and coordinates already in the dashboard (pomistya.club community map: ids of pomistya.club/map/<id>/, KML files, Silvi, Arkreen, Sarafu, INAT, BirdWeather). 'unsure' lists matches made only by a similar name or a nearby point; ask the network coordinator to confirm them. The 'hromada' field is filled by scripts/build-hromadas.py (do not edit it by hand).",
+  "locations": [
+    {
+      "id": "happy-people",
+      "name": "Щасливі Люди",
+      "nameEn": "Happy People",
+      "lat": 49.4802,
+      "lng": 36.3213,
+      "links": {
+        "pomistya": [
+          20
+        ],
+        "silvi": [
+          71
+        ],
+        "arkreen": [
+          "site_happy_people"
+        ],
+        "sarafu": [
+          "Happy People"
+        ],
+        "solar": [
+          "Happy People"
+        ]
+      },
+      "hromada": "UA63100070000048302"
+    },
+    {
+      "id": "yemelyanivka",
+      "name": "Ємельянівка",
+      "nameEn": "Yemelyanivka (Omelyanivka)",
+      "lat": 50.8985,
+      "lng": 29.1097,
+      "links": {
+        "pomistya": [
+          2
+        ],
+        "silvi": [
+          49
+        ],
+        "sarafu": [
+          "Omelyanivka"
+        ],
+        "inat": [
+          "Yemelyanivka"
+        ],
+        "rainwater": [
+          "Omelyanivka"
+        ]
+      },
+      "hromada": "UA18060250000078729"
+    },
+    {
+      "id": "zhyvyi-dim",
+      "name": "Живий Дім (Дудківка)",
+      "nameEn": "Zhyvyi Dim / Living Home (Dudkivka)",
+      "lat": 49.6497,
+      "lng": 36.1989,
+      "links": {
+        "pomistya": [
+          42
+        ],
+        "silvi": [
+          52
+        ],
+        "arkreen": [
+          "site_zhyvyi_dim"
+        ],
+        "sarafu": [
+          "Living Home"
+        ],
+        "inat": [
+          "Living Home (Dudkivka)"
+        ],
+        "rainwater": [
+          "Jyvyi Dim"
+        ]
+      },
+      "hromada": "UA63140030000091352"
+    },
+    {
+      "id": "svitanok-samara",
+      "name": "Світанок-Самара",
+      "nameEn": "Svitanok-Samara (Rassvet)",
+      "lat": 48.7158,
+      "lng": 35.5481,
+      "links": {
+        "pomistya": [
+          31
+        ],
+        "arkreen": [
+          "site_sv_samara"
+        ],
+        "sarafu": [
+          "Svitanok"
+        ],
+        "solar": [
+          "Svitanok / Rassvet-Samara"
+        ],
+        "rainwater": [
+          "Svitanok-Samara"
+        ]
+      },
+      "unsure": [
+        "Sarafu «Svitanok» could also be Світанок in Rivne region"
+      ],
+      "hromada": "UA12100010000093577"
+    },
+    {
+      "id": "poselennia-maistriv",
+      "name": "Поселення Майстрів",
+      "nameEn": "Masters' Settlement",
+      "lat": 48.7173,
+      "lng": 35.5445,
+      "links": {
+        "pomistya": [
+          13
+        ],
+        "sarafu": [
+          "MaistryMy"
+        ]
+      },
+      "unsure": [
+        "Sarafu «MaistryMy» matched by name"
+      ],
+      "hromada": "UA12100010000093577"
+    },
+    {
+      "id": "hobbit-terra",
+      "name": "Hobbit Terra",
+      "nameEn": "Hobbit Terra",
+      "lat": 48.7118,
+      "lng": 35.5483,
+      "links": {
+        "pomistya": [
+          56
+        ],
+        "sarafu": [
+          "Hobbit Terra"
+        ]
+      },
+      "hromada": "UA12100010000093577"
+    },
+    {
+      "id": "yasna-roslynka",
+      "name": "Ясна Рослинка",
+      "nameEn": "Yasna Roslynka nursery",
+      "lat": 48.68098,
+      "lng": 35.615,
+      "links": {
+        "silvi": [
+          56,
+          74
+        ]
+      },
+      "unsure": [
+        "Silvi 74 (forest belts) sits 200 m from the nursery, so both are treated as one place"
+      ],
+      "hromada": "UA12120030000075687"
+    },
+    {
+      "id": "prostir-lyubovi",
+      "name": "Простір Любові (Лагульськ)",
+      "nameEn": "Prostir Lyubovi (Lagulske)",
+      "lat": 50.544,
+      "lng": 27.9781,
+      "links": {
+        "pomistya": [
+          38
+        ],
+        "silvi": [
+          44,
+          72,
+          81
+        ],
+        "sarafu": [
+          "Prostir Lyubovi",
+          "Space of Love"
+        ],
+        "inat": [
+          "Lagulske (Zhytomyr)"
+        ]
+      },
+      "hromada": "UA18080050000083590"
+    },
+    {
+      "id": "velyka-rodyna",
+      "name": "Велика родина",
+      "nameEn": "Velyka Rodyna",
+      "lat": 49.1571,
+      "lng": 29.0939,
+      "links": {
+        "pomistya": [
+          52
+        ],
+        "sarafu": [
+          "Velyka Rodyna"
+        ],
+        "solar": [
+          "Velyka Rodyna"
+        ]
+      },
+      "hromada": "UA05020110000052014"
+    },
+    {
+      "id": "radaria",
+      "name": "Радарія",
+      "nameEn": "Radaria",
+      "lat": 50.7966,
+      "lng": 29.5735,
+      "links": {
+        "pomistya": [
+          37
+        ],
+        "sarafu": [
+          "Radaria"
+        ],
+        "solar": [
+          "Radaria Ecocentre"
+        ],
+        "rainwater": [
+          "Radariya"
+        ]
+      },
+      "hromada": "UA32100050000082904"
+    },
+    {
+      "id": "ladoslavne",
+      "name": "Ладославне",
+      "nameEn": "Ladoslavne",
+      "lat": 50.8059,
+      "lng": 29.5529,
+      "links": {
+        "pomistya": [
+          54
+        ],
+        "solar": [
+          "Kedravushka / Ladoslavne"
+        ]
+      },
+      "hromada": "UA32100050000082904"
+    },
+    {
+      "id": "ozarinnya",
+      "name": "Озаріння",
+      "nameEn": "Ozarinnya",
+      "lat": 49.8261,
+      "lng": 36.0006,
+      "links": {
+        "pomistya": [
+          39
+        ],
+        "solar": [
+          "Ozarinnya"
+        ]
+      },
+      "hromada": "UA63120150000086206"
+    },
+    {
+      "id": "pokuttya",
+      "name": "Покуття",
+      "nameEn": "Pokuttya",
+      "lat": 48.6703,
+      "lng": 25.5072,
+      "links": {
+        "pomistya": [
+          100
+        ],
+        "sarafu": [
+          "Pokuttya School"
+        ],
+        "solar": [
+          "Pokuttya Waldorf School"
+        ]
+      },
+      "hromada": "UA26080030000014307"
+    },
+    {
+      "id": "tepla-hora",
+      "name": "Тепла Гора",
+      "nameEn": "Tepla Hora",
+      "lat": 48.2056,
+      "lng": 24.9673,
+      "links": {
+        "pomistya": [
+          18
+        ],
+        "arkreen": [
+          "site_tepla_gora"
+        ],
+        "sarafu": [
+          "Tepla Hora"
+        ],
+        "inat": [
+          "Tepla Gora"
+        ],
+        "rainwater": [
+          "Tepla Hora"
+        ]
+      },
+      "hromada": "UA26020030000088465"
+    },
+    {
+      "id": "goloka",
+      "name": "Голока",
+      "nameEn": "Goloka",
+      "lat": 48.0705,
+      "lng": 29.564,
+      "links": {
+        "pomistya": [
+          95
+        ],
+        "rainwater": [
+          "Goloka"
+        ]
+      },
+      "unsure": [
+        "The rainwater point is 30 km from the pomistya.club point; matched by name"
+      ],
+      "hromada": "UA51120030000075494"
+    },
+    {
+      "id": "charivne",
+      "name": "Чарівне",
+      "nameEn": "Charivne",
+      "lat": 49.0974,
+      "lng": 32.4789,
+      "links": {
+        "pomistya": [
+          17
+        ],
+        "sarafu": [
+          "Charivne"
+        ],
+        "rainwater": [
+          "Charivne Lake Systems"
+        ]
+      },
+      "hromada": "UA71080510000028067"
+    },
+    {
+      "id": "velyka-homilsha",
+      "name": "Велика Гомільша",
+      "nameEn": "Velyka Homilsha",
+      "lat": 49.5525,
+      "lng": 36.2638,
+      "links": {
+        "pomistya": [
+          85
+        ],
+        "silvi": [
+          87
+        ]
+      },
+      "hromada": "UA63140030000091352"
+    },
+    {
+      "id": "potoky",
+      "name": "Потоки",
+      "nameEn": "Potoky",
+      "lat": 49.0341,
+      "lng": 28.2343,
+      "links": {
+        "pomistya": [
+          63
+        ],
+        "silvi": [
+          91
+        ],
+        "sarafu": [
+          "Potoky"
+        ]
+      },
+      "unsure": [
+        "Silvi 91 (Maze Garden) is 0.8 km from Потоки"
+      ],
+      "hromada": "UA05020070000010139"
+    },
+    {
+      "id": "kazkove",
+      "name": "Казкове",
+      "nameEn": "Kazkove",
+      "lat": 50.2943,
+      "lng": 29.6593,
+      "links": {
+        "pomistya": [
+          53
+        ],
+        "arkreen": [
+          "site_kazkove"
+        ]
+      },
+      "hromada": "UA18040050000049937"
+    },
+    {
+      "id": "vesela-slobidka",
+      "name": "Весела Слобідка",
+      "nameEn": "Vesela Slobidka (Kyiv region)",
+      "lat": 50.26042,
+      "lng": 29.73213,
+      "links": {
+        "silvi": [
+          80
+        ]
+      },
+      "unsure": [
+        "6 km from Казкове; may be the same community"
+      ],
+      "hromada": "UA32140010000049369"
+    },
+    {
+      "id": "zhyvyi-dim-zaporizhzhia",
+      "name": "Живий Дім Запоріжжя",
+      "nameEn": "Zhyvyi Dim Zaporizhzhia",
+      "lat": 47.88822,
+      "lng": 35.13787,
+      "links": {
+        "silvi": [
+          84
+        ]
+      },
+      "hromada": "UA23060070000082704"
+    },
+    {
+      "id": "bhumi-bezvodne",
+      "name": "Бхумі (Безводне)",
+      "nameEn": "Bhumi (Bezvodne)",
+      "lat": 46.5314,
+      "lng": 31.4435,
+      "links": {
+        "rainwater": [
+          "Bezvodne (Bhumi)"
+        ]
+      },
+      "hromada": null
+    },
+    {
+      "id": "bhumi-podillia",
+      "name": "Бхумі (Поділля)",
+      "nameEn": "Bhumi (Podillia)",
+      "lat": 48.6943,
+      "lng": 27.3819,
+      "links": {
+        "rainwater": [
+          "Bhumi"
+        ]
+      },
+      "hromada": "UA68020190000052031"
+    },
+    {
+      "id": "new-mayapur",
+      "name": "Новий Маяпур",
+      "nameEn": "New Mayapur",
+      "lat": 49.1663,
+      "lng": 34.8055,
+      "links": {
+        "pomistya": [
+          69
+        ],
+        "sarafu": [
+          "New Mayapur"
+        ]
+      },
+      "hromada": "UA12100150000039396"
+    },
+    {
+      "id": "dzin-space",
+      "name": "Dzin Space",
+      "nameEn": "Dzin Space",
+      "lat": 48.1882,
+      "lng": 24.7237,
+      "links": {
+        "pomistya": [
+          64
+        ],
+        "sarafu": [
+          "Dzin Space"
+        ]
+      },
+      "hromada": "UA26020030000088465"
+    },
+    {
+      "id": "lubodarove",
+      "name": "Любодарове",
+      "nameEn": "Lubodarove",
+      "lat": 48.9657,
+      "lng": 27.9664,
+      "links": {
+        "pomistya": [
+          21
+        ],
+        "sarafu": [
+          "Lubodarove EcoHub"
+        ]
+      },
+      "hromada": "UA05060130000030729"
+    },
+    {
+      "id": "bushanska-toloka",
+      "name": "Бушанська Толока",
+      "nameEn": "Bushanska Toloka",
+      "lat": 48.3439,
+      "lng": 28.0888,
+      "links": {
+        "pomistya": [
+          57
+        ],
+        "sarafu": [
+          "Bushanska Toloka"
+        ]
+      },
+      "hromada": "UA05080110000056824"
+    },
+    {
+      "id": "rodnyky",
+      "name": "Родники",
+      "nameEn": "Rodnyky",
+      "lat": 49.8785,
+      "lng": 35.8656,
+      "links": {
+        "pomistya": [
+          3
+        ],
+        "sarafu": [
+          "Rodniki"
+        ]
+      },
+      "hromada": "UA63020030000094096"
+    },
+    {
+      "id": "shkola-zhyttia",
+      "name": "Школа Життя",
+      "nameEn": "School of Life",
+      "lat": 50.4047,
+      "lng": 30.1676,
+      "links": {
+        "pomistya": [
+          22
+        ],
+        "sarafu": [
+          "Eco-center School Life"
+        ]
+      },
+      "hromada": "UA32080130000056481"
+    },
+    {
+      "id": "svitanok-rivne",
+      "name": "Світанок (Рівненщина)",
+      "nameEn": "Svitanok (Rivne region)",
+      "lat": 50.8558,
+      "lng": 26.0116,
+      "links": {
+        "pomistya": [
+          1
+        ],
+        "sarafu": [
+          "Sunrise Ecovillage"
+        ]
+      },
+      "unsure": [
+        "Sarafu «Sunrise Ecovillage» matched by name (Світанок = sunrise)"
+      ],
+      "hromada": "UA07080290000088287"
+    },
+    {
+      "id": "trokhy-dali",
+      "name": "Трохи Далі",
+      "nameEn": "Trokhy Dali",
+      "lat": 49.428169,
+      "lng": 30.846943,
+      "links": {
+        "birdweather": [
+          26098
+        ]
+      },
+      "unsure": [
+        "1.7 km from Зелені кручі; may be the same place"
+      ],
+      "hromada": "UA32020110000085875"
+    },
+    {
+      "id": "supii-lake",
+      "name": "Озеро Супій",
+      "nameEn": "Supii Lake",
+      "lat": 50.316551,
+      "lng": 31.737823,
+      "links": {
+        "birdweather": [
+          2912
+        ]
+      },
+      "hromada": "UA32040210000086086"
+    },
+    {
+      "id": "chornobyl-zone",
+      "name": "Чорнобильська зона",
+      "nameEn": "Chornobyl zone",
+      "lat": 51.276,
+      "lng": 30.222,
+      "links": {
+        "birdweather": [
+          22407
+        ]
+      },
+      "unsure": [
+        "Approximate station position"
+      ],
+      "hromada": null
+    },
+    {
+      "id": "drago",
+      "name": "Drago",
+      "nameEn": "Drago",
+      "lat": null,
+      "lng": null,
+      "links": {
+        "arkreen": [
+          "site_drago"
+        ]
+      },
+      "unsure": [
+        "No coordinates or matching name in other sources"
+      ],
+      "hromada": null
+    },
+    {
+      "id": "etnokod",
+      "name": "Етнокод",
+      "nameEn": "Etnokod",
+      "lat": null,
+      "lng": null,
+      "links": {
+        "sarafu": [
+          "Etnokod"
+        ]
+      },
+      "unsure": [
+        "No coordinates"
+      ],
+      "hromada": null
+    },
+    {
+      "id": "ohra-workshop",
+      "name": "Ohra Workshop",
+      "nameEn": "Ohra Workshop",
+      "lat": null,
+      "lng": null,
+      "links": {
+        "sarafu": [
+          "Ohra Workshop"
+        ]
+      },
+      "unsure": [
+        "No coordinates"
+      ],
+      "hromada": null
+    },
+    {
+      "id": "veloselo",
+      "name": "Велосело",
+      "nameEn": "Veloselo",
+      "lat": null,
+      "lng": null,
+      "links": {
+        "sarafu": [
+          "Veloselo"
+        ]
+      },
+      "unsure": [
+        "No coordinates"
+      ],
+      "hromada": null
+    },
+    {
+      "id": "veseli-kurkuli",
+      "name": "Веселі Куркулі",
+      "nameEn": "Veseli Kurkuli",
+      "lat": null,
+      "lng": null,
+      "links": {
+        "sarafu": [
+          "Veseli Kurkuli"
+        ]
+      },
+      "unsure": [
+        "No coordinates"
+      ],
+      "hromada": null
+    },
+    {
+      "id": "prilestnoe",
+      "name": "Прелесне",
+      "nameEn": "Prilestnoe",
+      "lat": null,
+      "lng": null,
+      "links": {
+        "sarafu": [
+          "Prilestnoe"
+        ]
+      },
+      "unsure": [
+        "No coordinates"
+      ],
+      "hromada": null
+    },
+    {
+      "id": "verkhnii-byshkin",
+      "name": "Верхній Бишкин",
+      "nameEn": "Verkhniy Byshkin",
+      "lat": null,
+      "lng": null,
+      "links": {
+        "inat": [
+          "Verkhniy Byshkin"
+        ]
+      },
+      "unsure": [
+        "No coordinates"
+      ],
+      "hromada": null
+    },
+    {
+      "id": "hora-lyskivka",
+      "name": "Гора Лисківка",
+      "nameEn": "Hora Lyskivka",
+      "lat": null,
+      "lng": null,
+      "links": {
+        "inat": [
+          "Hora Lyskivka"
+        ]
+      },
+      "unsure": [
+        "No coordinates"
+      ],
+      "hromada": null
+    }
+  ]
+}

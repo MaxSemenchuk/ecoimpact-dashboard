@@ -588,10 +588,10 @@ function mergeSilviIntoData(data, silvi) {
     }
   });
 
-  // Show approved projects only (drafts are not verified by Silvi yet)
+  // Show approved projects and drafts that already have data (empty drafts are just placeholders)
   data.silviProjects = (data.silviProjects || []).filter(p => {
     const s = byId.get(p.id);
-    return !s || s.status === 'approved';
+    return !s || s.status === 'approved' || (s.logs || 0) > 0 || (s.trees || 0) > 0 || (s.areaHa || 0) > 0;
   });
 
   // Keep the ecology block in step with the (now authoritative) Silvi numbers
@@ -689,6 +689,7 @@ function mergeArkreenIntoData(data, arkreenLive) {
 
   // Build nodes list: one entry per solar site
   data.energy.nodes = (arkreenLive.miners || []).map(m => ({
+    id: m.id,
     name: m.name,
     wallet: m.address.slice(0, 6) + '...' + m.address.slice(-4),
     walletFull: m.address,

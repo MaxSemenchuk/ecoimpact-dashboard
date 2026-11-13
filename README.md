@@ -20,6 +20,7 @@ It is a plain static site — HTML, [Tailwind](https://tailwindcss.com) (CDN), [
 | Donations | [Giveth](https://giveth.io) | static values in `js/api.js` (`BLOCKCHAIN_CONFIG.giveth`) — update by hand |
 | Grants | [Karma](https://www.karmahq.org) (GAP API) | live, in the browser |
 | Bird monitoring | [BirdWeather](https://www.birdweather.com) stations | live, in the browser |
+| Places and hromadas | hand-curated registry of places and their IDs on each platform; hromada boundaries and population from [KSE Loc Data Hub](https://github.com/kse-ua/KSE-Loc-Data-Hub) (MIT); hromada eco goals from [hromada-strategy-collab](https://doi.org/10.5281/zenodo.22552879) (CC BY 4.0) | `data/locations.json`, `data/hromadas.geojson` (built by `scripts/build-hromadas.py` from `scripts/hromada-ecogoals.json`) |
 
 Browsers are rate-limited by Blockscout (HTTP 429), and some APIs do not allow cross-origin requests, so most data is **pre-fetched into JSON snapshots** by the scripts below and served as static files. Karma and BirdWeather allow browser requests and are read live. If a snapshot is missing, the page falls back to a live request or to the demo values in `js/data.js`.
 
@@ -48,6 +49,7 @@ node scripts/fetch-chain-snapshots.mjs      # Hypercerts + Sarafu pools (Blocksc
 node scripts/fetch-inat.mjs                 # INAT eco-credit sales
 bash scripts/fetch-sarafu-reports.sh        # Sarafu activity reports
 node scripts/fetch-silvi.mjs                # Silvi projects (needs API keys, see below)
+python3 scripts/build-hromadas.py           # links places to hromadas, builds data/hromadas.geojson (pip install shapely)
 ```
 
 **Silvi API keys.** Silvi issues one key per project (ask them at support@silvi.earth). Put them in a `.env` file at the repository root — it is git-ignored — one per line:
