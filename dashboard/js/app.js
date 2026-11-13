@@ -349,6 +349,10 @@ function populateInat(data) {
       ? `<span class="text-accent-green font-mono whitespace-nowrap">${T('{n} credits', { n: credits % 1 === 0 ? credits : credits.toFixed(2) })} · $${revenue.toFixed(2)}</span>`
       : '<span class="text-gray-600 font-mono">' + T('no sales') + '</span>';
     const projectUrl = p.url || '#';
+    // Regen Bank checkout (js/regenbank.js): buy this project's credits without leaving the page
+    const buyBtn = window.RegenBank && p.listing != null
+      ? `<button type="button" class="rb-buy-btn" data-rb-buy="${p.listing}" data-rb-name="${p.name}" data-rb-url="${projectUrl}">${T('Buy')}</button>`
+      : '';
     return `
       <div class="flex items-center justify-between text-xs py-1.5 border-b border-dark-600/50 gap-4">
         <div class="flex items-center gap-2 min-w-0">
@@ -357,10 +361,12 @@ function populateInat(data) {
         </div>
         <div class="flex items-center gap-3 flex-shrink-0">
           ${statsBadge}
+          ${buyBtn}
         </div>
       </div>
     `;
   }).join('');
+  if (window.RegenBank) window.RegenBank.refreshButtons(list);
 }
 
 // Populate Fundraising & Grants
