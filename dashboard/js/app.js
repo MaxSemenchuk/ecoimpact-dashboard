@@ -102,9 +102,10 @@ function populateEcology(data) {
       const mapUrl = silviProject
         ? `https://app.silvi.earth/?asset=zone&sourceProject=${silviProject.id}&sourceProjectTitle=${encodeURIComponent(silviProject.name)}`
         : null;
+      const label = silviProject ? placeNameHtml('silvi', silviProject.id, p.name) : esc(p.name);
       const nameHtml = mapUrl
-        ? `<a href="${mapUrl}" target="_blank" class="text-gray-300 hover:text-lime-400 hover:underline">${p.name}</a>`
-        : `<span class="text-gray-300">${p.name}</span>`;
+        ? `<a href="${mapUrl}" target="_blank" class="text-gray-300 hover:text-lime-400 hover:underline">${label}</a>`
+        : `<span class="text-gray-300">${label}</span>`;
       return `
         <div class="flex items-center justify-between gap-3 text-xs py-1.5 border-b border-dark-600/50">
           <div class="flex items-center gap-2 min-w-0">
@@ -186,7 +187,7 @@ function populateEnergyNodes(data) {
         <div class="flex items-center gap-2 min-w-0">
           ${statusDot}
           <div class="min-w-0">
-            <span class="block truncate text-gray-300">${T(n.name)}</span>
+            <span class="block truncate text-gray-300">${placeNameHtml('arkreen', n.id, T(n.name))}</span>
             <span class="block text-[0.65rem] sm:hidden">${walletDisplay}</span>
           </div>
         </div>
@@ -206,9 +207,10 @@ function populateCommunityPools(data) {
   if (!list) return;
 
   list.innerHTML = data.community.vouchers.map(v => {
+    const label = placeNameHtml('sarafu', v.settlement, T(v.settlement));
     const nameEl = v.url
-      ? `<a href="${v.url}" target="_blank" class="text-gray-300 hover:text-accent-orange hover:underline">${T(v.settlement)}</a>`
-      : `<span class="text-gray-300">${T(v.settlement)}</span>`;
+      ? `<a href="${v.url}" target="_blank" class="text-gray-300 hover:text-accent-orange hover:underline">${label}</a>`
+      : `<span class="text-gray-300">${label}</span>`;
     const statusDot = v.live
       ? '<span class="w-1.5 h-1.5 rounded-full bg-accent-green flex-shrink-0" title="Live data"></span>'
       : '<span class="w-1.5 h-1.5 rounded-full bg-gray-600 flex-shrink-0"></span>';
@@ -249,7 +251,7 @@ function populateSettlements(data) {
       <div class="flex items-center justify-between text-xs py-1.5 border-b border-dark-600/50">
         <div class="flex items-center gap-2 min-w-0">
           <span class="w-1.5 h-1.5 rounded-full ${s.reports > 0 ? 'bg-accent-orange' : 'bg-gray-600'} flex-shrink-0"></span>
-          <a href="${s.url}" target="_blank" class="text-gray-300 hover:text-accent-orange hover:underline truncate">${T(s.name)}</a>
+          <a href="${s.url}" target="_blank" class="text-gray-300 hover:text-accent-orange hover:underline truncate">${placeNameHtml('sarafu', s.name, T(s.name))}</a>
         </div>
         <div class="flex items-center gap-3 flex-shrink-0">
           <code class="text-[0.6rem] text-gray-500 bg-dark-700 px-1.5 py-0.5 rounded">${s.address.slice(0, 6)}...${s.address.slice(-4)}</code>
@@ -357,7 +359,7 @@ function populateInat(data) {
       <div class="flex items-center justify-between text-xs py-1.5 border-b border-dark-600/50 gap-4">
         <div class="flex items-center gap-2 min-w-0">
           <span class="w-1.5 h-1.5 rounded-full bg-accent-blue flex-shrink-0"></span>
-          <a href="${projectUrl}" target="_blank" class="text-gray-300 truncate hover:text-accent-blue hover:underline">${T(p.name)}</a>
+          <a href="${projectUrl}" target="_blank" class="text-gray-300 truncate hover:text-accent-blue hover:underline">${placeNameHtml('inat', p.name, T(p.name))}</a>
         </div>
         <div class="flex items-center gap-3 flex-shrink-0">
           ${statsBadge}
@@ -486,7 +488,7 @@ function populateBirds(data) {
   list.innerHTML = b.stations.map(s => `
     <div class="bg-dark-700/50 border border-dark-600 rounded-lg p-3">
       <div class="flex items-start justify-between gap-2">
-        <a href="https://app.birdweather.com/stations/${s.id}" target="_blank" rel="noopener" class="text-sm text-gray-200 hover:text-sky-400 hover:underline font-medium">${esc(T(s.name))}</a>
+        <a href="https://app.birdweather.com/stations/${s.id}" target="_blank" rel="noopener" class="text-sm text-gray-200 hover:text-sky-400 hover:underline font-medium">${placeNameHtml('birdweather', s.id, T(s.name))}</a>
         <span class="w-1.5 h-1.5 mt-1.5 rounded-full flex-shrink-0 ${s.live ? 'bg-accent-green' : 'bg-gray-600'}" title="${esc(s.live ? T('Station online') : T('Station offline'))}"></span>
       </div>
       <div class="flex gap-4 mt-2 text-xs">
@@ -547,6 +549,8 @@ function initTabs() {
 
 // === Init everything ===
 document.addEventListener('DOMContentLoaded', async () => {
+  // Places registry first (small local files): lists below show registry names
+  try { await loadLocationFiles(); } catch (err) { console.warn('[App] Places registry failed:', err); }
   // 1. Show mock data immediately for fast first paint
   populateSummary(MOCK_DATA);
   populateEnergy(MOCK_DATA);
