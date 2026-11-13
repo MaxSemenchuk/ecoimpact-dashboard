@@ -61,7 +61,7 @@ async function loadLocationFiles() {
 // All numbers for one location, read from the merged dashboard data
 function locationStats(loc, data) {
   const L = loc.links || {};
-  const s = { trees: 0, ha: 0, kwh: 0, akre: 0, reports: 0, credits: 0, usd: 0, solar: [], rain: [], birdIds: L.birdweather || [], birds: null, urls: [] };
+  const s = { trees: 0, ha: 0, kwh: 0, akre: 0, reports: 0, credits: 0, usd: 0, solar: [], rain: [], birdIds: L.birdweather || [], birds: null, urls: [], buy: [] };
 
   (L.silvi || []).forEach(id => {
     const p = (data.silviProjects || []).find(x => x.id === id);
@@ -88,6 +88,7 @@ function locationStats(loc, data) {
     if (!p) return;
     s.credits += p.totalCredits || 0;
     s.usd += p.revenue || 0;
+    if (p.listing != null) s.buy.push({ listing: p.listing, name: p.name, url: p.url });
     s.urls.push({ src: 'inat', label: name, url: p.url });
   });
   (L.solar || []).forEach(name => {
@@ -391,6 +392,8 @@ function openLocationDetail(id) {
     if (cat) hromada += `<div class="loc-d-row"><span>🎯</span><span><b style="color:${cat.color}">${esc(LANG === 'uk' ? cat.uk : cat.en)}</b>: ${esc(LANG === 'uk' ? h.ecoGoal.uk : h.ecoGoal.en)}</span></div>`;
   }
   const links = s.urls.map(u => `<a href="${u.url}" target="_blank" rel="noopener">${esc(LOC_SOURCES[u.src].label)}: ${esc(u.label)} →</a>`).join('');
+  // Regen Bank checkout (js/regenbank.js): same buy modal as the INAT list on the dashboard
+  const buy = window.RegenBank ? s.buy.map(b => `<div class="loc-d-row items-center"><span>💳</span><span class="flex-1">${s.buy.length > 1 ? esc(placeName('inat', b.name, T(b.name))) : T('Eco-credits')} · INAT</span><button type="button" class="rb-buy-btn" data-rb-buy="${b.listing}" data-rb-name="${esc(b.name)}" data-rb-url="${b.url}">${T('Buy')}</button></div>`).join('') : '';
   const unsure = (l.unsure || []).map(t => `<p class="loc-unsure">⚠ ${esc(T(t))}</p>`).join('');
 
   el.querySelector('.loc-d-body').innerHTML = `
@@ -406,12 +409,14 @@ function openLocationDetail(id) {
       <div>${l.lat != null ? '<div id="loc-detail-map"></div>' : `<div class="loc-d-nomap">${T('No coordinates yet. Ask the network coordinator where this place is.')}</div>`}</div>
       <div>
         ${section(T('What is measured here'), rows.length ? rows.map(([i, t]) => `<div class="loc-d-row"><span>${i}</span><span>${t}</span></div>`).join('') : `<p class="loc-empty">${T('Listed on a platform; no numbers yet')}</p>`)}
+        ${section(T('Buy eco-credits'), buy)}
         ${section(T('Community map'), community)}
         ${section(T('Hromada'), hromada)}
         ${section(T('Sources'), links ? `<div class="loc-links">${links}</div>` : '')}
         ${unsure}
       </div>
     </div>`;
+  if (buy) window.RegenBank.refreshButtons(el);
   el.classList.remove('hidden');
   document.body.style.overflow = 'hidden';
   history.replaceState(null, '', location.pathname + location.search + '#places/' + l.id);
@@ -441,7 +446,7 @@ function wireLocationClicks() {
     if (e.target.closest('[data-hromada-more]')) { LOCATIONS.hromadaShowAll = true; renderHromadaList(); return; }
     if (e.target.closest('[data-close-detail]') || e.target.id === 'loc-detail') closeLocationDetail();
   }, true);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLocationDetail(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !document.querySelector('.rb-overlay')) closeLocationDetail(); });
 }
 
 // Called with mock data on first paint, then again once live data has merged
@@ -460,4 +465,8 @@ async function renderLocations(data) {
   renderLocationCards();
   renderHromadaList();
   window.drawPins();
+  // An open place detail was drawn from the earlier data (e.g. mock on a deep link): redraw it with the new numbers
+  const open = document.getElementById('loc-detail');
+  const m = location.hash.match(/^#places\/(.+)$/);
+  if (open && !open.classList.contains('hidden') && m) openLocationDetail(decodeURIComponent(m[1]));
 }
