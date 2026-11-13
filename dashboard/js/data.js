@@ -55,7 +55,7 @@ const MOCK_DATA = {
 
   // --- Ecology Block (source: Silvi — tree tracking; list from the "Sarafu Arkreen" Google Sheet, Silvi tab) ---
   ecology: {
-    biodiversityProjects: 11, // approved Silvi projects only
+    biodiversityProjects: 11, // Silvi projects shown (approved + drafts with data); live value comes from silvi.json
     treesPlanted: null, // Silvi does not report tree counts for these projects
     habitatRestored: 2847, // hectares (sum of Silvi projects)
     projects: [
